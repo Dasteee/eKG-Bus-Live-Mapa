@@ -27,11 +27,11 @@ jobs:
 
       - name: Run script to generate map
 
+        run: python ekg_mapa.py
         env:
           API_URL: ${{ secrets.API_URL }}
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           DEVICE_ID: ${{ secrets.DEVICE_ID }}
-        run: python ekg_mapa.py
 
       - name: Commit and push if map changed
         uses: stefanzweifel/git-auto-commit-action@v4
