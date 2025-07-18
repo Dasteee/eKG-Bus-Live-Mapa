@@ -2,7 +2,7 @@ import requests
 import json
 import folium
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
 from jinja2 import Template
@@ -12,6 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 REFRESH_SECONDS = 60
 MAP_FILE = "kragujevac_busevi.html"
+
 def get_vehicle_info(bus_id):
     bus_id_str = str(bus_id)
     if bus_id_str.startswith('30'):
@@ -19,6 +20,7 @@ def get_vehicle_info(bus_id):
     if bus_id_str.startswith('70'):
         return "Vulović Transport", bus_id_str[2:]
     return "Nepoznat prevoznik", bus_id_str
+
 def get_secrets():
     api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
@@ -32,6 +34,7 @@ def get_secrets():
     }
     return api_url, headers
 
+
 def get_clean_line_number(route_code):
     if not route_code or not isinstance(route_code, str):
         return "N/A"
@@ -41,13 +44,14 @@ def get_clean_line_number(route_code):
         if 600 <= suburban_line <= 613:
             return str(suburban_line)
         city_line = code_int % 100
-        if 1 <= city_line <= 30: # Prošireno do 30 za svaki slučaj
+        if 1 <= city_line <= 30:
             return str(city_line)
         if 1 <= code_int <= 30 or 600 <= code_int <= 613:
             return str(code_int)
         return route_code
     except (ValueError, TypeError):
         return route_code
+
 
 def enhance_html_head(html_file, interval_seconds):
     try:
@@ -66,6 +70,7 @@ def enhance_html_head(html_file, interval_seconds):
     except Exception as e:
         print(f"Greška kod dodavanja HTML tagova: {e}")
 
+
 def fetch_bus_data(api_url, headers):
     try:
         response = requests.get(api_url, headers=headers, timeout=15, verify=False)
@@ -76,6 +81,7 @@ def fetch_bus_data(api_url, headers):
         print(f"Greška prilikom preuzimanja podataka: {e}")
         return None
 
+
 def create_map(buses):
     if buses is None:
         buses = []
@@ -84,26 +90,33 @@ def create_map(buses):
     bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter", max_zoom=21)
 
     # Dodaj slojeve mape
-    folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', name='Satelit', attr='Esri').add_to(bus_map)
+    folium.TileLayer(
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        name='Satelit', attr='Esri'
+    ).add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
-    now = datetime.now()
-    ten_min_ago = now - timedelta(minutes=10)
+    # Sadašnje vreme u Belgrade zoni
+    now = datetime.now(ZoneInfo("Europe/Belgrade"))
+    ten_min_ago   = now - timedelta(minutes=10)
     sixty_min_ago = now - timedelta(minutes=60)
-    archive_cutoff = datetime(2024, 1, 1)
+    archive_cutoff = datetime(2024, 1, 1, tzinfo=ZoneInfo("Europe/Belgrade"))
 
     # 4 grupe
-    fg_active = folium.FeatureGroup(name="🟢 Aktivna vozila", show=True)
-    fg_mid = folium.FeatureGroup(name="🟡 Aktivna vozila (10-60 min)", show=True)
-    fg_old = folium.FeatureGroup(name="🟠 Neaktivna vozila", show=False)
-    fg_archive = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
+    fg_active = folium.FeatureGroup(name="🟢 Aktivna vozila (0–10 min)", show=True)
+    fg_mid    = folium.FeatureGroup(name="🟡 Aktivna vozila (10–60 min)", show=True)
+    fg_old    = folium.FeatureGroup(name="🟠 Neaktivna vozila (60+ min)", show=False)
+    fg_archive= folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
 
     search_features = []
     counts = {'active': 0, 'mid': 0, 'old': 0, 'archive': 0, 'total': 0}
 
     for bus in buses:
         try:
-            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S')
+            # Parsiraj i konvertuj vreme u lokalno
+            last_seen_dt_utc = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=timezone.utc)
+            last_seen_dt = last_seen_dt_utc.astimezone(ZoneInfo("Europe/Belgrade"))
+
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
             lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
             if lat == 0 or lon == 0:
@@ -121,16 +134,12 @@ def create_map(buses):
 
             tooltip = f"Linija {clean_line} | {operator} #{internal_id}"
 
-            icon = folium.Icon(color="gray", icon="bus", prefix="fa")
-
-            # Odredi grupu i boju
+            # Odredi grupu ikonom
             if last_seen_dt >= archive_cutoff:
                 if last_seen_dt > ten_min_ago:
                     icon = folium.Icon(color="green", icon="bus", prefix="fa")
                     fg_active.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup_html, icon=icon))
                     counts['active'] += 1
-
-                    # Za search
                     search_features.append({
                         'type': 'Feature',
                         'geometry': {'type': 'Point', 'coordinates': [lon, lat]},
@@ -153,11 +162,11 @@ def create_map(buses):
         except Exception:
             continue
 
-    # Dodaj sve layer-e
+    # Dodaj slojeve na mapu
     for fg in [fg_active, fg_mid, fg_old, fg_archive]:
         bus_map.add_child(fg)
 
-    # Dodaj search layer
+    # Dodaj pretragu
     if search_features:
         search_layer = folium.GeoJson(
             {'type': 'FeatureCollection', 'features': search_features},
@@ -165,20 +174,13 @@ def create_map(buses):
             marker=folium.CircleMarker(radius=0, fill_opacity=0, opacity=0)
         )
         bus_map.add_child(search_layer)
-        Search(
-            layer=search_layer,
-            geom_type='Point',
-            placeholder='Traži garažni broj...',
-            collapsed=True,
-            search_label='BUS_ID',
-            search_zoom=18
-        ).add_to(bus_map)
+        Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True,
+               search_label='BUS_ID', search_zoom=18).add_to(bus_map)
 
-    # LayerControl + fullscreen
     Fullscreen().add_to(bus_map)
     folium.LayerControl(collapsed=False).add_to(bus_map)
 
-        # Statistika
+    # Statistika
     stats_html = f"""
     <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
                 background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
@@ -186,10 +188,10 @@ def create_map(buses):
         <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
             onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
         <b>Stanje na mapi</b><br>
-        Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade")).strftime('%d.%m.%Y. %H:%M:%S')}<br>
+        Ažurirano: {now.strftime('%d.%m.%Y. %H:%M:%S')}<br>
         Aktivna: {counts['active']}<br>
         10-60 min: {counts['mid']}<br>
-        60min-2024: {counts['old']}<br>
+        60+ min: {counts['old']}<br>
         Arhiva: {counts['archive']}
     </div>
     """
@@ -203,11 +205,9 @@ def create_map(buses):
     """
     bus_map.get_root().html.add_child(folium.Element(disclaimer_html))
 
-    # Save
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
-
 
 
 def main():
