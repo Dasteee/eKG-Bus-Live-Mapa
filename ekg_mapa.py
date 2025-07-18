@@ -11,7 +11,13 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 REFRESH_SECONDS = 60
 MAP_FILE = "kragujevac_busevi.html"
-
+def get_vehicle_info(bus_id):
+    bus_id_str = str(bus_id)
+    if bus_id_str.startswith('30'):
+        return "Strela Obrenovac", bus_id_str[2:]
+    if bus_id_str.startswith('70'):
+        return "Vulović Transport", bus_id_str[2:]
+    return "Nepoznat prevoznik", bus_id_str
 def get_secrets():
     api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
@@ -107,12 +113,12 @@ def create_map(buses):
             if lat == 0 and lon == 0: continue
 
             clean_line = get_clean_line_number(route_code)
-            popup_html = f"<b>Linija: {clean_line}</b> ({route_code})<br><b>Vozilo:</b> {bus_id}<br><b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
+            popup_html = f"<b>Linija: {clean_line}</b> ({route_code})<br><b>Vozilo:</b> {bus_id}<br>{get_vehicle_info(bus_id)}<br><b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
             
             is_live = last_seen_dt > live_cutoff
             icon_color = 'green' if is_live else 'orange'
             
-            marker = folium.Marker(location=[lat, lon], popup=popup_html, tooltip=f"Linija {clean_line} | Vozilo {bus_id}", icon=folium.Icon(color=icon_color))
+            marker = folium.Marker(location=[lat, lon], popup=popup_html, tooltip=f"Linija {clean_line} | {get_vehicle_info(bus_id)}", icon=folium.Icon(color=icon_color, icon='bus', prefix='fa'))
 
             if last_seen_dt >= archive_cutoff:
                 if clean_line in line_layers:
@@ -122,14 +128,14 @@ def create_map(buses):
                     if is_live:
                         counts['active'] += 1
             else:
-                marker.options['icon'] = folium.Icon(color='black', prefix='fa', icon='archive')
+                marker.options['icon'] = folium.Icon(color='black', prefix='fa', icon='bus')
                 marker.add_to(archive_group)
                 counts['archive'] += 1
         except Exception:
             continue
 
     stats_html = f"""
-    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: rgba(30, 30, 30, 0.85); color: #f0f0f0; padding: 10px 15px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #555; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 280px;">
+    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 999; background-color: rgba(30, 30, 30, 0.85); color: #f0f0f0; padding: 10px 15px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #555; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 280px;">
         <span onclick="this.parentElement.style.display='none';" style="position: absolute; top: 2px; right: 8px; cursor: pointer; font-size: 24px; color: #aaa; font-weight: bold; transition: color 0.2s;">&times;</span>
         <h4 style="margin: 0 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #666; font-size: 16px; text-align: center;">Stanje na mapi</h4>
         <p style="margin: 5px 0;">Ažurirano: <strong>{now.strftime('%d.%m.%Y. %H:%M:%S')}</strong></p>
@@ -139,7 +145,7 @@ def create_map(buses):
     bus_map.get_root().html.add_child(folium.Element(stats_html))
 
     disclaimer_html = """
-    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 9999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
+    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
         <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
     </div>
     """
