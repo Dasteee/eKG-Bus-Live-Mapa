@@ -1,11 +1,11 @@
 import requests
 import json
 import folium
-from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
 import os
 from datetime import datetime, timedelta, timezone
 import zoneinfo
 from branca.element import MacroElement
+from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
 from jinja2 import Template
 import urllib3
 
@@ -148,7 +148,7 @@ def create_map(buses):
     
     total_on_map = counts['active'] + counts['stale'] + counts['inactive']
 
-    stats_template = Template("""
+    ui_template = Template("""
     {% macro html(last_update, active_count, stale_count, inactive_count, total_count) %}
         <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: rgba(30, 30, 30, 0.85); color: #f0f0f0; padding: 10px 15px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #555; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 280px;">
             <span onclick="this.parentElement.style.display='none';" style="position: absolute; top: 2px; right: 8px; cursor: pointer; font-size: 24px; color: #aaa; font-weight: bold; transition: color 0.2s;">&times;</span>
@@ -161,35 +161,16 @@ def create_map(buses):
             </ul>
             <p style="margin: 5px 0; padding-top: 5px; border-top: 1px solid #666;">Ukupno na mapi: <strong>{{ total_count }}</strong></p>
         </div>
-    {% endmacro %}
-    {% macro css(this) %}
-        /* CSS can be embedded here if needed */
-    {% endmacro %}
-    {% macro js(this) %}
-        /* JS can be embedded here if needed */
-    {% endmacro %}
-    """)
-    macro = MacroElement()
-    macro._template = stats_template
-    macro.kwargs = {
-        'last_update': now.strftime('%d.%m.%Y. %H:%M:%S'),
-        'active_count': counts['active'],
-        'stale_count': counts['stale'],
-        'inactive_count': counts['inactive'],
-        'total_count': total_on_map
-    }
-    bus_map.add_child(macro)
 
-    disclaimer_template = Template("""
-    {% macro html() %}
         <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
             <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
         </div>
     {% endmacro %}
     """)
-    disclaimer_macro = MacroElement()
-    disclaimer_macro._template = disclaimer_template
-    bus_map.add_child(disclaimer_macro)
+    ui_macro = MacroElement()
+    ui_macro._template = ui_template
+    ui_macro.kwargs = {'last_update': now.strftime('%d.%m.%Y. %H:%M:%S'),'active_count': counts['active'],'stale_count': counts['stale'],'inactive_count': counts['inactive'],'total_count': total_on_map}
+    bus_map.add_child(ui_macro)
 
     if search_features:
         search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
