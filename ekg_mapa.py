@@ -9,7 +9,6 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def get_secrets():
-    """Učitava 'tajne' podatke iz environment variables."""
     api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
     device_id = os.getenv("DEVICE_ID")
