@@ -100,7 +100,7 @@ def create_map(buses):
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
     fg_active = folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True)
-    fg_mid    = folium.FeatureGroup(name="🟡 Aktivna (10–60 min)", show=True)
+    fg_mid    = folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True)
     fg_24h    = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=False)
     fg_old    = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
     fg_arch   = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
@@ -145,11 +145,11 @@ def create_map(buses):
                         'properties': {'BUS_ID': bus_id}
                     })
                 elif last_seen_dt > sixty_min_ago:
-                    icon = folium.Icon(color="orange", icon="bus", prefix="fa")
+                    icon = folium.Icon(color="darkgreen", icon="bus", prefix="fa")
                     fg_mid.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
                     counts['mid'] += 1
                 elif last_seen_dt > twenty_four_hours_ago:
-                    icon = folium.Icon(color="yellow", icon="bus", prefix="fa")
+                    icon = folium.Icon(color="orange", icon="bus", prefix="fa")
                     fg_24h.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
                     counts['24h'] += 1
                 else:
