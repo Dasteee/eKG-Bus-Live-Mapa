@@ -77,27 +77,51 @@ def fetch_bus_data(api_url, headers):
         return None
 
 def create_map(buses):
-    print("\n---> Korak 3: Kreiranje TEST mape...")
-    print(f"Ima {len(buses) if buses else 0} autobusa, ali ću ih ignorisati i crtam samo jedan test marker.")
+    print("\n---> Korak 3: Kreiranje mape sa svim autobusima (jednostavna verzija)...")
+    if buses is None:
+        buses = []
+    
+    print(f"Funkcija create_map je primila {len(buses)} autobusa za iscrtavanje.")
 
     kg_coords = [44.0141, 20.9116]
+    bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter")
     
-    bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="OpenStreetMap")
+    live_cutoff = datetime.now() - timedelta(minutes=10)
+    buses_drawn = 0
 
-    try:
-        folium.Marker(
-            location=kg_coords,
-            popup="TEST MARKER - AKO VIDIŠ OVO, OSNOVA RADI!",
-            tooltip="TEST",
-            icon=folium.Icon(color='red', prefix='fa', icon='star')
-        ).add_to(bus_map)
-        print("Test marker je uspešno DODAT na map objekat.")
-    except Exception as e:
-        print(f"!!! GREŠKA prilikom dodavanja test markera: {e} !!!")
+    for bus in buses:
+        try:
+            lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
+            lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
+            bus_id = bus.get('BUS_ID', 'N/A')
+            if lat == 0 and lon == 0:
+                continue
 
+            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S')
+            is_live = last_seen_dt > live_cutoff
+
+            icon_color = 'green' if is_live else 'gray'
+            
+            popup_html = f"<b>Vozilo: {bus_id}</b><br>Linija: {bus.get('ROUTE_CODE', 'N/A')}<br>Poslednji signal: {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
+
+            folium.Marker(
+                location=[lat, lon],
+                popup=popup_html,
+                tooltip=f"Vozilo: {bus_id}",
+                icon=folium.Icon(color=icon_color)
+            ).add_to(bus_map)
+            
+            buses_drawn += 1
+
+        except Exception as e:
+            print(f"!!! Greška pri obradi busa {bus.get('BUS_ID')}: {e} !!!")
+            continue
+    
+    print(f"Iscrtano je {buses_drawn} od {len(buses)} autobusa na mapi.")
+    
     bus_map.save(MAP_FILE)
     add_auto_refresh(MAP_FILE, REFRESH_SECONDS)
-    print(f"\n--- Test mapa je generisana. ---")
+    print(f"\n--- Mapa sa svim autobusima (jednostavna) je generisana. ---")
 
 def main():
     api_url, headers = get_secrets()
