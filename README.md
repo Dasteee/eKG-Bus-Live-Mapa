@@ -1,7 +1,7 @@
 ## Opis Projekta
 [🇬🇧 English version available below](#english)
 
-Ova interaktivna mapa predstavlja naprednu alternativu zvaničnoj aplikaciji za praćenje javnog prevoza. Za razliku od zvanične aplikacije, koja često ograničava prikaz na jednu liniju i skriva ključne podatke poput garažnog broja, ovaj alat vam daje potpunu kontrolu i transparentnost.
+Ova interaktivna mapa predstavlja naprednu alternativu zvaničnoj aplikaciji za praćenje javnog prevoza za grad Kragujevac. Za razliku od zvanične aplikacije, koja često ograničava prikaz na jednu liniju i skriva ključne podatke poput garažnog broja, ovaj alat vam daje potpunu kontrolu i transparentnost.
 
 Cilj je pružiti sveobuhvatan pregled saobraćaja, obogaćen funkcionalnostima koje ne postoje u zvaničnoj verziji. Pored osnovnog prikaza svih vozila i njihovih garažnih brojeva, mapa nudi i:
 
