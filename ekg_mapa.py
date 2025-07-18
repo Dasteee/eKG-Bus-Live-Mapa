@@ -10,9 +10,9 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Ove vrednosti podešavaš preko env var
 REFRESH_SECONDS = 1800
 MAP_FILE = "kragujevac_busevi.html"
+VEHICLE_LOG_FILE = "flota.json"
 
 def get_vehicle_info(bus_id):
     bus_id_str = str(bus_id)
@@ -83,7 +83,6 @@ def create_map(buses):
     if buses is None:
         buses = []
 
-    # Definiši “sada” i intervale po srpskom vremenu
     tz = ZoneInfo("Europe/Belgrade")
     now          = datetime.now(tz)
     ten_min_ago  = now - timedelta(minutes=10)
@@ -94,7 +93,6 @@ def create_map(buses):
     kg_coords = [44.0141, 20.9116]
     bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter", max_zoom=21)
 
-    # slojevi
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
                      name='Satelit', attr='Esri').add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
@@ -110,7 +108,6 @@ def create_map(buses):
 
     for bus in buses:
         try:
-            # Parsiraj kao lokalno vreme (LAST_GPS_TIME već po srpskom)
             last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'),
                                              '%Y%m%d%H%M%S').replace(tzinfo=tz)
 
@@ -133,7 +130,6 @@ def create_map(buses):
             tooltip = f"Linija {clean_line} | {operator} #{internal}"
             icon = folium.Icon(color="gray", icon="bus", prefix="fa")
 
-            # određivanje grupe
             if last_seen_dt >= archive_cutoff:
                 if last_seen_dt > ten_min_ago:
                     icon = folium.Icon(color="green", icon="bus", prefix="fa")
@@ -167,7 +163,6 @@ def create_map(buses):
         except Exception:
             continue
 
-    # Dodaj slojeve i kontrolu
     for fg in [fg_active, fg_mid, fg_24h, fg_old, fg_arch]:
         bus_map.add_child(fg)
 
@@ -190,7 +185,6 @@ def create_map(buses):
     Fullscreen().add_to(bus_map)
     folium.LayerControl(collapsed=False).add_to(bus_map)
 
-       # Statistika
     stats_html = f"""
     <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
                 background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
@@ -208,7 +202,6 @@ def create_map(buses):
     """
     bus_map.get_root().html.add_child(folium.Element(stats_html))
 
-    # Disclaimer
     disclaimer_html = """
     <div style="position: absolute; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
         <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
@@ -216,15 +209,66 @@ def create_map(buses):
     """
     bus_map.get_root().html.add_child(folium.Element(disclaimer_html))
 
-    # Sačuvaj i osveži head
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
 
+def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
+    """Učitava, ažurira i čuva JSON fajl sa evidencijom vozila."""
+    try:
+        with open(log_file, 'r', encoding='utf-8') as f:
+            log_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        log_data = {}
+
+    tz = ZoneInfo("Europe/Belgrade")
+    archive_cutoff = datetime(2024, 1, 1, tzinfo=tz)
+
+    if not buses:
+        print("Nema podataka o busevima za ažuriranje evidencije.")
+        return
+
+    for bus in buses:
+        try:
+            bus_id_str = bus.get('BUS_ID')
+            if not bus_id_str:
+                continue
+
+            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=tz)
+            last_seen_str = last_seen_dt.strftime('%d.%m.%Y %H:%M:%S')
+
+            if last_seen_dt < archive_cutoff:
+                continue
+
+            if bus_id_str in log_data:
+                log_data[bus_id_str][1] = last_seen_str
+            else:
+                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
+
+        except (ValueError, KeyError, TypeError):
+            continue
+
+    try:
+        with open(log_file, 'w', encoding='utf-8') as f:
+            sorted_log_data = dict(sorted(log_data.items(), key=lambda item: int(item[0])))
+            json.dump(sorted_log_data, f, indent=4, ensure_ascii=False)
+        print(f"✔️ Evidencija vozila je uspešno ažurirana u fajlu '{log_file}'.")
+    except Exception as e:
+        print(f"Greška pri čuvanju JSON fajla: {e}")
+
+
 def main():
-    api_url, headers = get_secrets()
-    buses = fetch_bus_data(api_url, headers)
-    create_map(buses)
+    try:
+        api_url, headers = get_secrets()
+        buses = fetch_bus_data(api_url, headers)
+        if buses:
+            create_map(buses)
+            update_vehicle_log(buses)
+        else:
+            print("Nije moguće generisati mapu i evidenciju bez podataka o vozilima.")
+    except Exception as e:
+        print(f"Došlo je do greške u izvršavanju programa: {e}")
+
 
 if __name__ == "__main__":
     main()
