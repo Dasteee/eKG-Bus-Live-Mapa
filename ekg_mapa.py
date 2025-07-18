@@ -165,38 +165,48 @@ def create_map(buses):
         bus_map.add_child(fg)
 
     if search_features:
-        geo = folium.GeoJson({'type':'FeatureCollection','features':search_features},
-                              name="Pretraga", marker=folium.CircleMarker(radius=0))
-        bus_map.add_child(geo)
-        Search(layer=geo, geom_type='Point', placeholder='Traži garažni broj…',
-               collapsed=True, search_label='BUS_ID', search_zoom=18).add_to(bus_map)
+        search_layer = folium.GeoJson(
+            {'type': 'FeatureCollection', 'features': search_features},
+            name="Pretraga",
+            marker=folium.CircleMarker(radius=0, fill_opacity=0, opacity=0)
+        )
+        bus_map.add_child(search_layer)
+        Search(
+            layer=search_layer,
+            geom_type='Point',
+            placeholder='Traži garažni broj...',
+            collapsed=True,
+            search_label='BUS_ID',
+            search_zoom=18
+        ).add_to(bus_map)
 
     Fullscreen().add_to(bus_map)
     folium.LayerControl(collapsed=False).add_to(bus_map)
 
-    # Statistika
-    stats = (
-        f"<div style='position:absolute;top:10px;left:50%;transform:translateX(-50%);"
-        "background:rgba(0,0,0,0.8);color:#fff;padding:10px;border-radius:8px;min-width:250px;'>"
-        f"<b>Stanje na mapi</b><br>"
-        f"Ažurirano: {now.strftime('%d.%m.%Y. %H:%M:%S')}<br>"
-        f"0–10 min: {counts['active']}<br>"
-        f"10–60 min: {counts['mid']}<br>"
-        f"60+ min: {counts['old']}<br>"
-        f"Arhiva: {counts['archive']}"
-        "</div>"
-    )
-    bus_map.get_root().html.add_child(folium.Element(stats))
+       # Statistika
+    stats_html = f"""
+    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+                background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
+                border-radius: 8px; z-index: 999; font-size: 14px; min-width: 280px;">
+        <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
+            onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
+        <b>Stanje na mapi</b><br>
+        Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade")).strftime('%d.%m.%Y. %H:%M:%S')}<br>
+        Aktivna: {counts['active']}<br>
+        10-60 min: {counts['mid']}<br>
+        60min-2024: {counts['old']}<br>
+        Arhiva: {counts['archive']}
+    </div>
+    """
+    bus_map.get_root().html.add_child(folium.Element(stats_html))
 
     # Disclaimer
-    disclaimer = (
-        "<div style='position:absolute;bottom:10px;right:10px;z-index:999;"
-        "background:rgba(30,30,30,0.7);color:#ccc;padding:5px 10px;border-radius:5px;"
-        "font-size:11px;border:1px solid #555;'>"
-        "<b>Disclaimer:</b> Ovo je nezvanični hobi-projekat; mogući su odstupanja."
-        "</div>"
-    )
-    bus_map.get_root().html.add_child(folium.Element(disclaimer))
+    disclaimer_html = """
+    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
+        <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
+    </div>
+    """
+    bus_map.get_root().html.add_child(folium.Element(disclaimer_html))
 
     # Sačuvaj i osveži head
     bus_map.save(MAP_FILE)
