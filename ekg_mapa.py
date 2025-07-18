@@ -88,6 +88,7 @@ def create_map(buses):
     now          = datetime.now(tz)
     ten_min_ago  = now - timedelta(minutes=10)
     sixty_min_ago= now - timedelta(minutes=60)
+    twenty_four_hours_ago = now - timedelta(hours=24)
     archive_cutoff = datetime(2024, 1, 1, tzinfo=tz)
 
     kg_coords = [44.0141, 20.9116]
@@ -100,7 +101,8 @@ def create_map(buses):
 
     fg_active = folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True)
     fg_mid    = folium.FeatureGroup(name="🟡 Aktivna (10–60 min)", show=True)
-    fg_old    = folium.FeatureGroup(name="🟠 Neaktivna (60+ min)", show=False)
+    fg_24h    = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=False)
+    fg_old    = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
     fg_arch   = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
 
     search_features = []
@@ -146,6 +148,10 @@ def create_map(buses):
                     icon = folium.Icon(color="orange", icon="bus", prefix="fa")
                     fg_mid.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
                     counts['mid'] += 1
+                elif last_seen_dt > twenty_four_hours_ago:
+                    icon = folium.Icon(color="yellow", icon="bus", prefix="fa")
+                    fg_24h.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                    counts['24h'] += 1
                 else:
                     icon = folium.Icon(color="lightgray", icon="bus", prefix="fa")
                     fg_old.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
@@ -194,6 +200,7 @@ def create_map(buses):
         Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade")).strftime('%d.%m.%Y. %H:%M:%S')}<br>
         Aktivna: {counts['active']}<br>
         10-60 min: {counts['mid']}<br>
+        1-24h: {counts['24h']}<br>
         60min-2024: {counts['old']}<br>
         Arhiva: {counts['archive']}
     </div>
