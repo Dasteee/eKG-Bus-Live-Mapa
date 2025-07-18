@@ -8,14 +8,32 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+REFRESH_SECONDS = 60
+MAP_FILE = "kragujevac_busevi.html"
+
 def get_secrets():
+    print("\n---> Korak 1: Provera 'tajni' (secrets)...")
     api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
     device_id = os.getenv("DEVICE_ID")
 
-    if not all([api_url, auth_token, device_id]):
-        raise ValueError("Nisu postavljene sve potrebne environment variables (API_URL, AUTH_TOKEN, DEVICE_ID)")
+    print(f"Tip podatka za API_URL: {type(api_url)}")
+    print(f"Tip podatka za AUTH_TOKEN: {type(auth_token)}")
+    print(f"Tip podatka za DEVICE_ID: {type(device_id)}")
 
+    print(f"Da li API_URL ima sadržaj? {bool(api_url)}")
+    print(f"Da li AUTH_TOKEN ima sadržaj? {bool(auth_token)}")
+    print(f"Da li DEVICE_ID ima sadržaj? {bool(device_id)}")
+
+    if auth_token:
+        print(f"Početak tokena (prvih 5 karaktera): {auth_token[:5]}")
+    
+    if not all([api_url, auth_token, device_id]):
+        print("\n!!! KRITIČNA GREŠKA: Jedna ili više 'tajni' nisu ispravno učitane. Proveri imena i vrednosti u GitHub Secrets. Prekidam izvršavanje. !!!")
+        return None, None
+
+    print("\n--- 'Tajne' su uspešno učitane. ---")
+    
     headers = {
         'Authorization': f'Bearer {auth_token}',
         'X-Device-Id': device_id,
@@ -25,8 +43,10 @@ def get_secrets():
 
 def get_vehicle_info(bus_id):
     bus_id_str = str(bus_id)
-    if bus_id_str.startswith('30'): return "Strela Obrenovac", bus_id_str[2:]
-    if bus_id_str.startswith('70'): return "Vulović Transport", bus_id_str[2:]
+    if bus_id_str.startswith('30'):
+        return "Strela Obrenovac", bus_id_str[2:]
+    if bus_id_str.startswith('70'):
+        return "Vulović Transport", bus_id_str[2:]
     return "Nepoznat prevoznik", bus_id_str
 
 def add_auto_refresh(html_file, interval_seconds):
@@ -42,19 +62,31 @@ def add_auto_refresh(html_file, interval_seconds):
         print(f"Greška kod dodavanja auto-refresha: {e}")
 
 def fetch_bus_data(api_url, headers):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Preuzimam sveže podatke...")
+    print(f"\n---> Korak 2: Preuzimanje podataka sa API-ja...")
+    print(f"Šaljem zahtev na URL: {api_url}")
     try:
         response = requests.get(api_url, headers=headers, timeout=15, verify=False)
-        response.raise_for_status() 
+        print(f"Server je odgovorio sa status kodom: {response.status_code}")
+        response.raise_for_status()
         nested_data = json.loads(response.json()['data'])
-        return nested_data['ROOT']['BUSES']['BUS']
+        buses = nested_data['ROOT']['BUSES']['BUS']
+        print(f"Podaci uspešno parsirani. Pronađeno {len(buses)} unosa za autobuse.")
+        return buses
     except Exception as e:
-        print(f"Greška prilikom preuzimanja ili parsiranja: {e}")
+        print(f"!!! GREŠKA prilikom preuzimanja ili parsiranja: {e} !!!")
         return None
 
 def create_map(buses):
+    print("\n---> Korak 3: Kreiranje mape...")
+    if buses is None:
+        print("Lista autobusa je None, mapa će biti prazna ali sa kontrolama.")
+        buses = []
+    
+    print(f"Funkcija create_map je primila {len(buses)} autobusa za iscrtavanje.")
+
     kg_coords = [44.0141, 20.9116]
     bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter")
+    
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', name='Satelit', attr='Esri').add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
@@ -62,11 +94,9 @@ def create_map(buses):
     inactive_group = folium.FeatureGroup(name='Neaktivni (2024-danas)', show=True).add_to(bus_map)
     archive_group = folium.FeatureGroup(name='Arhiva (bivša Arriva, <2024)', show=False).add_to(bus_map)
     search_features = []
-
+    
     archive_cutoff = datetime(2024, 1, 1)
-    live_cutoff = datetime.now() - timedelta(minutes=10) 
-
-    if not buses: return
+    live_cutoff = datetime.now() - timedelta(minutes=10)
 
     for bus in buses:
         try:
@@ -96,19 +126,20 @@ def create_map(buses):
 
     search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, style_function=lambda x: {'color': 'transparent', 'fillColor': 'transparent', 'weight': 0}, name='search_layer').add_to(bus_map)
     Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=16).add_to(bus_map)
-
+    
     Fullscreen().add_to(bus_map)
     folium.LayerControl().add_to(bus_map)
-
-    bus_map.save("kragujevac_busevi.html")
-    add_auto_refresh("kragujevac_busevi.html", 60) 
-    print(f"Mapa je uspešno generisana.")
+    
+    bus_map.save(MAP_FILE)
+    add_auto_refresh(MAP_FILE, REFRESH_SECONDS)
+    print(f"\n--- Mapa je uspešno generisana. ---")
 
 def main():
     api_url, headers = get_secrets()
+    if not api_url or not headers:
+        return 
     buses = fetch_bus_data(api_url, headers)
-    if buses:
-        create_map(buses)
+    create_map(buses)
 
 if __name__ == "__main__":
     main()
