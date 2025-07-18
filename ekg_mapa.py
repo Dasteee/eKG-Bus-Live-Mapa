@@ -4,7 +4,7 @@ import folium
 import os
 from datetime import datetime, timedelta, timezone
 import zoneinfo
-from folium.element import MacroElement
+from branca.element import MacroElement
 from jinja2 import Template
 import urllib3
 
