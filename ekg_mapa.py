@@ -101,7 +101,13 @@ def create_map(buses):
         except Exception:
             continue
 
-    search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, style_function=lambda x: {'color': 'transparent', 'fillColor': 'transparent', 'weight': 0}, name='search_layer').add_to(bus_map)
+    search_layer = folium.GeoJson(
+        {'type': 'FeatureCollection', 'features': search_features},
+        marker=folium.CircleMarker(radius=0, fill_color='transparent', color='transparent', opacity=0, fill_opacity=0),
+        style_function=lambda x: {'color': 'transparent', 'fillColor': 'transparent', 'weight': 0},
+        name='search_layer'
+    ).add_to(bus_map)
+    
     Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=16).add_to(bus_map)
     
     Fullscreen().add_to(bus_map)
@@ -110,7 +116,6 @@ def create_map(buses):
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print("Finalna, optimizovana mapa je uspešno generisana.")
-
 def main():
     api_url, headers = get_secrets()
     if not api_url or not headers:
