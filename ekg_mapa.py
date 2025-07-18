@@ -186,7 +186,7 @@ def create_map(buses):
         <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
             onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
         <b>Stanje na mapi</b><br>
-        Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade"))}<br>
+        Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade")).strftime('%d.%m.%Y. %H:%M:%S')}<br>
         Aktivna: {counts['active']}<br>
         10-60 min: {counts['mid']}<br>
         60min-2024: {counts['old']}<br>
