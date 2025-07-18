@@ -53,6 +53,22 @@ Ovaj način je namenjen programerima koji žele da pokreću, analiziraju ili mod
   Nakon ovoga, `html` fajl sa mapom će biti generisan u direktorijumu projekta i možete ga otvoriti u bilo kom veb pregledaču.
 </details>
 
+<details>
+  <summary><strong>Važno Pravno Obaveštenje i Odricanje od Odgovornosti</strong></summary>
+  
+  #### 1. Odsustvo povezanosti
+  Ovaj projekat je nezavisan i nekomercijalan. **Izričito se navodi da projekat nije ni na koji način zvanično povezan, odobren, niti sponzorisan od strane JKP 'Šumadija' Kragujevac, Gradske agencije za saobraćaj, sistema BusPlus, prevoznika 'Vulović transport d.o.o.' i 'Strela-Obrenovac', niti bilo koje druge povezane pravne ili fizičke osobe.** Projekat je razvijen samostalno, bez ikakve saradnje ili komunikacije sa navedenim entitetima.
+
+  #### 2. Korišćenje podataka i svrha projekta
+  Aplikacija pristupa podacima preko tehničkog interfejsa (API) koji je javno dostupan, ali se ovde koristi u svrhe koje verovatno nisu predviđene od strane originalnog provajdera. Svrha ovog projekta je isključivo edukativna, informativna i predstavlja tehničku demonstraciju (alternativni klijent) za pregled informacija koje su javno dostupne. **Ne postoji namera da se konkuriše zvaničnim servisima niti da se ostvari bilo kakva materijalna korist.**
+
+  #### 3. Intelektualna svojina
+  Svi žigovi, uslužni znaci, nazivi kompanija (uključujući, ali ne ograničavajući se na "JKP Šumadija", "BusPlus", "Vulović", "Strela") i logotipi pomenuti u ovom projektu su vlasništvo njihovih odgovarajućih vlasnika. Njihovo korišćenje je minimalno i služi isključivo u svrhu identifikacije i opisnog izveštavanja (nominativna upotreba), i ne podrazumeva nikakvu povezanost sa vlasnicima žigova niti sponzorstvo.
+
+  #### 4. Garancija i odgovornost
+  Softver i podaci se pružaju **"takvi kakvi jesu"**, bez ikakvih garancija, izričitih ili podrazumevanih. Autor se odriče svake odgovornosti za bilo kakvu štetu ili gubitke koji mogu nastati korišćenjem ove aplikacije. Korisnik preuzima sav rizik vezan za tačnost, kompletnost i upotrebljivost podataka.
+</details>
+
 ## English
 #### Project Description
 
@@ -106,4 +122,19 @@ This method is intended for developers who want to run, analyze, or modify the c
       python your_script.py
       ```
   After this, the `html` file with the map will be generated in the project's directory, and you can open it in any web browser.
+</details>
+<details>
+  <summary><strong>Important Legal Notice and Disclaimer (Click for details)</strong></summary>
+  
+  #### 1. No Affiliation
+  This project is independent and non-commercial. **It is explicitly stated that the project is in no way officially affiliated with, endorsed, or sponsored by JKP 'Šumadija' Kragujevac, the City Transport Agency, the BusPlus system, operators 'Vulović transport d.o.o.' and 'Strela-Obrenovac', or any other related legal or natural person.** This project was developed independently, without any cooperation or communication with the aforementioned entities.
+
+  #### 2. Data Usage and Project Purpose
+  The application accesses data through a technical interface (API) that is publicly available but is used here for purposes likely not intended by the original provider. The purpose of this project is strictly educational, informational, and serves as a technical demonstration (an alternative client) for viewing publicly available information. **There is no intention to compete with official services or to generate any material profit.**
+
+  #### 3. Intellectual Property
+  All trademarks, service marks, company names (including, but not limited to, "JKP Šumadija," "BusPlus," "Vulović," "Strela"), and logos mentioned in this project are the property of their respective owners. Their use is minimal and serves exclusively for identification and descriptive reporting purposes (nominative use), and does not imply any association with or endorsement by the trademark holders.
+
+  #### 4. Warranty and Liability
+  The software and data are provided **"as is"**, without warranty of any kind, express or implied. The author disclaims all liability for any damages or losses that may arise from the use of this application. The user assumes all risk related to the accuracy, completeness, and usability of the data.
 </details>
