@@ -8,7 +8,7 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-REFRESH_SECONDS = 60
+REFRESH_SECONDS = 600
 MAP_FILE = "kragujevac_busevi.html"
 
 def get_secrets():
@@ -36,7 +36,6 @@ def enhance_html_head(html_file, interval_seconds):
     try:
         with open(html_file, 'r', encoding='utf-8') as f:
             html_content = f.read()
-
         anti_cache_tags = f"""
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -65,19 +64,23 @@ def create_map(buses):
         buses = []
 
     kg_coords = [44.0141, 20.9116]
-    bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter")
+    bus_map = folium.Map(location=kg_coords, zoom_start=13, tiles="CartoDB dark_matter", max_zoom=21)
     
-    folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', name='Satelit', attr='Esri').add_to(bus_map)
+    folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', name='Satelit', attr='Esri', max_zoom=21).add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
-    active_group = folium.FeatureGroup(name='Aktivni', show=True).add_to(bus_map)
-    marker_cluster = MarkerCluster().add_to(active_group)
-    inactive_group = folium.FeatureGroup(name='Neaktivni (2024-danas)', show=True).add_to(bus_map)
-    archive_group = folium.FeatureGroup(name='Arhiva (bivša Arriva, <2024)', show=False).add_to(bus_map)
+    active_group = folium.FeatureGroup(name='Aktivni (<10 min)', show=True).add_to(bus_map)
+    stale_group = folium.FeatureGroup(name='Stariji signal (10-60 min)', show=True).add_to(bus_map)
+    inactive_group = folium.FeatureGroup(name='Neaktivni (>1h)', show=True).add_to(bus_map)
+    archive_group = folium.FeatureGroup(name='Arhiva (<2024)', show=False).add_to(bus_map)
+    
+    marker_cluster = MarkerCluster(disable_clustering_at_zoom=19).add_to(active_group)
     
     search_features = []
+    now = datetime.now()
+    live_cutoff = now - timedelta(minutes=10)
+    stale_cutoff = now - timedelta(hours=1)
     archive_cutoff = datetime(2024, 1, 1)
-    live_cutoff = datetime.now() - timedelta(minutes=10)
 
     for bus in buses:
         try:
@@ -91,24 +94,25 @@ def create_map(buses):
             popup_html = f"<b>{bus_id}</b><br><i>{display_name}</i><br><br><b>Linija:</b> {bus.get('ROUTE_CODE', 'N/A')}<br><b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
             
             if last_seen_dt > live_cutoff:
-                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=folium.Icon(color='green', prefix='fa', icon='bus')).add_to(marker_cluster)
-                search_features.append({'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [lon, lat]}, 'properties': {'BUS_ID': bus_id}})
+                icon = folium.Icon(color='green', prefix='fa', icon='bus')
+                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(marker_cluster)
+            elif last_seen_dt > stale_cutoff:
+                icon = folium.Icon(color='orange', prefix='fa', icon='clock-o')
+                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(stale_group)
             elif last_seen_dt >= archive_cutoff:
-                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=folium.Icon(color='orange', prefix='fa', icon='clock-o')).add_to(inactive_group)
-                search_features.append({'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [lon, lat]}, 'properties': {'BUS_ID': bus_id}})
+                icon = folium.Icon(color='lightgray', prefix='fa', icon='info-sign')
+                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(inactive_group)
             else:
-                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=folium.Icon(color='gray', prefix='fa', icon='archive')).add_to(archive_group)
+                icon = folium.Icon(color='black', prefix='fa', icon='archive')
+                folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(archive_group)
+            
+            if last_seen_dt >= archive_cutoff:
+                search_features.append({'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [lon, lat]}, 'properties': {'BUS_ID': bus_id}})
         except Exception:
             continue
 
-    search_layer = folium.GeoJson(
-        {'type': 'FeatureCollection', 'features': search_features},
-        marker=folium.CircleMarker(radius=0, fill_color='transparent', color='transparent', opacity=0, fill_opacity=0),
-        style_function=lambda x: {'color': 'transparent', 'fillColor': 'transparent', 'weight': 0},
-        name='search_layer'
-    ).add_to(bus_map)
-    
-    Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=16).add_to(bus_map)
+    search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
+    Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=19).add_to(bus_map)
     
     Fullscreen().add_to(bus_map)
     folium.LayerControl().add_to(bus_map)
@@ -116,6 +120,7 @@ def create_map(buses):
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print("Finalna, optimizovana mapa je uspešno generisana.")
+
 def main():
     api_url, headers = get_secrets()
     if not api_url or not headers:
