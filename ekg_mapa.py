@@ -41,6 +41,14 @@ def get_clean_line_number(route_code):
     except (ValueError, TypeError):
         return route_code
 
+def get_vehicle_info(bus_id):
+    bus_id_str = str(bus_id)
+    if bus_id_str.startswith('30'):
+        return "Strela Obrenovac", bus_id_str[2:]
+    if bus_id_str.startswith('70'):
+        return "Vulović Transport", bus_id_str[2:]
+    return "Nepoznat prevoznik", bus_id_str
+
 def enhance_html_head(html_file, interval_seconds):
     try:
         with open(html_file, 'r', encoding='utf-8') as f:
