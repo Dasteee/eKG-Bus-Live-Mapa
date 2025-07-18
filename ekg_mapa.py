@@ -101,7 +101,7 @@ def create_map(buses):
 
     fg_active = folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True)
     fg_mid    = folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True)
-    fg_24h    = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=False)
+    fg_24h    = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True)
     fg_old    = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
     fg_arch   = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
 
@@ -139,11 +139,6 @@ def create_map(buses):
                     icon = folium.Icon(color="green", icon="bus", prefix="fa")
                     fg_active.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
                     counts['active'] += 1
-                    search_features.append({
-                        'type': 'Feature',
-                        'geometry': {'type': 'Point','coordinates':[lon,lat]},
-                        'properties': {'BUS_ID': bus_id}
-                    })
                 elif last_seen_dt > sixty_min_ago:
                     icon = folium.Icon(color="darkgreen", icon="bus", prefix="fa")
                     fg_mid.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
@@ -156,6 +151,12 @@ def create_map(buses):
                     icon = folium.Icon(color="lightgray", icon="bus", prefix="fa")
                     fg_old.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
                     counts['old'] += 1
+
+                search_features.append({
+                    'type': 'Feature',
+                    'geometry': {'type': 'Point','coordinates':[lon,lat]},
+                    'properties': {'BUS_ID': bus_id}
+                })
             else:
                 icon = folium.Icon(color="black", icon="bus", prefix="fa")
                 fg_arch.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
