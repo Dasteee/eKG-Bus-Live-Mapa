@@ -4,6 +4,7 @@ import folium
 import os
 from datetime import datetime, timedelta
 from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
+from jinja2 import Template
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -56,7 +57,7 @@ def fetch_bus_data(api_url, headers):
         nested_data = json.loads(response.json()['data'])
         return nested_data['ROOT']['BUSES']['BUS']
     except Exception as e:
-        print(f"!!! GREŠKA prilikom preuzimanja ili parsiranja: {e} !!!")
+        print(f"Greška prilikom preuzimanja podataka: {e}")
         return None
 
 def create_map(buses):
@@ -82,6 +83,8 @@ def create_map(buses):
     stale_cutoff = now - timedelta(hours=1)
     archive_cutoff = datetime(2024, 1, 1)
 
+    counts = {'active': 0, 'stale': 0, 'inactive': 0, 'archive': 0}
+
     for bus in buses:
         try:
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
@@ -93,23 +96,137 @@ def create_map(buses):
             display_name = f"{company} {vehicle_num}"
             popup_html = f"<b>{bus_id}</b><br><i>{display_name}</i><br><br><b>Linija:</b> {bus.get('ROUTE_CODE', 'N/A')}<br><b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
             
+            marker_added = False
             if last_seen_dt > live_cutoff:
                 icon = folium.Icon(color='green', prefix='fa', icon='bus')
                 folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(marker_cluster)
+                counts['active'] += 1
+                marker_added = True
             elif last_seen_dt > stale_cutoff:
                 icon = folium.Icon(color='orange', prefix='fa', icon='clock-o')
                 folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(stale_group)
+                counts['stale'] += 1
+                marker_added = True
             elif last_seen_dt >= archive_cutoff:
                 icon = folium.Icon(color='lightgray', prefix='fa', icon='info-sign')
                 folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(inactive_group)
+                counts['inactive'] += 1
+                marker_added = True
             else:
                 icon = folium.Icon(color='black', prefix='fa', icon='archive')
                 folium.Marker(location=[lat, lon], popup=popup_html, tooltip=display_name, icon=icon).add_to(archive_group)
+                counts['archive'] += 1
             
-            if last_seen_dt >= archive_cutoff:
+            if marker_added and last_seen_dt >= archive_cutoff:
                 search_features.append({'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [lon, lat]}, 'properties': {'BUS_ID': bus_id}})
         except Exception:
             continue
+
+    total_vehicles = sum(counts.values())
+
+    stats_template = Template("""
+    {% macro html(last_update, active_count, stale_count, inactive_count, archive_count, total_count) %}
+        <div id="stats-box">
+            <span class="close-btn" onclick="closeStatsBox()">&times;</span>
+            <h4>Stanje na mapi</h4>
+            <p>Poslednji put ažurirano: <strong>{{ last_update }}</strong></p>
+            <ul>
+                <li><span class="dot green"></span>Aktivni (&lt;10 min): <strong>{{ active_count }}</strong></li>
+                <li><span class="dot orange"></span>Stariji signal (10-60 min): <strong>{{ stale_count }}</strong></li>
+                <li><span class="dot gray"></span>Neaktivni (&gt;1h): <strong>{{ inactive_count }}</strong></li>
+                <li><span class="dot black"></span>Arhiva (&lt;2024): <strong>{{ archive_count }}</strong></li>
+            </ul>
+            <p>Ukupno vozila: <strong>{{ total_count }}</strong></p>
+        </div>
+    {% endmacro %}
+    {% macro css() %}
+        <style>
+            #stats-box {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9999;
+                background-color: rgba(30, 30, 30, 0.85);
+                color: #f0f0f0;
+                padding: 10px 15px;
+                border-radius: 8px;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                border: 1px solid #555;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                min-width: 280px;
+            }
+            #stats-box h4 {
+                margin: 0 0 10px 0;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #666;
+                font-size: 16px;
+                text-align: center;
+            }
+            #stats-box p {
+                margin: 5px 0;
+            }
+            #stats-box ul {
+                list-style: none;
+                padding: 0;
+                margin: 10px 0;
+            }
+            #stats-box li {
+                margin-bottom: 5px;
+                display: flex;
+                align-items: center;
+            }
+            .close-btn {
+                position: absolute;
+                top: 2px;
+                right: 8px;
+                cursor: pointer;
+                font-size: 24px;
+                color: #aaa;
+                font-weight: bold;
+                transition: color 0.2s;
+            }
+            .close-btn:hover {
+                color: #fff;
+            }
+            .dot {
+                height: 12px;
+                width: 12px;
+                border-radius: 50%;
+                display: inline-block;
+                margin-right: 8px;
+                border: 1px solid rgba(255,255,255,0.2);
+            }
+            .dot.green { background-color: #52D357; }
+            .dot.orange { background-color: #F8963E; }
+            .dot.gray { background-color: #A0A0A0; }
+            .dot.black { background-color: #303030; }
+        </style>
+    {% endmacro %}
+    {% macro js() %}
+        <script>
+            function closeStatsBox() {
+                document.getElementById('stats-box').style.display = 'none';
+            }
+        </script>
+    {% endmacro %}
+    """)
+
+    last_update_str = now.strftime('%d.%m.%Y. %H:%M:%S')
+    macro = folium.MacroElement()
+    macro._template = stats_template
+    macro.kwargs = {
+        'last_update': last_update_str,
+        'active_count': counts['active'],
+        'stale_count': counts['stale'],
+        'inactive_count': counts['inactive'],
+        'archive_count': counts['archive'],
+        'total_count': total_vehicles
+    }
+    bus_map.add_child(macro)
 
     search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
     Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=19).add_to(bus_map)
@@ -119,7 +236,7 @@ def create_map(buses):
     
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
-    print("Finalna, optimizovana mapa je uspešno generisana.")
+    print(f"Mapa je uspešno generisana sa {total_vehicles} vozila.")
 
 def main():
     api_url, headers = get_secrets()
