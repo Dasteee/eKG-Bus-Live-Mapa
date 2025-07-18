@@ -48,4 +48,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Automatsko ažuriranje mape autobusa'
-          file_pattern: 'kragujevac_busevi.html'
+          file_pattern: 'kragujevac_busevi.html flota.json'
