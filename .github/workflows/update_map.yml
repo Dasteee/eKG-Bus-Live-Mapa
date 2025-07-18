@@ -25,6 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Stash any unstaged changes
+        run: |
+          git add -A
+          git stash
+          
       - name: Run script to generate map
 
         run: python ekg_mapa.py
@@ -33,11 +38,6 @@ jobs:
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           DEVICE_ID: ${{ secrets.DEVICE_ID }}
 
-      - name: Stash any unstaged changes
-        run: |
-          git add -A
-          git stash
-          
       - name: Pull latest changes
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
