@@ -167,7 +167,7 @@ def create_map(buses):
             continue
 
     # Dodaj slojeve i kontrolu
-    for fg in [fg_active, fg_mid, fg_old, fg_arch]:
+    for fg in [fg_active, fg_mid, fg_24h, fg_old, fg_arch]:
         bus_map.add_child(fg)
 
     if search_features:
