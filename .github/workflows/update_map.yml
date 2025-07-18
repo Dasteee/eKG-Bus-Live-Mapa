@@ -29,6 +29,12 @@ jobs:
         run: |
           git add -A
           git stash
+
+      - name: Pull latest changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git pull origin main --rebase
           
       - name: Run script to generate map
 
@@ -37,12 +43,6 @@ jobs:
           API_URL: ${{ secrets.API_URL }}
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           DEVICE_ID: ${{ secrets.DEVICE_ID }}
-
-      - name: Pull latest changes
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git pull origin main --rebase
 
       - name: Commit and push if map changed
         uses: stefanzweifel/git-auto-commit-action@v4
