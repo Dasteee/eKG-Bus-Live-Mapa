@@ -156,10 +156,11 @@ def create_map(buses):
     </div>
     """
 
-    search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
+    if search_features:
+        search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
+        Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=19, initial=False).add_to(bus_map)
     
     Fullscreen().add_to(bus_map)
-    Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=19, initial=False).add_to(bus_map)
     folium.LayerControl(collapsed=True).add_to(bus_map)
     
     bus_map.get_root().html.add_child(folium.Element(stats_html))
