@@ -177,21 +177,21 @@ def create_map(buses):
     Fullscreen().add_to(bus_map)
     folium.LayerControl(collapsed=False).add_to(bus_map)
 
-    # Statistika
-stats_html = f"""
-<div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-            background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
-            border-radius: 8px; z-index: 999; font-size: 14px; min-width: 280px;">
-    <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
-          onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
-    <b>Stanje na mapi</b><br>
-    Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade"))}<br>
-    Aktivna: {counts['active']}<br>
-    10-60 min: {counts['mid']}<br>
-    60min-2024: {counts['old']}<br>
-    Arhiva: {counts['archive']}
-</div>
-"""
+        # Statistika
+    stats_html = f"""
+    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+                background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
+                border-radius: 8px; z-index: 999; font-size: 14px; min-width: 280px;">
+        <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
+            onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
+        <b>Stanje na mapi</b><br>
+        Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade"))}<br>
+        Aktivna: {counts['active']}<br>
+        10-60 min: {counts['mid']}<br>
+        60min-2024: {counts['old']}<br>
+        Arhiva: {counts['archive']}
+    </div>
+    """
     bus_map.get_root().html.add_child(folium.Element(stats_html))
 
     # Disclaimer
