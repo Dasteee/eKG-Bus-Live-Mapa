@@ -1,4 +1,5 @@
-#### Opis Projekta
+## Opis Projekta
+[🇬🇧 English version available below](#english)
 
 Ova interaktivna mapa predstavlja naprednu alternativu zvaničnoj aplikaciji za praćenje javnog prevoza. Za razliku od zvanične aplikacije, koja često ograničava prikaz na jednu liniju i skriva ključne podatke poput garažnog broja, ovaj alat vam daje potpunu kontrolu i transparentnost.
 
@@ -52,7 +53,7 @@ Ovaj način je namenjen programerima koji žele da pokreću, analiziraju ili mod
   Nakon ovoga, `html` fajl sa mapom će biti generisan u direktorijumu projekta i možete ga otvoriti u bilo kom veb pregledaču.
 </details>
 
-### English
+## English
 #### Project Description
 
 This interactive map serves as an advanced alternative to the official Kragujevac public transport tracking application. Unlike the official app, which often restricts the view to a single stop and hides key data like the vehicle's garage number, this tool gives you complete control and transparency.
