@@ -1,6 +1,7 @@
 import requests
 import json
 import folium
+from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
 import os
 from datetime import datetime, timedelta, timezone
 import zoneinfo
