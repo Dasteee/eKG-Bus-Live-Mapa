@@ -2,8 +2,10 @@ import requests
 import json
 import folium
 import os
-from datetime import datetime, timedelta
-from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
+from datetime import datetime, timedelta, timezone
+import zoneinfo
+from folium.element import MacroElement
+from jinja2 import Template
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -16,7 +18,7 @@ def get_secrets():
     auth_token = os.getenv("AUTH_TOKEN")
     device_id = os.getenv("DEVICE_ID")
     if not all([api_url, auth_token, device_id]):
-        raise ValueError("Nisu postavljene sve potrebne environment variables (API_URL, AUTH_TOKEN, DEVICE_ID)")
+        raise ValueError("Nisu postavljene sve potrebne environment variables")
     headers = {
         'Authorization': f'Bearer {auth_token}',
         'X-Device-Id': device_id,
@@ -86,27 +88,29 @@ def create_map(buses):
     folium.TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', name='Satelit', attr='Esri', max_zoom=21).add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
-    now = datetime.now()
-    archive_cutoff = datetime(2024, 1, 1)
+    belgrade_tz = zoneinfo.ZoneInfo("Europe/Belgrade")
+    now = datetime.now(belgrade_tz)
+    archive_cutoff = datetime(2024, 1, 1, tzinfo=belgrade_tz)
+    live_cutoff = now - timedelta(minutes=10)
+    stale_cutoff = now - timedelta(hours=1)
 
     clean_lines_set = set()
     for bus in buses:
-        if datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S') >= archive_cutoff:
+        last_seen_dt_naive = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S')
+        if last_seen_dt_naive.replace(tzinfo=belgrade_tz) >= archive_cutoff:
             clean_lines_set.add(get_clean_line_number(bus.get('ROUTE_CODE')))
     
     sorted_lines = sorted(list(clean_lines_set), key=lambda x: int(x) if x.isdigit() else 9999)
-
     line_layers = {line: folium.FeatureGroup(name=f"Linija {line}", show=True).add_to(bus_map) for line in sorted_lines}
     archive_group = folium.FeatureGroup(name='Arhiva (<2024)', show=False).add_to(bus_map)
     
     search_features = []
     counts = {'active': 0, 'stale': 0, 'inactive': 0, 'archive': 0}
-    live_cutoff = now - timedelta(minutes=10)
-    stale_cutoff = now - timedelta(hours=1)
 
     for bus in buses:
         try:
-            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S')
+            last_seen_dt_naive = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S')
+            last_seen_dt = last_seen_dt_naive.replace(tzinfo=belgrade_tz)
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
             lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
             bus_id = bus.get('BUS_ID', 'N/A')
@@ -132,7 +136,6 @@ def create_map(buses):
                     else:
                         marker.options['icon'] = folium.Icon(color='lightgray', prefix='fa', icon='info-sign')
                         counts['inactive'] += 1
-                    
                     marker.add_to(line_layers[clean_line])
                     search_features.append({'type': 'Feature', 'geometry': {'type': 'Point', 'coordinates': [lon, lat]}, 'properties': {'BUS_ID': bus_id}})
             else:
@@ -144,35 +147,55 @@ def create_map(buses):
     
     total_on_map = counts['active'] + counts['stale'] + counts['inactive']
 
-    stats_html = f"""
-     <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: rgba(30, 30, 30, 0.85); color: #f0f0f0; padding: 10px 15px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #555; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 280px;">
-        <span onclick="this.parentElement.style.display='none';" style="position: absolute; top: 2px; right: 8px; cursor: pointer; font-size: 24px; color: #aaa; font-weight: bold; transition: color 0.2s;">&times;</span>
-        <h4 style="margin: 0 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #666; font-size: 16px; text-align: center;">Stanje na mapi</h4>
-        <p style="margin: 5px 0;">Ažurirano: <strong>{now.strftime('%d.%m.%Y. %H:%M:%S')}</strong></p>
-        <ul style="list-style: none; padding: 0; margin: 10px 0;">
-            <li style="margin-bottom: 5px;">Aktivni (&lt;10 min): <strong>{counts['active']}</strong></li>
-            <li style="margin-bottom: 5px;">Stariji signal (10-60 min): <strong>{counts['stale']}</strong></li>
-            <li style="margin-bottom: 5px;">Neaktivni (&gt;1h): <strong>{counts['inactive']}</strong></li>
-        </ul>
-        <p style="margin: 5px 0; padding-top: 5px; border-top: 1px solid #666;">Ukupno na mapi: <strong>{total_on_map}</strong></p>
-    </div>
-    """
-    
-    disclaimer_html = """
-    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 9999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
-        <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
-    </div>
-    """
+    stats_template = Template("""
+    {% macro html(last_update, active_count, stale_count, inactive_count, total_count) %}
+        <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 9999; background-color: rgba(30, 30, 30, 0.85); color: #f0f0f0; padding: 10px 15px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #555; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); min-width: 280px;">
+            <span onclick="this.parentElement.style.display='none';" style="position: absolute; top: 2px; right: 8px; cursor: pointer; font-size: 24px; color: #aaa; font-weight: bold; transition: color 0.2s;">&times;</span>
+            <h4 style="margin: 0 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #666; font-size: 16px; text-align: center;">Stanje na mapi</h4>
+            <p style="margin: 5px 0;">Ažurirano: <strong>{{ last_update }}</strong></p>
+            <ul style="list-style: none; padding: 0; margin: 10px 0;">
+                <li style="margin-bottom: 5px;">Aktivni (&lt;10 min): <strong>{{ active_count }}</strong></li>
+                <li style="margin-bottom: 5px;">Stariji signal (10-60 min): <strong>{{ stale_count }}</strong></li>
+                <li style="margin-bottom: 5px;">Neaktivni (&gt;1h): <strong>{{ inactive_count }}</strong></li>
+            </ul>
+            <p style="margin: 5px 0; padding-top: 5px; border-top: 1px solid #666;">Ukupno na mapi: <strong>{{ total_count }}</strong></p>
+        </div>
+    {% endmacro %}
+    {% macro css(this) %}
+        /* CSS can be embedded here if needed */
+    {% endmacro %}
+    {% macro js(this) %}
+        /* JS can be embedded here if needed */
+    {% endmacro %}
+    """)
+    macro = MacroElement()
+    macro._template = stats_template
+    macro.kwargs = {
+        'last_update': now.strftime('%d.%m.%Y. %H:%M:%S'),
+        'active_count': counts['active'],
+        'stale_count': counts['stale'],
+        'inactive_count': counts['inactive'],
+        'total_count': total_on_map
+    }
+    bus_map.add_child(macro)
 
-    Fullscreen().add_to(bus_map)
-    folium.LayerControl(collapsed=True).add_to(bus_map)
-    
+    disclaimer_template = Template("""
+    {% macro html() %}
+        <div style="position: fixed; bottom: 10px; right: 10px; z-index: 9999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
+            <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
+        </div>
+    {% endmacro %}
+    """)
+    disclaimer_macro = MacroElement()
+    disclaimer_macro._template = disclaimer_template
+    bus_map.add_child(disclaimer_macro)
+
     if search_features:
         search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, marker=folium.CircleMarker(radius=0, opacity=0), name='search_layer').add_to(bus_map)
         Search(layer=search_layer, geom_type='Point', placeholder='Traži garažni broj...', collapsed=True, search_label='BUS_ID', search_zoom=19, initial=False).add_to(bus_map)
     
-    bus_map.get_root().html.add_child(folium.Element(stats_html))
-    bus_map.get_root().html.add_child(folium.Element(disclaimer_html))
+    Fullscreen().add_to(bus_map)
+    folium.LayerControl(collapsed=True).add_to(bus_map)
     
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
