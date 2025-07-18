@@ -243,7 +243,7 @@ def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
             if bus_id_str in log_data:
                 log_data[bus_id_str][1] = last_seen_str
             else:
-                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
+                log_data[bus_id_str] = [last_seen_str, last_seen_str, ""]
 
         except (ValueError, KeyError, TypeError):
             continue
