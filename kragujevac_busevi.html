@@ -1,0 +1,5099 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1a7a6e6eb6746aaf45803154308b271c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+<meta http-equiv="refresh" content="60">
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_1a7a6e6eb6746aaf45803154308b271c" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1a7a6e6eb6746aaf45803154308b271c = L.map(
+                "map_1a7a6e6eb6746aaf45803154308b271c",
+                {
+                    center: [44.0141, 20.9116],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_85d0f7ea16a0f9d73ef7589842394bf9 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_85d0f7ea16a0f9d73ef7589842394bf9.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var tile_layer_ad52f93b1b66334d7209207cb1c3d2de = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ad52f93b1b66334d7209207cb1c3d2de.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var tile_layer_3595802830dd406974f90683d344197c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3595802830dd406974f90683d344197c.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var feature_group_26ea359fc33225135c533582e199e244 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_ec2030eeb64be8519dda4de12219eaa4 = L.marker(
+                [44.015034, 20.931786],
+                {
+  "icon": icon_45408cbb958d7074de4783c936a0c1f9,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_832b735b18c25bd5a6785aef4fc70a1b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_82e3329884cc89eafbce19e5b1bf8a75 = $(`<div id="html_82e3329884cc89eafbce19e5b1bf8a75" style="width: 100.0%; height: 100.0%;"><b>70338</b><br><i>Vulović Transport 338</i><br><br><b>Linija:</b> 00003<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_832b735b18c25bd5a6785aef4fc70a1b.setContent(html_82e3329884cc89eafbce19e5b1bf8a75);
+            
+        
+
+        marker_ec2030eeb64be8519dda4de12219eaa4.bindPopup(popup_832b735b18c25bd5a6785aef4fc70a1b)
+        ;
+
+        
+    
+    
+            marker_ec2030eeb64be8519dda4de12219eaa4.bindTooltip(
+                `<div>
+                     Vulović Transport 338
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_18fd9ea6606fab9a5b829ba5ba1ba9c2 = L.marker(
+                [44.000607, 20.934029],
+                {
+  "icon": icon_464f3d6e630b1c8d5b74f07a77bf3842,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_1f1888b6f9df4ade04e80eeebe167c73 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_be464d94f9b94d598960c8958114915e = $(`<div id="html_be464d94f9b94d598960c8958114915e" style="width: 100.0%; height: 100.0%;"><b>70331</b><br><i>Vulović Transport 331</i><br><br><b>Linija:</b> 00003<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_1f1888b6f9df4ade04e80eeebe167c73.setContent(html_be464d94f9b94d598960c8958114915e);
+            
+        
+
+        marker_18fd9ea6606fab9a5b829ba5ba1ba9c2.bindPopup(popup_1f1888b6f9df4ade04e80eeebe167c73)
+        ;
+
+        
+    
+    
+            marker_18fd9ea6606fab9a5b829ba5ba1ba9c2.bindTooltip(
+                `<div>
+                     Vulović Transport 331
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_57a4c451b75c8628e9344880e74af18d = L.marker(
+                [44.010876, 20.927576],
+                {
+  "icon": icon_3ad7f25ac089cfa63eac068484cf050c,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0366e786bfb6b961d0101cdb80c1f2a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d7f0d32d756aa92af5f5ca866d55414 = $(`<div id="html_2d7f0d32d756aa92af5f5ca866d55414" style="width: 100.0%; height: 100.0%;"><b>70291</b><br><i>Vulović Transport 291</i><br><br><b>Linija:</b> 00004<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_0366e786bfb6b961d0101cdb80c1f2a5.setContent(html_2d7f0d32d756aa92af5f5ca866d55414);
+            
+        
+
+        marker_57a4c451b75c8628e9344880e74af18d.bindPopup(popup_0366e786bfb6b961d0101cdb80c1f2a5)
+        ;
+
+        
+    
+    
+            marker_57a4c451b75c8628e9344880e74af18d.bindTooltip(
+                `<div>
+                     Vulović Transport 291
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f9acbb52bde889a2d60294ccad553ebc = L.marker(
+                [44.014805, 20.930223],
+                {
+  "icon": icon_1307c76011ba5b952ba5a52099625e96,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e83ceb4dda5e65cf254e295092c7ccb6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6249cc9d66b4210ce00e1d84bda13cd5 = $(`<div id="html_6249cc9d66b4210ce00e1d84bda13cd5" style="width: 100.0%; height: 100.0%;"><b>70275</b><br><i>Vulović Transport 275</i><br><br><b>Linija:</b> 00004<br><b>Poslednji signal:</b> 18.07.2025. 17:39:20</div>`)[0];
+                popup_e83ceb4dda5e65cf254e295092c7ccb6.setContent(html_6249cc9d66b4210ce00e1d84bda13cd5);
+            
+        
+
+        marker_f9acbb52bde889a2d60294ccad553ebc.bindPopup(popup_e83ceb4dda5e65cf254e295092c7ccb6)
+        ;
+
+        
+    
+    
+            marker_f9acbb52bde889a2d60294ccad553ebc.bindTooltip(
+                `<div>
+                     Vulović Transport 275
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d508a777fa241af2b8780a80ea181319 = L.marker(
+                [43.998104, 20.88351],
+                {
+  "icon": icon_f98a37c1dd17cf1fb4a8f5cf2b2ada2a,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_c12cc3db8a9c9aabd2dedde84299884c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0231a3042776e16ad86caa594a931b9c = $(`<div id="html_0231a3042776e16ad86caa594a931b9c" style="width: 100.0%; height: 100.0%;"><b>70318</b><br><i>Vulović Transport 318</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_c12cc3db8a9c9aabd2dedde84299884c.setContent(html_0231a3042776e16ad86caa594a931b9c);
+            
+        
+
+        marker_d508a777fa241af2b8780a80ea181319.bindPopup(popup_c12cc3db8a9c9aabd2dedde84299884c)
+        ;
+
+        
+    
+    
+            marker_d508a777fa241af2b8780a80ea181319.bindTooltip(
+                `<div>
+                     Vulović Transport 318
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_82ddec1ebfe8c7b920255e224e5116a2 = L.marker(
+                [44.00903, 20.912819],
+                {
+  "icon": icon_1bea059144c2b4afd4bee8b841e95886,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_69b958205ddde52a8c28ea4544913ee8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_51966a4a5a7d44e2ddc9270b1188fb33 = $(`<div id="html_51966a4a5a7d44e2ddc9270b1188fb33" style="width: 100.0%; height: 100.0%;"><b>70328</b><br><i>Vulović Transport 328</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_69b958205ddde52a8c28ea4544913ee8.setContent(html_51966a4a5a7d44e2ddc9270b1188fb33);
+            
+        
+
+        marker_82ddec1ebfe8c7b920255e224e5116a2.bindPopup(popup_69b958205ddde52a8c28ea4544913ee8)
+        ;
+
+        
+    
+    
+            marker_82ddec1ebfe8c7b920255e224e5116a2.bindTooltip(
+                `<div>
+                     Vulović Transport 328
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b400729014715fbb7355a8d4723beedb = L.marker(
+                [44.0398, 20.87932],
+                {
+  "icon": icon_e7802f72cd0fe52c352bc934249c3d98,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_966c146c3541a09320da702aebfa015b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_510f833ab796d40ed52ac71d9524af3c = $(`<div id="html_510f833ab796d40ed52ac71d9524af3c" style="width: 100.0%; height: 100.0%;"><b>70315</b><br><i>Vulović Transport 315</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_966c146c3541a09320da702aebfa015b.setContent(html_510f833ab796d40ed52ac71d9524af3c);
+            
+        
+
+        marker_b400729014715fbb7355a8d4723beedb.bindPopup(popup_966c146c3541a09320da702aebfa015b)
+        ;
+
+        
+    
+    
+            marker_b400729014715fbb7355a8d4723beedb.bindTooltip(
+                `<div>
+                     Vulović Transport 315
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e7aa7d889638d4a084d441743de22c3a = L.marker(
+                [44.02852, 20.918762],
+                {
+  "icon": icon_8e02fe501964c86ca9158e09463deb0a,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_bb3e1eb7c922498f8614c9092546708c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f967f412234e8df5b247785d20a36558 = $(`<div id="html_f967f412234e8df5b247785d20a36558" style="width: 100.0%; height: 100.0%;"><b>70274</b><br><i>Vulović Transport 274</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_bb3e1eb7c922498f8614c9092546708c.setContent(html_f967f412234e8df5b247785d20a36558);
+            
+        
+
+        marker_e7aa7d889638d4a084d441743de22c3a.bindPopup(popup_bb3e1eb7c922498f8614c9092546708c)
+        ;
+
+        
+    
+    
+            marker_e7aa7d889638d4a084d441743de22c3a.bindTooltip(
+                `<div>
+                     Vulović Transport 274
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_87430cc037209f50bd45a9c876efeffa = L.marker(
+                [44.01494, 20.930676],
+                {
+  "icon": icon_5068d04b41ea1689036b48175ea56c45,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_fdc4716194078162a6545daa268dc290 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_afbf36f665020b1b87a9855ad52dd205 = $(`<div id="html_afbf36f665020b1b87a9855ad52dd205" style="width: 100.0%; height: 100.0%;"><b>70299</b><br><i>Vulović Transport 299</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_fdc4716194078162a6545daa268dc290.setContent(html_afbf36f665020b1b87a9855ad52dd205);
+            
+        
+
+        marker_87430cc037209f50bd45a9c876efeffa.bindPopup(popup_fdc4716194078162a6545daa268dc290)
+        ;
+
+        
+    
+    
+            marker_87430cc037209f50bd45a9c876efeffa.bindTooltip(
+                `<div>
+                     Vulović Transport 299
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ce7da5b1ee010ad1faf3d64d97adcad0 = L.marker(
+                [44.03198, 20.951878],
+                {
+  "icon": icon_6fa8f9af2c0e6d59cbd6926995343036,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_cba220a9ef6686c01d66594dd981acd6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6fa59196dc9a484075f6219264c6a20e = $(`<div id="html_6fa59196dc9a484075f6219264c6a20e" style="width: 100.0%; height: 100.0%;"><b>70319</b><br><i>Vulović Transport 319</i><br><br><b>Linija:</b> 00006<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_cba220a9ef6686c01d66594dd981acd6.setContent(html_6fa59196dc9a484075f6219264c6a20e);
+            
+        
+
+        marker_ce7da5b1ee010ad1faf3d64d97adcad0.bindPopup(popup_cba220a9ef6686c01d66594dd981acd6)
+        ;
+
+        
+    
+    
+            marker_ce7da5b1ee010ad1faf3d64d97adcad0.bindTooltip(
+                `<div>
+                     Vulović Transport 319
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_00d62338c26b79371e0e2d8491a93e6b = L.marker(
+                [43.985153, 20.879332],
+                {
+  "icon": icon_ad6553847823108f6dcee1662ca2bd7c,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0a7fd4d35a0fffc7a74fdd63874e34cd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e96a84f40bc5004f613f8584380e203c = $(`<div id="html_e96a84f40bc5004f613f8584380e203c" style="width: 100.0%; height: 100.0%;"><b>70326</b><br><i>Vulović Transport 326</i><br><br><b>Linija:</b> 00006<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_0a7fd4d35a0fffc7a74fdd63874e34cd.setContent(html_e96a84f40bc5004f613f8584380e203c);
+            
+        
+
+        marker_00d62338c26b79371e0e2d8491a93e6b.bindPopup(popup_0a7fd4d35a0fffc7a74fdd63874e34cd)
+        ;
+
+        
+    
+    
+            marker_00d62338c26b79371e0e2d8491a93e6b.bindTooltip(
+                `<div>
+                     Vulović Transport 326
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3f3cade24d9997990350a878c0e51591 = L.marker(
+                [44.014893, 20.931316],
+                {
+  "icon": icon_b32894d02546d44f1aa29351bf9f96fd,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_9afb9050d5c90ba2facaafd3d3a18a8b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8158bf315e5aa64216d44ca45279275a = $(`<div id="html_8158bf315e5aa64216d44ca45279275a" style="width: 100.0%; height: 100.0%;"><b>70335</b><br><i>Vulović Transport 335</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 18.07.2025. 17:15:20</div>`)[0];
+                popup_9afb9050d5c90ba2facaafd3d3a18a8b.setContent(html_8158bf315e5aa64216d44ca45279275a);
+            
+        
+
+        marker_3f3cade24d9997990350a878c0e51591.bindPopup(popup_9afb9050d5c90ba2facaafd3d3a18a8b)
+        ;
+
+        
+    
+    
+            marker_3f3cade24d9997990350a878c0e51591.bindTooltip(
+                `<div>
+                     Vulović Transport 335
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_55ba46eff4194c430125b2f6a2e345ef = L.marker(
+                [44.014896, 20.931318],
+                {
+  "icon": icon_eb317f49b044856f6bbc750a6c6aa390,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_ff65ca53937f3b9810b569308c890548 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_105578d4994d50d92782fd4f625d72ee = $(`<div id="html_105578d4994d50d92782fd4f625d72ee" style="width: 100.0%; height: 100.0%;"><b>70317</b><br><i>Vulović Transport 317</i><br><br><b>Linija:</b> 00008<br><b>Poslednji signal:</b> 18.07.2025. 16:40:40</div>`)[0];
+                popup_ff65ca53937f3b9810b569308c890548.setContent(html_105578d4994d50d92782fd4f625d72ee);
+            
+        
+
+        marker_55ba46eff4194c430125b2f6a2e345ef.bindPopup(popup_ff65ca53937f3b9810b569308c890548)
+        ;
+
+        
+    
+    
+            marker_55ba46eff4194c430125b2f6a2e345ef.bindTooltip(
+                `<div>
+                     Vulović Transport 317
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_05bb3028cfbe4a7546dfa3ef65714d4e = L.marker(
+                [44.05105, 20.95489],
+                {
+  "icon": icon_796c0a46d562bc37509abb04b247c14e,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e33d73e81acb3574a0531c31d88db724 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3176b5fc4dae53469970d0b71c4eb61d = $(`<div id="html_3176b5fc4dae53469970d0b71c4eb61d" style="width: 100.0%; height: 100.0%;"><b>30228</b><br><i>Strela Obrenovac 228</i><br><br><b>Linija:</b> 00009<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_e33d73e81acb3574a0531c31d88db724.setContent(html_3176b5fc4dae53469970d0b71c4eb61d);
+            
+        
+
+        marker_05bb3028cfbe4a7546dfa3ef65714d4e.bindPopup(popup_e33d73e81acb3574a0531c31d88db724)
+        ;
+
+        
+    
+    
+            marker_05bb3028cfbe4a7546dfa3ef65714d4e.bindTooltip(
+                `<div>
+                     Strela Obrenovac 228
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8469af008f8e3ad0d84d5cab811a0473 = L.marker(
+                [44.033558, 20.968884],
+                {
+  "icon": icon_a618de2f561a8014519c3f72c5d7aedc,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_a3695a38e6fd8b88b7286b24d1091c2c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_89c1cb395e06ac095c923acc2a830752 = $(`<div id="html_89c1cb395e06ac095c923acc2a830752" style="width: 100.0%; height: 100.0%;"><b>70337</b><br><i>Vulović Transport 337</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_a3695a38e6fd8b88b7286b24d1091c2c.setContent(html_89c1cb395e06ac095c923acc2a830752);
+            
+        
+
+        marker_8469af008f8e3ad0d84d5cab811a0473.bindPopup(popup_a3695a38e6fd8b88b7286b24d1091c2c)
+        ;
+
+        
+    
+    
+            marker_8469af008f8e3ad0d84d5cab811a0473.bindTooltip(
+                `<div>
+                     Vulović Transport 337
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_af22de8204b334f41902c5b3ba1ee0a2 = L.marker(
+                [43.988583, 20.890627],
+                {
+  "icon": icon_a79596c3e5f0cbc3a67e16af8b473674,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e9af24071736a88d6f4d52d969f2519c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_36d447f771e46143dd59652374bd4b5a = $(`<div id="html_36d447f771e46143dd59652374bd4b5a" style="width: 100.0%; height: 100.0%;"><b>70329</b><br><i>Vulović Transport 329</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_e9af24071736a88d6f4d52d969f2519c.setContent(html_36d447f771e46143dd59652374bd4b5a);
+            
+        
+
+        marker_af22de8204b334f41902c5b3ba1ee0a2.bindPopup(popup_e9af24071736a88d6f4d52d969f2519c)
+        ;
+
+        
+    
+    
+            marker_af22de8204b334f41902c5b3ba1ee0a2.bindTooltip(
+                `<div>
+                     Vulović Transport 329
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5d18c33002baed5be5253d1f27caad15 = L.marker(
+                [44.015667, 20.931011],
+                {
+  "icon": icon_caed5c2971f5fb1d91b96e1d839417ad,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_3c1b5edbdc39ccfd538fab466d8feca7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_141d0370757cca888acfc513bbdaf2e5 = $(`<div id="html_141d0370757cca888acfc513bbdaf2e5" style="width: 100.0%; height: 100.0%;"><b>70270</b><br><i>Vulović Transport 270</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_3c1b5edbdc39ccfd538fab466d8feca7.setContent(html_141d0370757cca888acfc513bbdaf2e5);
+            
+        
+
+        marker_5d18c33002baed5be5253d1f27caad15.bindPopup(popup_3c1b5edbdc39ccfd538fab466d8feca7)
+        ;
+
+        
+    
+    
+            marker_5d18c33002baed5be5253d1f27caad15.bindTooltip(
+                `<div>
+                     Vulović Transport 270
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9277f78044361feae66d9ce8822ae95d = L.marker(
+                [44.0156, 20.931337],
+                {
+  "icon": icon_e2a800afc4ba32ddf5a95834812003de,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_783c06b18bc737c33793c2d07cb5851d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dab46a4ed17457bbb2ec1576a85db968 = $(`<div id="html_dab46a4ed17457bbb2ec1576a85db968" style="width: 100.0%; height: 100.0%;"><b>70302</b><br><i>Vulović Transport 302</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_783c06b18bc737c33793c2d07cb5851d.setContent(html_dab46a4ed17457bbb2ec1576a85db968);
+            
+        
+
+        marker_9277f78044361feae66d9ce8822ae95d.bindPopup(popup_783c06b18bc737c33793c2d07cb5851d)
+        ;
+
+        
+    
+    
+            marker_9277f78044361feae66d9ce8822ae95d.bindTooltip(
+                `<div>
+                     Vulović Transport 302
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d60287f65e3bba528a647c441f71dbca = L.marker(
+                [44.01567, 20.929834],
+                {
+  "icon": icon_8b99fa1905ab5aafc8ce9e38ea53efc5,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_3220d577a5c00cbe5b2c58d29775aafd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3060190b42b8f9699683e74e0ec664ad = $(`<div id="html_3060190b42b8f9699683e74e0ec664ad" style="width: 100.0%; height: 100.0%;"><b>70276</b><br><i>Vulović Transport 276</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 18.07.2025. 16:40:00</div>`)[0];
+                popup_3220d577a5c00cbe5b2c58d29775aafd.setContent(html_3060190b42b8f9699683e74e0ec664ad);
+            
+        
+
+        marker_d60287f65e3bba528a647c441f71dbca.bindPopup(popup_3220d577a5c00cbe5b2c58d29775aafd)
+        ;
+
+        
+    
+    
+            marker_d60287f65e3bba528a647c441f71dbca.bindTooltip(
+                `<div>
+                     Vulović Transport 276
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3dc4b593de2031ae3eab2f77d535f541 = L.marker(
+                [44.009216, 20.917665],
+                {
+  "icon": icon_4477242ef9baade841f6f7403a5b52b7,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_f0ba9cee0727fad0e92205187c05437e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_85eb617c890ad0819746ebe65482c611 = $(`<div id="html_85eb617c890ad0819746ebe65482c611" style="width: 100.0%; height: 100.0%;"><b>70321</b><br><i>Vulović Transport 321</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_f0ba9cee0727fad0e92205187c05437e.setContent(html_85eb617c890ad0819746ebe65482c611);
+            
+        
+
+        marker_3dc4b593de2031ae3eab2f77d535f541.bindPopup(popup_f0ba9cee0727fad0e92205187c05437e)
+        ;
+
+        
+    
+    
+            marker_3dc4b593de2031ae3eab2f77d535f541.bindTooltip(
+                `<div>
+                     Vulović Transport 321
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5a1e7c734d6778a1f0057a21492544d1 = L.marker(
+                [44.011044, 20.927584],
+                {
+  "icon": icon_2ff70145d83d1931de97bbda53e76ace,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_d4c0fb8f8d59e1a7cf138ee43ed0f50f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3cc8bbaf6c0577832160e0fbdcb8881f = $(`<div id="html_3cc8bbaf6c0577832160e0fbdcb8881f" style="width: 100.0%; height: 100.0%;"><b>70325</b><br><i>Vulović Transport 325</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_d4c0fb8f8d59e1a7cf138ee43ed0f50f.setContent(html_3cc8bbaf6c0577832160e0fbdcb8881f);
+            
+        
+
+        marker_5a1e7c734d6778a1f0057a21492544d1.bindPopup(popup_d4c0fb8f8d59e1a7cf138ee43ed0f50f)
+        ;
+
+        
+    
+    
+            marker_5a1e7c734d6778a1f0057a21492544d1.bindTooltip(
+                `<div>
+                     Vulović Transport 325
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b83f2075a6a8eb88aedf05c1c683a0a0 = L.marker(
+                [44.014496, 20.930532],
+                {
+  "icon": icon_1bec439d9e7c9af449b80488dc341f2f,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_8df6cd6fde5aba8056bd542f2941b9d9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_268979e912e612cbf693d6cc8bb02f0d = $(`<div id="html_268979e912e612cbf693d6cc8bb02f0d" style="width: 100.0%; height: 100.0%;"><b>70279</b><br><i>Vulović Transport 279</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 18.07.2025. 15:49:00</div>`)[0];
+                popup_8df6cd6fde5aba8056bd542f2941b9d9.setContent(html_268979e912e612cbf693d6cc8bb02f0d);
+            
+        
+
+        marker_b83f2075a6a8eb88aedf05c1c683a0a0.bindPopup(popup_8df6cd6fde5aba8056bd542f2941b9d9)
+        ;
+
+        
+    
+    
+            marker_b83f2075a6a8eb88aedf05c1c683a0a0.bindTooltip(
+                `<div>
+                     Vulović Transport 279
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_58be71b7207a48674fd53e77b07a5c8b = L.marker(
+                [43.945244, 20.872728],
+                {
+  "icon": icon_9f7ab87407b3231fbff9e42c8c79ba92,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_8a8d16612b108951b596617206d04612 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c43787cb614a60af95370b0f09dd64db = $(`<div id="html_c43787cb614a60af95370b0f09dd64db" style="width: 100.0%; height: 100.0%;"><b>30227</b><br><i>Strela Obrenovac 227</i><br><br><b>Linija:</b> 00013<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_8a8d16612b108951b596617206d04612.setContent(html_c43787cb614a60af95370b0f09dd64db);
+            
+        
+
+        marker_58be71b7207a48674fd53e77b07a5c8b.bindPopup(popup_8a8d16612b108951b596617206d04612)
+        ;
+
+        
+    
+    
+            marker_58be71b7207a48674fd53e77b07a5c8b.bindTooltip(
+                `<div>
+                     Strela Obrenovac 227
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_89ac33c4f91be988a4084eab5af70c51 = L.marker(
+                [44.014755, 20.930424],
+                {
+  "icon": icon_898b1927a5bf5bd7bf5f11ed4bdcff75,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_6993cec68292ec9e99597e802457233c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c6f2d7cbf39a741aa8b0c16f1396b4be = $(`<div id="html_c6f2d7cbf39a741aa8b0c16f1396b4be" style="width: 100.0%; height: 100.0%;"><b>70281</b><br><i>Vulović Transport 281</i><br><br><b>Linija:</b> 00015<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_6993cec68292ec9e99597e802457233c.setContent(html_c6f2d7cbf39a741aa8b0c16f1396b4be);
+            
+        
+
+        marker_89ac33c4f91be988a4084eab5af70c51.bindPopup(popup_6993cec68292ec9e99597e802457233c)
+        ;
+
+        
+    
+    
+            marker_89ac33c4f91be988a4084eab5af70c51.bindTooltip(
+                `<div>
+                     Vulović Transport 281
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ac5c7dfdd6de7113fefe6baf28322b28 = L.marker(
+                [44.031227, 20.820827],
+                {
+  "icon": icon_553bf969456d88f63ab74f7b0d2c5eba,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_eb2d438f53224ca6c61a676b16c12d44 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7ada9dd5d95364a55495e62a432c87db = $(`<div id="html_7ada9dd5d95364a55495e62a432c87db" style="width: 100.0%; height: 100.0%;"><b>70500</b><br><i>Vulović Transport 500</i><br><br><b>Linija:</b> 00015<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_eb2d438f53224ca6c61a676b16c12d44.setContent(html_7ada9dd5d95364a55495e62a432c87db);
+            
+        
+
+        marker_ac5c7dfdd6de7113fefe6baf28322b28.bindPopup(popup_eb2d438f53224ca6c61a676b16c12d44)
+        ;
+
+        
+    
+    
+            marker_ac5c7dfdd6de7113fefe6baf28322b28.bindTooltip(
+                `<div>
+                     Vulović Transport 500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5dae3c03486ad689dd1073db09d5b95c = L.marker(
+                [44.01534, 20.93016],
+                {
+  "icon": icon_ae056ba671d1788bc1aedd81a2be5805,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e86a43518d5f4931248784ced2781aa7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bd3749480a105e18ea44fc0c6f0080f0 = $(`<div id="html_bd3749480a105e18ea44fc0c6f0080f0" style="width: 100.0%; height: 100.0%;"><b>30234</b><br><i>Strela Obrenovac 234</i><br><br><b>Linija:</b> 00016<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_e86a43518d5f4931248784ced2781aa7.setContent(html_bd3749480a105e18ea44fc0c6f0080f0);
+            
+        
+
+        marker_5dae3c03486ad689dd1073db09d5b95c.bindPopup(popup_e86a43518d5f4931248784ced2781aa7)
+        ;
+
+        
+    
+    
+            marker_5dae3c03486ad689dd1073db09d5b95c.bindTooltip(
+                `<div>
+                     Strela Obrenovac 234
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ea54ad716962a3435fa805366febe31a = L.marker(
+                [44.00519, 20.918257],
+                {
+  "icon": icon_95bf59be77ab66fdb4601c96faca4c4d,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e50037a205e4b3191b32e72f6bbaed04 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d9d6114439390a1b5bb48f663e84c307 = $(`<div id="html_d9d6114439390a1b5bb48f663e84c307" style="width: 100.0%; height: 100.0%;"><b>30235</b><br><i>Strela Obrenovac 235</i><br><br><b>Linija:</b> 00017<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_e50037a205e4b3191b32e72f6bbaed04.setContent(html_d9d6114439390a1b5bb48f663e84c307);
+            
+        
+
+        marker_ea54ad716962a3435fa805366febe31a.bindPopup(popup_e50037a205e4b3191b32e72f6bbaed04)
+        ;
+
+        
+    
+    
+            marker_ea54ad716962a3435fa805366febe31a.bindTooltip(
+                `<div>
+                     Strela Obrenovac 235
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d08d054f2a467e8ebea22ac53e4a4498 = L.marker(
+                [44.014603, 20.93053],
+                {
+  "icon": icon_f10541a8c22ed0496d4a0d1456e0784c,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_c9ed36ac6486ee4adb915ec608360b3f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_642fd1e3a8376e5d6b41bf21950e0583 = $(`<div id="html_642fd1e3a8376e5d6b41bf21950e0583" style="width: 100.0%; height: 100.0%;"><b>70272</b><br><i>Vulović Transport 272</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_c9ed36ac6486ee4adb915ec608360b3f.setContent(html_642fd1e3a8376e5d6b41bf21950e0583);
+            
+        
+
+        marker_d08d054f2a467e8ebea22ac53e4a4498.bindPopup(popup_c9ed36ac6486ee4adb915ec608360b3f)
+        ;
+
+        
+    
+    
+            marker_d08d054f2a467e8ebea22ac53e4a4498.bindTooltip(
+                `<div>
+                     Vulović Transport 272
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_50f769b5e7acd020f43c38103d3908b3 = L.marker(
+                [44.00875, 20.898594],
+                {
+  "icon": icon_68122a0e22e984bf942ff9129faa22fe,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_9176af092801dd280dd8ec9b550d9d61 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d01849e7dcc16230f62401de0342575c = $(`<div id="html_d01849e7dcc16230f62401de0342575c" style="width: 100.0%; height: 100.0%;"><b>70278</b><br><i>Vulović Transport 278</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_9176af092801dd280dd8ec9b550d9d61.setContent(html_d01849e7dcc16230f62401de0342575c);
+            
+        
+
+        marker_50f769b5e7acd020f43c38103d3908b3.bindPopup(popup_9176af092801dd280dd8ec9b550d9d61)
+        ;
+
+        
+    
+    
+            marker_50f769b5e7acd020f43c38103d3908b3.bindTooltip(
+                `<div>
+                     Vulović Transport 278
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_23bb588c6505730686f468fcd97f25e1 = L.marker(
+                [44.00831, 20.89717],
+                {
+  "icon": icon_1a004245771c7a7c607f4995f506c42a,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_baa49e20f0852090b0b07728491112d6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_23243d8c246d1c59be5048f5398a73dd = $(`<div id="html_23243d8c246d1c59be5048f5398a73dd" style="width: 100.0%; height: 100.0%;"><b>30231</b><br><i>Strela Obrenovac 231</i><br><br><b>Linija:</b> 00020<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_baa49e20f0852090b0b07728491112d6.setContent(html_23243d8c246d1c59be5048f5398a73dd);
+            
+        
+
+        marker_23bb588c6505730686f468fcd97f25e1.bindPopup(popup_baa49e20f0852090b0b07728491112d6)
+        ;
+
+        
+    
+    
+            marker_23bb588c6505730686f468fcd97f25e1.bindTooltip(
+                `<div>
+                     Strela Obrenovac 231
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_32b5aaae87f47ebd4fca2c42fa380020 = L.marker(
+                [44.015415, 20.930143],
+                {
+  "icon": icon_2f1e16f1ce1bbe5cb04969e91950dabe,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_501f0fa0299628bf3dc261b578a6add6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d6c68ea04e2ffd23d112f7606652a553 = $(`<div id="html_d6c68ea04e2ffd23d112f7606652a553" style="width: 100.0%; height: 100.0%;"><b>30240</b><br><i>Strela Obrenovac 240</i><br><br><b>Linija:</b> 00020<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_501f0fa0299628bf3dc261b578a6add6.setContent(html_d6c68ea04e2ffd23d112f7606652a553);
+            
+        
+
+        marker_32b5aaae87f47ebd4fca2c42fa380020.bindPopup(popup_501f0fa0299628bf3dc261b578a6add6)
+        ;
+
+        
+    
+    
+            marker_32b5aaae87f47ebd4fca2c42fa380020.bindTooltip(
+                `<div>
+                     Strela Obrenovac 240
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d295b81df5950711b3f9388c245cd373 = L.marker(
+                [44.01465, 20.93148],
+                {
+  "icon": icon_c93d82615514ccc71d286f9df8a60ad1,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0ba1e3dc98d4b141c0232ba29a96bce3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_831617c374766aa20d018a79656ede77 = $(`<div id="html_831617c374766aa20d018a79656ede77" style="width: 100.0%; height: 100.0%;"><b>70277</b><br><i>Vulović Transport 277</i><br><br><b>Linija:</b> 00024<br><b>Poslednji signal:</b> 18.07.2025. 17:40:00</div>`)[0];
+                popup_0ba1e3dc98d4b141c0232ba29a96bce3.setContent(html_831617c374766aa20d018a79656ede77);
+            
+        
+
+        marker_d295b81df5950711b3f9388c245cd373.bindPopup(popup_0ba1e3dc98d4b141c0232ba29a96bce3)
+        ;
+
+        
+    
+    
+            marker_d295b81df5950711b3f9388c245cd373.bindTooltip(
+                `<div>
+                     Vulović Transport 277
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_81f6caaf453d3815adf849c1d79b5979 = L.marker(
+                [44.00699, 20.907215],
+                {
+  "icon": icon_779b350899978d8bfe3062a9f3144a67,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_aa6fcc18f26683edf64fe497ffdcd787 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ab667918e7279066d197a8ac7406367a = $(`<div id="html_ab667918e7279066d197a8ac7406367a" style="width: 100.0%; height: 100.0%;"><b>70333</b><br><i>Vulović Transport 333</i><br><br><b>Linija:</b> 00024<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_aa6fcc18f26683edf64fe497ffdcd787.setContent(html_ab667918e7279066d197a8ac7406367a);
+            
+        
+
+        marker_81f6caaf453d3815adf849c1d79b5979.bindPopup(popup_aa6fcc18f26683edf64fe497ffdcd787)
+        ;
+
+        
+    
+    
+            marker_81f6caaf453d3815adf849c1d79b5979.bindTooltip(
+                `<div>
+                     Vulović Transport 333
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c0822214ba88020db1bc22164071985f = L.marker(
+                [44.018288, 20.916765],
+                {
+  "icon": icon_95060f496931e011d5e0edb6cb0a4ab7,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0e296162edb7b032bf283390dca491b5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9cb2d6f7106df1c0c505cd45376fd976 = $(`<div id="html_9cb2d6f7106df1c0c505cd45376fd976" style="width: 100.0%; height: 100.0%;"><b>30230</b><br><i>Strela Obrenovac 230</i><br><br><b>Linija:</b> 00025<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_0e296162edb7b032bf283390dca491b5.setContent(html_9cb2d6f7106df1c0c505cd45376fd976);
+            
+        
+
+        marker_c0822214ba88020db1bc22164071985f.bindPopup(popup_0e296162edb7b032bf283390dca491b5)
+        ;
+
+        
+    
+    
+            marker_c0822214ba88020db1bc22164071985f.bindTooltip(
+                `<div>
+                     Strela Obrenovac 230
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_259a65d6836743289eaf06e7e7376ff4 = L.marker(
+                [44.014935, 20.931305],
+                {
+  "icon": icon_a15e953ee8e0e0838af59dfbff6d246e,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0e25012d8fb007c6e74a19fd287d18dd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_567bc6fc135633094c60b42f28daa63f = $(`<div id="html_567bc6fc135633094c60b42f28daa63f" style="width: 100.0%; height: 100.0%;"><b>70332</b><br><i>Vulović Transport 332</i><br><br><b>Linija:</b> 00026<br><b>Poslednji signal:</b> 18.07.2025. 17:27:00</div>`)[0];
+                popup_0e25012d8fb007c6e74a19fd287d18dd.setContent(html_567bc6fc135633094c60b42f28daa63f);
+            
+        
+
+        marker_259a65d6836743289eaf06e7e7376ff4.bindPopup(popup_0e25012d8fb007c6e74a19fd287d18dd)
+        ;
+
+        
+    
+    
+            marker_259a65d6836743289eaf06e7e7376ff4.bindTooltip(
+                `<div>
+                     Vulović Transport 332
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_be5f6a3a3e02549bdcab98ac012250c4 = L.marker(
+                [44.009, 20.897507],
+                {
+  "icon": icon_0df7dff79401ba2e0f048ec90f8fb9d6,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_62f2c5bede96e0ee0f9ae2dba1f2fe56 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_223ef23ac37b4e46e197a5e45813b8c1 = $(`<div id="html_223ef23ac37b4e46e197a5e45813b8c1" style="width: 100.0%; height: 100.0%;"><b>70316</b><br><i>Vulović Transport 316</i><br><br><b>Linija:</b> 00026<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_62f2c5bede96e0ee0f9ae2dba1f2fe56.setContent(html_223ef23ac37b4e46e197a5e45813b8c1);
+            
+        
+
+        marker_be5f6a3a3e02549bdcab98ac012250c4.bindPopup(popup_62f2c5bede96e0ee0f9ae2dba1f2fe56)
+        ;
+
+        
+    
+    
+            marker_be5f6a3a3e02549bdcab98ac012250c4.bindTooltip(
+                `<div>
+                     Vulović Transport 316
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_dbf09342c72b083c7c2b2ff63158096d = L.marker(
+                [44.015797, 20.931189],
+                {
+  "icon": icon_96ec7b3616af706fceadeb3ced77ffea,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_aaa800e317b2fb4b9d5b9c805acbf508 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b371f97e26251e71443d5d87178c715 = $(`<div id="html_2b371f97e26251e71443d5d87178c715" style="width: 100.0%; height: 100.0%;"><b>70309</b><br><i>Vulović Transport 309</i><br><br><b>Linija:</b> 00026<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_aaa800e317b2fb4b9d5b9c805acbf508.setContent(html_2b371f97e26251e71443d5d87178c715);
+            
+        
+
+        marker_dbf09342c72b083c7c2b2ff63158096d.bindPopup(popup_aaa800e317b2fb4b9d5b9c805acbf508)
+        ;
+
+        
+    
+    
+            marker_dbf09342c72b083c7c2b2ff63158096d.bindTooltip(
+                `<div>
+                     Vulović Transport 309
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c4752c60ebaee8e49e7655e105eb756a = L.marker(
+                [44.016117, 20.920258],
+                {
+  "icon": icon_66318abdeb2e0c2fb74fefe9f5cb03bc,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_9cf6a3621545b241d1275e093a9d44f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7f6007bf90cae18f08bf5d47c40b2136 = $(`<div id="html_7f6007bf90cae18f08bf5d47c40b2136" style="width: 100.0%; height: 100.0%;"><b>30238</b><br><i>Strela Obrenovac 238</i><br><br><b>Linija:</b> 10002<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_9cf6a3621545b241d1275e093a9d44f9.setContent(html_7f6007bf90cae18f08bf5d47c40b2136);
+            
+        
+
+        marker_c4752c60ebaee8e49e7655e105eb756a.bindPopup(popup_9cf6a3621545b241d1275e093a9d44f9)
+        ;
+
+        
+    
+    
+            marker_c4752c60ebaee8e49e7655e105eb756a.bindTooltip(
+                `<div>
+                     Strela Obrenovac 238
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3bf9ea9f876dd68b3503da876d6ce8a8 = L.marker(
+                [44.02846, 20.905582],
+                {
+  "icon": icon_92b2124f6e52541f0144fd4cd92b4beb,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_0e3644f78d5a08ec6622e16e057ce656 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9ba13cfd781118de37c0bdb439b5db80 = $(`<div id="html_9ba13cfd781118de37c0bdb439b5db80" style="width: 100.0%; height: 100.0%;"><b>70330</b><br><i>Vulović Transport 330</i><br><br><b>Linija:</b> 10003<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_0e3644f78d5a08ec6622e16e057ce656.setContent(html_9ba13cfd781118de37c0bdb439b5db80);
+            
+        
+
+        marker_3bf9ea9f876dd68b3503da876d6ce8a8.bindPopup(popup_0e3644f78d5a08ec6622e16e057ce656)
+        ;
+
+        
+    
+    
+            marker_3bf9ea9f876dd68b3503da876d6ce8a8.bindTooltip(
+                `<div>
+                     Vulović Transport 330
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d52e903b65fc41be2ef236a6b8a9bf8f = L.marker(
+                [44.014557, 20.931013],
+                {
+  "icon": icon_69395b745ffad565cd77a9d03114a9ba,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e1ff2c3a240e1318a2b29d09c1ad59b5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_abc6e7592cfcbf024766fc1807b41c7d = $(`<div id="html_abc6e7592cfcbf024766fc1807b41c7d" style="width: 100.0%; height: 100.0%;"><b>70280</b><br><i>Vulović Transport 280</i><br><br><b>Linija:</b> 10003<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_e1ff2c3a240e1318a2b29d09c1ad59b5.setContent(html_abc6e7592cfcbf024766fc1807b41c7d);
+            
+        
+
+        marker_d52e903b65fc41be2ef236a6b8a9bf8f.bindPopup(popup_e1ff2c3a240e1318a2b29d09c1ad59b5)
+        ;
+
+        
+    
+    
+            marker_d52e903b65fc41be2ef236a6b8a9bf8f.bindTooltip(
+                `<div>
+                     Vulović Transport 280
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ca8ac8499341867e2276986027d77b30 = L.marker(
+                [44.0202, 20.910454],
+                {
+  "icon": icon_20cbba7d77a507ee59c47430f49445c5,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_9ec4ed4e75756bc712519ecde489f951 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9d601bc1b54ec8dde4b211077423e87 = $(`<div id="html_a9d601bc1b54ec8dde4b211077423e87" style="width: 100.0%; height: 100.0%;"><b>70327</b><br><i>Vulović Transport 327</i><br><br><b>Linija:</b> 10003<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_9ec4ed4e75756bc712519ecde489f951.setContent(html_a9d601bc1b54ec8dde4b211077423e87);
+            
+        
+
+        marker_ca8ac8499341867e2276986027d77b30.bindPopup(popup_9ec4ed4e75756bc712519ecde489f951)
+        ;
+
+        
+    
+    
+            marker_ca8ac8499341867e2276986027d77b30.bindTooltip(
+                `<div>
+                     Vulović Transport 327
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_11cca48d95aeec2f149d77841569b120 = L.marker(
+                [44.015144, 20.932842],
+                {
+  "icon": icon_362012b92c03287b14cfbd04722bee81,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_855d2aa4c433af30ad6602e31027b1e5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5ec40ff6bb5e95030b427fbf6a7ade7a = $(`<div id="html_5ec40ff6bb5e95030b427fbf6a7ade7a" style="width: 100.0%; height: 100.0%;"><b>70323</b><br><i>Vulović Transport 323</i><br><br><b>Linija:</b> 10008<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_855d2aa4c433af30ad6602e31027b1e5.setContent(html_5ec40ff6bb5e95030b427fbf6a7ade7a);
+            
+        
+
+        marker_11cca48d95aeec2f149d77841569b120.bindPopup(popup_855d2aa4c433af30ad6602e31027b1e5)
+        ;
+
+        
+    
+    
+            marker_11cca48d95aeec2f149d77841569b120.bindTooltip(
+                `<div>
+                     Vulović Transport 323
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1dd1a84decbcfa8bb693172a7bf58659 = L.marker(
+                [44.012024, 20.916355],
+                {
+  "icon": icon_1ae5e97ea50a9f82c6ce9e90043993d7,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_2d27e09e2204e59bf948fdc3101e3fd3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2ff32d1a86edf28f3c2f8432d4fd0cf4 = $(`<div id="html_2ff32d1a86edf28f3c2f8432d4fd0cf4" style="width: 100.0%; height: 100.0%;"><b>30237</b><br><i>Strela Obrenovac 237</i><br><br><b>Linija:</b> 10009<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_2d27e09e2204e59bf948fdc3101e3fd3.setContent(html_2ff32d1a86edf28f3c2f8432d4fd0cf4);
+            
+        
+
+        marker_1dd1a84decbcfa8bb693172a7bf58659.bindPopup(popup_2d27e09e2204e59bf948fdc3101e3fd3)
+        ;
+
+        
+    
+    
+            marker_1dd1a84decbcfa8bb693172a7bf58659.bindTooltip(
+                `<div>
+                     Strela Obrenovac 237
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7bc28091ff16958dbe317bea99f0e593 = L.marker(
+                [43.993305, 20.868793],
+                {
+  "icon": icon_947d90a0f1a58562e7a21d6be47a4b9c,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_50e82cf63fda502c6e9265c8f0277394 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_016407be00aebbeab298f9259aa9d5e8 = $(`<div id="html_016407be00aebbeab298f9259aa9d5e8" style="width: 100.0%; height: 100.0%;"><b>70324</b><br><i>Vulović Transport 324</i><br><br><b>Linija:</b> 10015<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_50e82cf63fda502c6e9265c8f0277394.setContent(html_016407be00aebbeab298f9259aa9d5e8);
+            
+        
+
+        marker_7bc28091ff16958dbe317bea99f0e593.bindPopup(popup_50e82cf63fda502c6e9265c8f0277394)
+        ;
+
+        
+    
+    
+            marker_7bc28091ff16958dbe317bea99f0e593.bindTooltip(
+                `<div>
+                     Vulović Transport 324
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_62bce63f9b7c714b62b627e404404b39 = L.marker(
+                [44.014385, 20.930767],
+                {
+  "icon": icon_b82a533fd571bc9e4dc50265441f4828,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_1a61ca0c1b7c4d71bb8a9857a84bd7e7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2a17e71bbc550c46d2d71312ef8d3fc5 = $(`<div id="html_2a17e71bbc550c46d2d71312ef8d3fc5" style="width: 100.0%; height: 100.0%;"><b>70271</b><br><i>Vulović Transport 271</i><br><br><b>Linija:</b> 10015<br><b>Poslednji signal:</b> 18.07.2025. 17:10:00</div>`)[0];
+                popup_1a61ca0c1b7c4d71bb8a9857a84bd7e7.setContent(html_2a17e71bbc550c46d2d71312ef8d3fc5);
+            
+        
+
+        marker_62bce63f9b7c714b62b627e404404b39.bindPopup(popup_1a61ca0c1b7c4d71bb8a9857a84bd7e7)
+        ;
+
+        
+    
+    
+            marker_62bce63f9b7c714b62b627e404404b39.bindTooltip(
+                `<div>
+                     Vulović Transport 271
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_286f78d74a9e1a43cbafdbab2b1b0c40 = L.marker(
+                [44.014908, 20.931227],
+                {
+  "icon": icon_186671df36da285a9592bba759f38e8d,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_97150847f8790939305a42876220a136 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2be9d99482511c410bba7e261e2aecf5 = $(`<div id="html_2be9d99482511c410bba7e261e2aecf5" style="width: 100.0%; height: 100.0%;"><b>70322</b><br><i>Vulović Transport 322</i><br><br><b>Linija:</b> 10018<br><b>Poslednji signal:</b> 18.07.2025. 16:24:00</div>`)[0];
+                popup_97150847f8790939305a42876220a136.setContent(html_2be9d99482511c410bba7e261e2aecf5);
+            
+        
+
+        marker_286f78d74a9e1a43cbafdbab2b1b0c40.bindPopup(popup_97150847f8790939305a42876220a136)
+        ;
+
+        
+    
+    
+            marker_286f78d74a9e1a43cbafdbab2b1b0c40.bindTooltip(
+                `<div>
+                     Vulović Transport 322
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4475e402588291c6a3676dd3a7639db6 = L.marker(
+                [43.982372, 20.831831],
+                {
+  "icon": icon_bd329ec4eb9645bbb4a29e87a29a8a7b,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_603000622528e0142b33fee179070ad6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8c505e85e93bef0e46c93b53da8cb183 = $(`<div id="html_8c505e85e93bef0e46c93b53da8cb183" style="width: 100.0%; height: 100.0%;"><b>30241</b><br><i>Strela Obrenovac 241</i><br><br><b>Linija:</b> 20001<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_603000622528e0142b33fee179070ad6.setContent(html_8c505e85e93bef0e46c93b53da8cb183);
+            
+        
+
+        marker_4475e402588291c6a3676dd3a7639db6.bindPopup(popup_603000622528e0142b33fee179070ad6)
+        ;
+
+        
+    
+    
+            marker_4475e402588291c6a3676dd3a7639db6.bindTooltip(
+                `<div>
+                     Strela Obrenovac 241
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2999dd792a58af3ee2ec6fb1973d64b9 = L.marker(
+                [43.985806, 20.865393],
+                {
+  "icon": icon_c16a9bd7563993cadddd7f94e92f00b7,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_eecce685758cfbe3235f17c0bd9c0a4f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cf202f83ec0a741ca57659ff527ab62a = $(`<div id="html_cf202f83ec0a741ca57659ff527ab62a" style="width: 100.0%; height: 100.0%;"><b>30239</b><br><i>Strela Obrenovac 239</i><br><br><b>Linija:</b> 20016<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_eecce685758cfbe3235f17c0bd9c0a4f.setContent(html_cf202f83ec0a741ca57659ff527ab62a);
+            
+        
+
+        marker_2999dd792a58af3ee2ec6fb1973d64b9.bindPopup(popup_eecce685758cfbe3235f17c0bd9c0a4f)
+        ;
+
+        
+    
+    
+            marker_2999dd792a58af3ee2ec6fb1973d64b9.bindTooltip(
+                `<div>
+                     Strela Obrenovac 239
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_261bcaf394d4c8ae32e0e814d9de25bc = L.marker(
+                [44.029762, 20.916504],
+                {
+  "icon": icon_4789609c0298effde5d37d0cde506480,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_94affb1cd5f8ee7b785bd98a814b9c7d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_265668bb3d42abf2d31e7299f950fe5e = $(`<div id="html_265668bb3d42abf2d31e7299f950fe5e" style="width: 100.0%; height: 100.0%;"><b>30233</b><br><i>Strela Obrenovac 233</i><br><br><b>Linija:</b> 30002<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_94affb1cd5f8ee7b785bd98a814b9c7d.setContent(html_265668bb3d42abf2d31e7299f950fe5e);
+            
+        
+
+        marker_261bcaf394d4c8ae32e0e814d9de25bc.bindPopup(popup_94affb1cd5f8ee7b785bd98a814b9c7d)
+        ;
+
+        
+    
+    
+            marker_261bcaf394d4c8ae32e0e814d9de25bc.bindTooltip(
+                `<div>
+                     Strela Obrenovac 233
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_bea35c4927c77560f3243e5316eec085 = L.marker(
+                [43.972843, 20.93725],
+                {
+  "icon": icon_0bfd51377469b736d7f50573929ab6f4,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_06feecd7a07ce478803c4c71cf017c38 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_81a875964d5d33e08ae333b826d0a19c = $(`<div id="html_81a875964d5d33e08ae333b826d0a19c" style="width: 100.0%; height: 100.0%;"><b>30183</b><br><i>Strela Obrenovac 183</i><br><br><b>Linija:</b> 30002<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_06feecd7a07ce478803c4c71cf017c38.setContent(html_81a875964d5d33e08ae333b826d0a19c);
+            
+        
+
+        marker_bea35c4927c77560f3243e5316eec085.bindPopup(popup_06feecd7a07ce478803c4c71cf017c38)
+        ;
+
+        
+    
+    
+            marker_bea35c4927c77560f3243e5316eec085.bindTooltip(
+                `<div>
+                     Strela Obrenovac 183
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fa453c55bc3d6d37a571d1063d781d58 = L.marker(
+                [44.045567, 20.984266],
+                {
+  "icon": icon_29f5ea8f0d39f2a4151bf00b004c5665,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_c50ab25ede3175007e636b6e2e416183 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_af158025301dfb439f9b084909c55200 = $(`<div id="html_af158025301dfb439f9b084909c55200" style="width: 100.0%; height: 100.0%;"><b>30236</b><br><i>Strela Obrenovac 236</i><br><br><b>Linija:</b> 50001<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_c50ab25ede3175007e636b6e2e416183.setContent(html_af158025301dfb439f9b084909c55200);
+            
+        
+
+        marker_fa453c55bc3d6d37a571d1063d781d58.bindPopup(popup_c50ab25ede3175007e636b6e2e416183)
+        ;
+
+        
+    
+    
+            marker_fa453c55bc3d6d37a571d1063d781d58.bindTooltip(
+                `<div>
+                     Strela Obrenovac 236
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e3a397d9d8e2a55878ae625a16215a50 = L.marker(
+                [44.015232, 20.930365],
+                {
+  "icon": icon_37c214a56f8a9ce9493fd40e76c5e370,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e1b14f75f20b49cc4f8bc9c1800a2e0c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_27a9a8885dd98de631ae0ffb6611b78e = $(`<div id="html_27a9a8885dd98de631ae0ffb6611b78e" style="width: 100.0%; height: 100.0%;"><b>30165</b><br><i>Strela Obrenovac 165</i><br><br><b>Linija:</b> 60601<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_e1b14f75f20b49cc4f8bc9c1800a2e0c.setContent(html_27a9a8885dd98de631ae0ffb6611b78e);
+            
+        
+
+        marker_e3a397d9d8e2a55878ae625a16215a50.bindPopup(popup_e1b14f75f20b49cc4f8bc9c1800a2e0c)
+        ;
+
+        
+    
+    
+            marker_e3a397d9d8e2a55878ae625a16215a50.bindTooltip(
+                `<div>
+                     Strela Obrenovac 165
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5626f09c4056ee2d65f491f6bbfd9195 = L.marker(
+                [43.99686, 20.938816],
+                {
+  "icon": icon_a1b1ba9a29afbfa031d8066e6520af66,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_35b13dbdea0b8a8a3690a66291caba37 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8213c9e8a659b297e6710c9bce7afdbd = $(`<div id="html_8213c9e8a659b297e6710c9bce7afdbd" style="width: 100.0%; height: 100.0%;"><b>30177</b><br><i>Strela Obrenovac 177</i><br><br><b>Linija:</b> 60601<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_35b13dbdea0b8a8a3690a66291caba37.setContent(html_8213c9e8a659b297e6710c9bce7afdbd);
+            
+        
+
+        marker_5626f09c4056ee2d65f491f6bbfd9195.bindPopup(popup_35b13dbdea0b8a8a3690a66291caba37)
+        ;
+
+        
+    
+    
+            marker_5626f09c4056ee2d65f491f6bbfd9195.bindTooltip(
+                `<div>
+                     Strela Obrenovac 177
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a44aef7b497ee47753ae135b2c49c582 = L.marker(
+                [44.01522, 20.930258],
+                {
+  "icon": icon_b927794a0b71d5386106da31751bc990,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_a0fb996054ff4d87e3e2eda0481bee85 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_243b5107929db24b2f31219582ec729c = $(`<div id="html_243b5107929db24b2f31219582ec729c" style="width: 100.0%; height: 100.0%;"><b>30169</b><br><i>Strela Obrenovac 169</i><br><br><b>Linija:</b> 60602<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_a0fb996054ff4d87e3e2eda0481bee85.setContent(html_243b5107929db24b2f31219582ec729c);
+            
+        
+
+        marker_a44aef7b497ee47753ae135b2c49c582.bindPopup(popup_a0fb996054ff4d87e3e2eda0481bee85)
+        ;
+
+        
+    
+    
+            marker_a44aef7b497ee47753ae135b2c49c582.bindTooltip(
+                `<div>
+                     Strela Obrenovac 169
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_af4cd0b88f028cde45bbf5ea5c4eea79 = L.marker(
+                [44.015167, 20.930347],
+                {
+  "icon": icon_27494f87d56422cf3d534f67ee8b1ab8,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_3a8384cb97d316f5e10d8e775ac06353 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8afb43850159635bfe8eec2648beadae = $(`<div id="html_8afb43850159635bfe8eec2648beadae" style="width: 100.0%; height: 100.0%;"><b>30173</b><br><i>Strela Obrenovac 173</i><br><br><b>Linija:</b> 60602<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_3a8384cb97d316f5e10d8e775ac06353.setContent(html_8afb43850159635bfe8eec2648beadae);
+            
+        
+
+        marker_af4cd0b88f028cde45bbf5ea5c4eea79.bindPopup(popup_3a8384cb97d316f5e10d8e775ac06353)
+        ;
+
+        
+    
+    
+            marker_af4cd0b88f028cde45bbf5ea5c4eea79.bindTooltip(
+                `<div>
+                     Strela Obrenovac 173
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2f2f30fa2fbf4d15ca50c9c190e33f55 = L.marker(
+                [44.018776, 20.930075],
+                {
+  "icon": icon_2b1df50524414972043d7c08f3ae2942,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_5a6451c0f8236944a52fa0caf83cbec8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ffe445a1aab148d5b1f9a260cc4395e6 = $(`<div id="html_ffe445a1aab148d5b1f9a260cc4395e6" style="width: 100.0%; height: 100.0%;"><b>30221</b><br><i>Strela Obrenovac 221</i><br><br><b>Linija:</b> 60603<br><b>Poslednji signal:</b> 18.07.2025. 16:44:40</div>`)[0];
+                popup_5a6451c0f8236944a52fa0caf83cbec8.setContent(html_ffe445a1aab148d5b1f9a260cc4395e6);
+            
+        
+
+        marker_2f2f30fa2fbf4d15ca50c9c190e33f55.bindPopup(popup_5a6451c0f8236944a52fa0caf83cbec8)
+        ;
+
+        
+    
+    
+            marker_2f2f30fa2fbf4d15ca50c9c190e33f55.bindTooltip(
+                `<div>
+                     Strela Obrenovac 221
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ff19705dd04bd0870e7b045640159d09 = L.marker(
+                [44.00909, 20.91715],
+                {
+  "icon": icon_300011009da38f57652f93489397a481,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_eb705aa91ede5f5afe0eb2c7f482dbc4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f4e3efa35293670140a33f0cf0d5d16d = $(`<div id="html_f4e3efa35293670140a33f0cf0d5d16d" style="width: 100.0%; height: 100.0%;"><b>30223</b><br><i>Strela Obrenovac 223</i><br><br><b>Linija:</b> 60604<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_eb705aa91ede5f5afe0eb2c7f482dbc4.setContent(html_f4e3efa35293670140a33f0cf0d5d16d);
+            
+        
+
+        marker_ff19705dd04bd0870e7b045640159d09.bindPopup(popup_eb705aa91ede5f5afe0eb2c7f482dbc4)
+        ;
+
+        
+    
+    
+            marker_ff19705dd04bd0870e7b045640159d09.bindTooltip(
+                `<div>
+                     Strela Obrenovac 223
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ea57a4cac4531cbb25889c1f1b6df6e1 = L.marker(
+                [44.0102, 20.927504],
+                {
+  "icon": icon_c4ab457c2cf8f931882f9878969d740b,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_3d7122899d0c26e339a1929957df08ca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0c2e7a3dd227de763534240bba609710 = $(`<div id="html_0c2e7a3dd227de763534240bba609710" style="width: 100.0%; height: 100.0%;"><b>30175</b><br><i>Strela Obrenovac 175</i><br><br><b>Linija:</b> 60605<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_3d7122899d0c26e339a1929957df08ca.setContent(html_0c2e7a3dd227de763534240bba609710);
+            
+        
+
+        marker_ea57a4cac4531cbb25889c1f1b6df6e1.bindPopup(popup_3d7122899d0c26e339a1929957df08ca)
+        ;
+
+        
+    
+    
+            marker_ea57a4cac4531cbb25889c1f1b6df6e1.bindTooltip(
+                `<div>
+                     Strela Obrenovac 175
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c3a14fbbf3a773ed2cb2cbe7ccd33a69 = L.marker(
+                [44.113106, 20.838924],
+                {
+  "icon": icon_ab8060c72bc146211120d5ca31a4e9f8,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_e08c8d170c843f739245d66456c0265a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f33e2107d61051ad82b45e55a317f863 = $(`<div id="html_f33e2107d61051ad82b45e55a317f863" style="width: 100.0%; height: 100.0%;"><b>30174</b><br><i>Strela Obrenovac 174</i><br><br><b>Linija:</b> 60606<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_e08c8d170c843f739245d66456c0265a.setContent(html_f33e2107d61051ad82b45e55a317f863);
+            
+        
+
+        marker_c3a14fbbf3a773ed2cb2cbe7ccd33a69.bindPopup(popup_e08c8d170c843f739245d66456c0265a)
+        ;
+
+        
+    
+    
+            marker_c3a14fbbf3a773ed2cb2cbe7ccd33a69.bindTooltip(
+                `<div>
+                     Strela Obrenovac 174
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_87e70808ca7aa77927c047f0e1adbed3 = L.marker(
+                [44.152195, 20.665277],
+                {
+  "icon": icon_ae146ca8219dd39b2691cffe4bab31ac,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_f45615b9444f7b3f534bef8e58dabe65 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c680c3d04de6df03c403da6900158063 = $(`<div id="html_c680c3d04de6df03c403da6900158063" style="width: 100.0%; height: 100.0%;"><b>30229</b><br><i>Strela Obrenovac 229</i><br><br><b>Linija:</b> 60606<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_f45615b9444f7b3f534bef8e58dabe65.setContent(html_c680c3d04de6df03c403da6900158063);
+            
+        
+
+        marker_87e70808ca7aa77927c047f0e1adbed3.bindPopup(popup_f45615b9444f7b3f534bef8e58dabe65)
+        ;
+
+        
+    
+    
+            marker_87e70808ca7aa77927c047f0e1adbed3.bindTooltip(
+                `<div>
+                     Strela Obrenovac 229
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e9635df21b34fdd4537f2a058c4a6645 = L.marker(
+                [44.01513, 20.930305],
+                {
+  "icon": icon_abd1a079904d6041ced53563d808ae1d,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_5a749048ff1dd617038019c1f2b54c28 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4a00b07beb5e7644b9eefa8309d87bd0 = $(`<div id="html_4a00b07beb5e7644b9eefa8309d87bd0" style="width: 100.0%; height: 100.0%;"><b>30168</b><br><i>Strela Obrenovac 168</i><br><br><b>Linija:</b> 60606<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_5a749048ff1dd617038019c1f2b54c28.setContent(html_4a00b07beb5e7644b9eefa8309d87bd0);
+            
+        
+
+        marker_e9635df21b34fdd4537f2a058c4a6645.bindPopup(popup_5a749048ff1dd617038019c1f2b54c28)
+        ;
+
+        
+    
+    
+            marker_e9635df21b34fdd4537f2a058c4a6645.bindTooltip(
+                `<div>
+                     Strela Obrenovac 168
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8852c48f0b3e04be9052e635b7252293 = L.marker(
+                [44.01553, 20.929998],
+                {
+  "icon": icon_9d20d096081f2ae7c931974861f38d73,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_26294456a6aa7c04218dd022dc3c7aaa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f8bc22d52a9a9fdcf587dc409f5f0b17 = $(`<div id="html_f8bc22d52a9a9fdcf587dc409f5f0b17" style="width: 100.0%; height: 100.0%;"><b>30170</b><br><i>Strela Obrenovac 170</i><br><br><b>Linija:</b> 60608<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_26294456a6aa7c04218dd022dc3c7aaa.setContent(html_f8bc22d52a9a9fdcf587dc409f5f0b17);
+            
+        
+
+        marker_8852c48f0b3e04be9052e635b7252293.bindPopup(popup_26294456a6aa7c04218dd022dc3c7aaa)
+        ;
+
+        
+    
+    
+            marker_8852c48f0b3e04be9052e635b7252293.bindTooltip(
+                `<div>
+                     Strela Obrenovac 170
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_463011d4e758c56f73fc9df0046f4f70 = L.marker(
+                [44.010292, 20.927536],
+                {
+  "icon": icon_6b7ae5c00bb92f018a10d206085d3719,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_4ceedefba0932910472ff54fbde8e968 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a11b2e11f681e46a51cdb8760f78f852 = $(`<div id="html_a11b2e11f681e46a51cdb8760f78f852" style="width: 100.0%; height: 100.0%;"><b>30176</b><br><i>Strela Obrenovac 176</i><br><br><b>Linija:</b> 60612<br><b>Poslednji signal:</b> 18.07.2025. 17:50:00</div>`)[0];
+                popup_4ceedefba0932910472ff54fbde8e968.setContent(html_a11b2e11f681e46a51cdb8760f78f852);
+            
+        
+
+        marker_463011d4e758c56f73fc9df0046f4f70.bindPopup(popup_4ceedefba0932910472ff54fbde8e968)
+        ;
+
+        
+    
+    
+            marker_463011d4e758c56f73fc9df0046f4f70.bindTooltip(
+                `<div>
+                     Strela Obrenovac 176
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_19ed8c5bcbe5e5b96beb8ec856a2e6ce = L.marker(
+                [44.018757, 20.930246],
+                {
+  "icon": icon_3cecd91eeb85ca512c19acea30dc8e29,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_10415e59056a091223e1c9a3d2731032 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_77d53ad94b9e99e2b12b3935cdda8b4b = $(`<div id="html_77d53ad94b9e99e2b12b3935cdda8b4b" style="width: 100.0%; height: 100.0%;"><b>30172</b><br><i>Strela Obrenovac 172</i><br><br><b>Linija:</b> 61602<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_10415e59056a091223e1c9a3d2731032.setContent(html_77d53ad94b9e99e2b12b3935cdda8b4b);
+            
+        
+
+        marker_19ed8c5bcbe5e5b96beb8ec856a2e6ce.bindPopup(popup_10415e59056a091223e1c9a3d2731032)
+        ;
+
+        
+    
+    
+            marker_19ed8c5bcbe5e5b96beb8ec856a2e6ce.bindTooltip(
+                `<div>
+                     Strela Obrenovac 172
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9a8c92c04d25d16e32ec9b42d3133d14 = L.marker(
+                [44.015312, 20.930344],
+                {
+  "icon": icon_f66e210ebeb5ace5e8e917e5a782e4fc,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_ed8a62043a21cab46f4cdf15c302383a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a0252ee9e85d7b55c97866fdded72c0e = $(`<div id="html_a0252ee9e85d7b55c97866fdded72c0e" style="width: 100.0%; height: 100.0%;"><b>30222</b><br><i>Strela Obrenovac 222</i><br><br><b>Linija:</b> 61607<br><b>Poslednji signal:</b> 18.07.2025. 17:15:00</div>`)[0];
+                popup_ed8a62043a21cab46f4cdf15c302383a.setContent(html_a0252ee9e85d7b55c97866fdded72c0e);
+            
+        
+
+        marker_9a8c92c04d25d16e32ec9b42d3133d14.bindPopup(popup_ed8a62043a21cab46f4cdf15c302383a)
+        ;
+
+        
+    
+    
+            marker_9a8c92c04d25d16e32ec9b42d3133d14.bindTooltip(
+                `<div>
+                     Strela Obrenovac 222
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b28d82a3a82ed28de003f2934158fa8a = L.marker(
+                [44.190113, 20.823235],
+                {
+  "icon": icon_d90fdcba6d51ba303905f48d656b8d92,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_bc6234a371980a43037e3c8f2f2d755d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1f3d24ff5ecd7c8a15ac0033155d151f = $(`<div id="html_1f3d24ff5ecd7c8a15ac0033155d151f" style="width: 100.0%; height: 100.0%;"><b>30232</b><br><i>Strela Obrenovac 232</i><br><br><b>Linija:</b> 61608<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_bc6234a371980a43037e3c8f2f2d755d.setContent(html_1f3d24ff5ecd7c8a15ac0033155d151f);
+            
+        
+
+        marker_b28d82a3a82ed28de003f2934158fa8a.bindPopup(popup_bc6234a371980a43037e3c8f2f2d755d)
+        ;
+
+        
+    
+    
+            marker_b28d82a3a82ed28de003f2934158fa8a.bindTooltip(
+                `<div>
+                     Strela Obrenovac 232
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_92c715015e73173ec246a700154997b4 = L.marker(
+                [44.010303, 20.927702],
+                {
+  "icon": icon_d3d29e0114594664239fc15c5b0a7a52,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_9910f0b754e93ecc33be116fcfbdfc10 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5e5eb28ab5465f9e676927818bb00d84 = $(`<div id="html_5e5eb28ab5465f9e676927818bb00d84" style="width: 100.0%; height: 100.0%;"><b>30166</b><br><i>Strela Obrenovac 166</i><br><br><b>Linija:</b> 61609<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_9910f0b754e93ecc33be116fcfbdfc10.setContent(html_5e5eb28ab5465f9e676927818bb00d84);
+            
+        
+
+        marker_92c715015e73173ec246a700154997b4.bindPopup(popup_9910f0b754e93ecc33be116fcfbdfc10)
+        ;
+
+        
+    
+    
+            marker_92c715015e73173ec246a700154997b4.bindTooltip(
+                `<div>
+                     Strela Obrenovac 166
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5bc36a08db94d91d78fe481b4bedb3b4 = L.marker(
+                [43.98326, 20.790043],
+                {
+  "icon": icon_1e5df7eda8a6df63f6cda074aafa0528,
+}
+            ).addTo(feature_group_26ea359fc33225135c533582e199e244);
+        
+    
+        var popup_b44768dd77bc328a5059826b5fed4f07 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b76e98f7ce09e91bd9a8f64c666bc7e8 = $(`<div id="html_b76e98f7ce09e91bd9a8f64c666bc7e8" style="width: 100.0%; height: 100.0%;"><b>30167</b><br><i>Strela Obrenovac 167</i><br><br><b>Linija:</b> 61610<br><b>Poslednji signal:</b> 18.07.2025. 17:53:30</div>`)[0];
+                popup_b44768dd77bc328a5059826b5fed4f07.setContent(html_b76e98f7ce09e91bd9a8f64c666bc7e8);
+            
+        
+
+        marker_5bc36a08db94d91d78fe481b4bedb3b4.bindPopup(popup_b44768dd77bc328a5059826b5fed4f07)
+        ;
+
+        
+    
+    
+            marker_5bc36a08db94d91d78fe481b4bedb3b4.bindTooltip(
+                `<div>
+                     Strela Obrenovac 167
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_26ea359fc33225135c533582e199e244.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var feature_group_b9ea94fc7a3deaed287216ce7dc944f7 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_ea8d56e870276f931415d334821526e4 = L.marker(
+                [44.015823, 20.930946],
+                {
+  "icon": icon_ac9a91234e8eb3af85dcba7bd27bd89f,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_878766a70873a5d43851a3953d752a4e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_da32a8e3c357e11f9216114ddaf014fb = $(`<div id="html_da32a8e3c357e11f9216114ddaf014fb" style="width: 100.0%; height: 100.0%;"><b>70227</b><br><i>Vulović Transport 227</i><br><br><b>Linija:</b> 00003<br><b>Poslednji signal:</b> 26.09.2024. 09:20:40</div>`)[0];
+                popup_878766a70873a5d43851a3953d752a4e.setContent(html_da32a8e3c357e11f9216114ddaf014fb);
+            
+        
+
+        marker_ea8d56e870276f931415d334821526e4.bindPopup(popup_878766a70873a5d43851a3953d752a4e)
+        ;
+
+        
+    
+    
+            marker_ea8d56e870276f931415d334821526e4.bindTooltip(
+                `<div>
+                     Vulović Transport 227
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c4bd8fcaef11154712df806c769f1753 = L.marker(
+                [44.015053, 20.931368],
+                {
+  "icon": icon_ef74de949cd3c320d6e07c5f89b9f28a,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_873aca3be5a847c5c60ffe45a6e3fd06 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c13119d4333881a955d1edf3ff1cbf81 = $(`<div id="html_c13119d4333881a955d1edf3ff1cbf81" style="width: 100.0%; height: 100.0%;"><b>70312</b><br><i>Vulović Transport 312</i><br><br><b>Linija:</b> 00003<br><b>Poslednji signal:</b> 20.10.2024. 12:50:00</div>`)[0];
+                popup_873aca3be5a847c5c60ffe45a6e3fd06.setContent(html_c13119d4333881a955d1edf3ff1cbf81);
+            
+        
+
+        marker_c4bd8fcaef11154712df806c769f1753.bindPopup(popup_873aca3be5a847c5c60ffe45a6e3fd06)
+        ;
+
+        
+    
+    
+            marker_c4bd8fcaef11154712df806c769f1753.bindTooltip(
+                `<div>
+                     Vulović Transport 312
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7abb20ee0b1585ed23bab68c4bf29f11 = L.marker(
+                [44.015766, 20.931215],
+                {
+  "icon": icon_82acf28730dc6fc2106c735c08ce1876,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_4446695ed5d4ee0e63cd3a4ab0ad5c17 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5a561da42da513c0be7c58f55f659405 = $(`<div id="html_5a561da42da513c0be7c58f55f659405" style="width: 100.0%; height: 100.0%;"><b>70290</b><br><i>Vulović Transport 290</i><br><br><b>Linija:</b> 00004<br><b>Poslednji signal:</b> 18.10.2024. 13:18:00</div>`)[0];
+                popup_4446695ed5d4ee0e63cd3a4ab0ad5c17.setContent(html_5a561da42da513c0be7c58f55f659405);
+            
+        
+
+        marker_7abb20ee0b1585ed23bab68c4bf29f11.bindPopup(popup_4446695ed5d4ee0e63cd3a4ab0ad5c17)
+        ;
+
+        
+    
+    
+            marker_7abb20ee0b1585ed23bab68c4bf29f11.bindTooltip(
+                `<div>
+                     Vulović Transport 290
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_101848c020b8d9f3b39058dfb2307a2e = L.marker(
+                [44.01474, 20.930426],
+                {
+  "icon": icon_5dd9a7ef191c17dcae23163e3fad390e,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_3625618e54c5988517edb448f815be5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8b8292efeb0a6f5942d174865ceead21 = $(`<div id="html_8b8292efeb0a6f5942d174865ceead21" style="width: 100.0%; height: 100.0%;"><b>70311</b><br><i>Vulović Transport 311</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 03.02.2025. 21:32:00</div>`)[0];
+                popup_3625618e54c5988517edb448f815be5d.setContent(html_8b8292efeb0a6f5942d174865ceead21);
+            
+        
+
+        marker_101848c020b8d9f3b39058dfb2307a2e.bindPopup(popup_3625618e54c5988517edb448f815be5d)
+        ;
+
+        
+    
+    
+            marker_101848c020b8d9f3b39058dfb2307a2e.bindTooltip(
+                `<div>
+                     Vulović Transport 311
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_636a42108ba8488491a7ff25c2a65376 = L.marker(
+                [44.014782, 20.93035],
+                {
+  "icon": icon_b397a298d465622973cdff749ac56fc0,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_654cde358108a911bf1b033f3f614ad1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5bce72e93c07bc40f8b226e5e5764517 = $(`<div id="html_5bce72e93c07bc40f8b226e5e5764517" style="width: 100.0%; height: 100.0%;"><b>70282</b><br><i>Vulović Transport 282</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 03.07.2025. 22:20:30</div>`)[0];
+                popup_654cde358108a911bf1b033f3f614ad1.setContent(html_5bce72e93c07bc40f8b226e5e5764517);
+            
+        
+
+        marker_636a42108ba8488491a7ff25c2a65376.bindPopup(popup_654cde358108a911bf1b033f3f614ad1)
+        ;
+
+        
+    
+    
+            marker_636a42108ba8488491a7ff25c2a65376.bindTooltip(
+                `<div>
+                     Vulović Transport 282
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3756b75ae161812e81994001fc569aa8 = L.marker(
+                [44.015278, 20.930044],
+                {
+  "icon": icon_2b489072daf0506c10660885848adcc7,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_f0c6ee6d0f53e67a8dc83a99fe50b039 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_76f4845146dad9509f9ec5fdfa1a5ffc = $(`<div id="html_76f4845146dad9509f9ec5fdfa1a5ffc" style="width: 100.0%; height: 100.0%;"><b>70226</b><br><i>Vulović Transport 226</i><br><br><b>Linija:</b> 00005<br><b>Poslednji signal:</b> 12.02.2025. 12:54:30</div>`)[0];
+                popup_f0c6ee6d0f53e67a8dc83a99fe50b039.setContent(html_76f4845146dad9509f9ec5fdfa1a5ffc);
+            
+        
+
+        marker_3756b75ae161812e81994001fc569aa8.bindPopup(popup_f0c6ee6d0f53e67a8dc83a99fe50b039)
+        ;
+
+        
+    
+    
+            marker_3756b75ae161812e81994001fc569aa8.bindTooltip(
+                `<div>
+                     Vulović Transport 226
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_077835156e3e867fe37b29912a11d563 = L.marker(
+                [44.014923, 20.93005],
+                {
+  "icon": icon_3c173f9e2a5146210797cf339efb68ab,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_7a58a481aafa5088f2c9cf6668797aa2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b8f112679ca43b6768ee522a3bd0bff = $(`<div id="html_2b8f112679ca43b6768ee522a3bd0bff" style="width: 100.0%; height: 100.0%;"><b>70301</b><br><i>Vulović Transport 301</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 11.02.2025. 20:04:00</div>`)[0];
+                popup_7a58a481aafa5088f2c9cf6668797aa2.setContent(html_2b8f112679ca43b6768ee522a3bd0bff);
+            
+        
+
+        marker_077835156e3e867fe37b29912a11d563.bindPopup(popup_7a58a481aafa5088f2c9cf6668797aa2)
+        ;
+
+        
+    
+    
+            marker_077835156e3e867fe37b29912a11d563.bindTooltip(
+                `<div>
+                     Vulović Transport 301
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d282be6ad07a61f64f850e5bd0f6b283 = L.marker(
+                [44.015465, 20.931059],
+                {
+  "icon": icon_d3bdd154a28b0a07d78841386ba2fa91,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_e95550c2efb07d276306eb936f74deed = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_27fd2dcada688b5238790466e36fb6dd = $(`<div id="html_27fd2dcada688b5238790466e36fb6dd" style="width: 100.0%; height: 100.0%;"><b>70288</b><br><i>Vulović Transport 288</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 16.06.2025. 10:54:20</div>`)[0];
+                popup_e95550c2efb07d276306eb936f74deed.setContent(html_27fd2dcada688b5238790466e36fb6dd);
+            
+        
+
+        marker_d282be6ad07a61f64f850e5bd0f6b283.bindPopup(popup_e95550c2efb07d276306eb936f74deed)
+        ;
+
+        
+    
+    
+            marker_d282be6ad07a61f64f850e5bd0f6b283.bindTooltip(
+                `<div>
+                     Vulović Transport 288
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_31b90acc4d742a226985635da2b0196b = L.marker(
+                [44.015762, 20.93126],
+                {
+  "icon": icon_438b922fbbbd844b401116c202198320,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_9bcc0d667f266e8c2dc046950434e7f6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e411fc86b23f54e4a8d68b1a4f7fdb7b = $(`<div id="html_e411fc86b23f54e4a8d68b1a4f7fdb7b" style="width: 100.0%; height: 100.0%;"><b>70303</b><br><i>Vulović Transport 303</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 07.03.2025. 14:49:10</div>`)[0];
+                popup_9bcc0d667f266e8c2dc046950434e7f6.setContent(html_e411fc86b23f54e4a8d68b1a4f7fdb7b);
+            
+        
+
+        marker_31b90acc4d742a226985635da2b0196b.bindPopup(popup_9bcc0d667f266e8c2dc046950434e7f6)
+        ;
+
+        
+    
+    
+            marker_31b90acc4d742a226985635da2b0196b.bindTooltip(
+                `<div>
+                     Vulović Transport 303
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_85826cb4df46ac104d4ffc2ee6b9cad3 = L.marker(
+                [44.01582, 20.930931],
+                {
+  "icon": icon_69f5693ace21c81649707d2d96a4be06,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_cd24d032b1be1806db9a5e51330b0824 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9d3b81c6ec048f03b917995de1c0ffae = $(`<div id="html_9d3b81c6ec048f03b917995de1c0ffae" style="width: 100.0%; height: 100.0%;"><b>70285</b><br><i>Vulović Transport 285</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 01.07.2025. 03:50:00</div>`)[0];
+                popup_cd24d032b1be1806db9a5e51330b0824.setContent(html_9d3b81c6ec048f03b917995de1c0ffae);
+            
+        
+
+        marker_85826cb4df46ac104d4ffc2ee6b9cad3.bindPopup(popup_cd24d032b1be1806db9a5e51330b0824)
+        ;
+
+        
+    
+    
+            marker_85826cb4df46ac104d4ffc2ee6b9cad3.bindTooltip(
+                `<div>
+                     Vulović Transport 285
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d1d9d7dbeab5cd120e0a679f0089a12d = L.marker(
+                [44.0157, 20.930931],
+                {
+  "icon": icon_66a402f2390f3a234f615a1a682bffdf,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_a8974edefaf2febdaa76cafe22a9a8fa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b79cbbb4a0b51c79c25f8492eeb706c3 = $(`<div id="html_b79cbbb4a0b51c79c25f8492eeb706c3" style="width: 100.0%; height: 100.0%;"><b>70273</b><br><i>Vulović Transport 273</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 01.06.2025. 04:15:50</div>`)[0];
+                popup_a8974edefaf2febdaa76cafe22a9a8fa.setContent(html_b79cbbb4a0b51c79c25f8492eeb706c3);
+            
+        
+
+        marker_d1d9d7dbeab5cd120e0a679f0089a12d.bindPopup(popup_a8974edefaf2febdaa76cafe22a9a8fa)
+        ;
+
+        
+    
+    
+            marker_d1d9d7dbeab5cd120e0a679f0089a12d.bindTooltip(
+                `<div>
+                     Vulović Transport 273
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9b219c3823832bddec9950cc1887d997 = L.marker(
+                [44.015697, 20.931364],
+                {
+  "icon": icon_2a2d24711fd6186871c2a0194715516c,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_0b183eb2015056a6ad55a801a95a0be0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f5be7386c775310704c7785518b26fba = $(`<div id="html_f5be7386c775310704c7785518b26fba" style="width: 100.0%; height: 100.0%;"><b>70298</b><br><i>Vulović Transport 298</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 18.03.2025. 13:23:50</div>`)[0];
+                popup_0b183eb2015056a6ad55a801a95a0be0.setContent(html_f5be7386c775310704c7785518b26fba);
+            
+        
+
+        marker_9b219c3823832bddec9950cc1887d997.bindPopup(popup_0b183eb2015056a6ad55a801a95a0be0)
+        ;
+
+        
+    
+    
+            marker_9b219c3823832bddec9950cc1887d997.bindTooltip(
+                `<div>
+                     Vulović Transport 298
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_db479f6ba208922c4c1c414b9c8ab33b = L.marker(
+                [44.01451, 20.930347],
+                {
+  "icon": icon_d6b39cea17c842429242944018e7c6c7,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_09932029047fbef2cd93e05b2440b913 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ed2e429b0e79f2c7f67a195b1ccb043c = $(`<div id="html_ed2e429b0e79f2c7f67a195b1ccb043c" style="width: 100.0%; height: 100.0%;"><b>70296</b><br><i>Vulović Transport 296</i><br><br><b>Linija:</b> 00014<br><b>Poslednji signal:</b> 21.03.2025. 11:20:00</div>`)[0];
+                popup_09932029047fbef2cd93e05b2440b913.setContent(html_ed2e429b0e79f2c7f67a195b1ccb043c);
+            
+        
+
+        marker_db479f6ba208922c4c1c414b9c8ab33b.bindPopup(popup_09932029047fbef2cd93e05b2440b913)
+        ;
+
+        
+    
+    
+            marker_db479f6ba208922c4c1c414b9c8ab33b.bindTooltip(
+                `<div>
+                     Vulović Transport 296
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c5d922b4c7d67e510ba4c7c12b8ce628 = L.marker(
+                [44.01502, 20.931208],
+                {
+  "icon": icon_625088e18dd0d20763647cc97ee82d9c,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_40309230a92241ebf0921a3d1df07b5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_22f92e05834c980df34a5c417a303cfa = $(`<div id="html_22f92e05834c980df34a5c417a303cfa" style="width: 100.0%; height: 100.0%;"><b>70314</b><br><i>Vulović Transport 314</i><br><br><b>Linija:</b> 00015<br><b>Poslednji signal:</b> 20.10.2024. 13:20:00</div>`)[0];
+                popup_40309230a92241ebf0921a3d1df07b5d.setContent(html_22f92e05834c980df34a5c417a303cfa);
+            
+        
+
+        marker_c5d922b4c7d67e510ba4c7c12b8ce628.bindPopup(popup_40309230a92241ebf0921a3d1df07b5d)
+        ;
+
+        
+    
+    
+            marker_c5d922b4c7d67e510ba4c7c12b8ce628.bindTooltip(
+                `<div>
+                     Vulović Transport 314
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8d0a86a7f21c507021d3ce14d4107170 = L.marker(
+                [44.015656, 20.931475],
+                {
+  "icon": icon_cb1d43b0a2f9e7491001fb5889da0fdb,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_01b318cfea15bbea6a3981c92a5dbe34 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dd2014cab4aaef24599f3af9d278b7fb = $(`<div id="html_dd2014cab4aaef24599f3af9d278b7fb" style="width: 100.0%; height: 100.0%;"><b>70300</b><br><i>Vulović Transport 300</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 17.07.2025. 15:10:00</div>`)[0];
+                popup_01b318cfea15bbea6a3981c92a5dbe34.setContent(html_dd2014cab4aaef24599f3af9d278b7fb);
+            
+        
+
+        marker_8d0a86a7f21c507021d3ce14d4107170.bindPopup(popup_01b318cfea15bbea6a3981c92a5dbe34)
+        ;
+
+        
+    
+    
+            marker_8d0a86a7f21c507021d3ce14d4107170.bindTooltip(
+                `<div>
+                     Vulović Transport 300
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8f7623ddb1232b273354af1b60280733 = L.marker(
+                [44.015568, 20.929379],
+                {
+  "icon": icon_36cee0254cbd13c273033f47b35452d5,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_9c15b42d8e38737b828132a2a2257db8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4f0e82945be5df56bc733c8906d13747 = $(`<div id="html_4f0e82945be5df56bc733c8906d13747" style="width: 100.0%; height: 100.0%;"><b>70293</b><br><i>Vulović Transport 293</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 16.10.2024. 15:54:30</div>`)[0];
+                popup_9c15b42d8e38737b828132a2a2257db8.setContent(html_4f0e82945be5df56bc733c8906d13747);
+            
+        
+
+        marker_8f7623ddb1232b273354af1b60280733.bindPopup(popup_9c15b42d8e38737b828132a2a2257db8)
+        ;
+
+        
+    
+    
+            marker_8f7623ddb1232b273354af1b60280733.bindTooltip(
+                `<div>
+                     Vulović Transport 293
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7d4fd7edf4f0e87bb06f246be3e2665a = L.marker(
+                [44.00664, 20.906242],
+                {
+  "icon": icon_0e15cf18f2599a3957434bbfe223d886,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_6d63c01116d3e4699a472359492deab5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_48783d2af157486f74bfea8fdc05a681 = $(`<div id="html_48783d2af157486f74bfea8fdc05a681" style="width: 100.0%; height: 100.0%;"><b>70334</b><br><i>Vulović Transport 334</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 16.07.2025. 11:16:30</div>`)[0];
+                popup_6d63c01116d3e4699a472359492deab5.setContent(html_48783d2af157486f74bfea8fdc05a681);
+            
+        
+
+        marker_7d4fd7edf4f0e87bb06f246be3e2665a.bindPopup(popup_6d63c01116d3e4699a472359492deab5)
+        ;
+
+        
+    
+    
+            marker_7d4fd7edf4f0e87bb06f246be3e2665a.bindTooltip(
+                `<div>
+                     Vulović Transport 334
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d86d7f289a5921e81bd478bf011e9105 = L.marker(
+                [44.01467, 20.930357],
+                {
+  "icon": icon_c8e04d6de7ec7fcaeb7e39d9ccfb8152,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_0d97c995405061b67fc625c44560cc89 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_819e6ab63f0895b533472606b4aea4ba = $(`<div id="html_819e6ab63f0895b533472606b4aea4ba" style="width: 100.0%; height: 100.0%;"><b>70283</b><br><i>Vulović Transport 283</i><br><br><b>Linija:</b> 00024<br><b>Poslednji signal:</b> 20.03.2025. 16:54:10</div>`)[0];
+                popup_0d97c995405061b67fc625c44560cc89.setContent(html_819e6ab63f0895b533472606b4aea4ba);
+            
+        
+
+        marker_d86d7f289a5921e81bd478bf011e9105.bindPopup(popup_0d97c995405061b67fc625c44560cc89)
+        ;
+
+        
+    
+    
+            marker_d86d7f289a5921e81bd478bf011e9105.bindTooltip(
+                `<div>
+                     Vulović Transport 283
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_460f11b99136b764d1f2b463c0d24ca2 = L.marker(
+                [44.01531, 20.92989],
+                {
+  "icon": icon_02ea7aa4b9d77b1a2eff289b60883541,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_37d925de6c5f14c444bac3fe1f09bed9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a74c4ab593ba84b1ea5898144a9dd4f9 = $(`<div id="html_a74c4ab593ba84b1ea5898144a9dd4f9" style="width: 100.0%; height: 100.0%;"><b>70313</b><br><i>Vulović Transport 313</i><br><br><b>Linija:</b> 10003<br><b>Poslednji signal:</b> 06.02.2025. 19:28:30</div>`)[0];
+                popup_37d925de6c5f14c444bac3fe1f09bed9.setContent(html_a74c4ab593ba84b1ea5898144a9dd4f9);
+            
+        
+
+        marker_460f11b99136b764d1f2b463c0d24ca2.bindPopup(popup_37d925de6c5f14c444bac3fe1f09bed9)
+        ;
+
+        
+    
+    
+            marker_460f11b99136b764d1f2b463c0d24ca2.bindTooltip(
+                `<div>
+                     Vulović Transport 313
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0b90f0e1b731f05e775fce74cdb25a10 = L.marker(
+                [44.014828, 20.930353],
+                {
+  "icon": icon_cc506816fda1ac59d158e5c3225278a8,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_6fa45140bf5f18feade1c61930c105be = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_559c9b8e316d8fbdb53d1c08a0aa55f9 = $(`<div id="html_559c9b8e316d8fbdb53d1c08a0aa55f9" style="width: 100.0%; height: 100.0%;"><b>70292</b><br><i>Vulović Transport 292</i><br><br><b>Linija:</b> 10011<br><b>Poslednji signal:</b> 02.07.2025. 22:33:00</div>`)[0];
+                popup_6fa45140bf5f18feade1c61930c105be.setContent(html_559c9b8e316d8fbdb53d1c08a0aa55f9);
+            
+        
+
+        marker_0b90f0e1b731f05e775fce74cdb25a10.bindPopup(popup_6fa45140bf5f18feade1c61930c105be)
+        ;
+
+        
+    
+    
+            marker_0b90f0e1b731f05e775fce74cdb25a10.bindTooltip(
+                `<div>
+                     Vulović Transport 292
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_61a18acfc372da23722f79f796b001a8 = L.marker(
+                [44.015003, 20.931463],
+                {
+  "icon": icon_79d88327930ec8fe7b0f899ff086ca2b,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_21a2b3e14777691bd2b628c59ee2fa25 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7ae84ad0613923ab02324f9fd35f3372 = $(`<div id="html_7ae84ad0613923ab02324f9fd35f3372" style="width: 100.0%; height: 100.0%;"><b>70225</b><br><i>Vulović Transport 225</i><br><br><b>Linija:</b> 10015<br><b>Poslednji signal:</b> 15.10.2024. 18:24:00</div>`)[0];
+                popup_21a2b3e14777691bd2b628c59ee2fa25.setContent(html_7ae84ad0613923ab02324f9fd35f3372);
+            
+        
+
+        marker_61a18acfc372da23722f79f796b001a8.bindPopup(popup_21a2b3e14777691bd2b628c59ee2fa25)
+        ;
+
+        
+    
+    
+            marker_61a18acfc372da23722f79f796b001a8.bindTooltip(
+                `<div>
+                     Vulović Transport 225
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_996d6b00f5c76f48ffb477f67add6903 = L.marker(
+                [44.015785, 20.931211],
+                {
+  "icon": icon_4bf939ab6f455513048e78769ab4bcff,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_51f05d72fad08079ec00675372b9abef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_af955ea16893a252efbe8370ab2a301d = $(`<div id="html_af955ea16893a252efbe8370ab2a301d" style="width: 100.0%; height: 100.0%;"><b>70289</b><br><i>Vulović Transport 289</i><br><br><b>Linija:</b> 20011<br><b>Poslednji signal:</b> 14.07.2025. 12:00:00</div>`)[0];
+                popup_51f05d72fad08079ec00675372b9abef.setContent(html_af955ea16893a252efbe8370ab2a301d);
+            
+        
+
+        marker_996d6b00f5c76f48ffb477f67add6903.bindPopup(popup_51f05d72fad08079ec00675372b9abef)
+        ;
+
+        
+    
+    
+            marker_996d6b00f5c76f48ffb477f67add6903.bindTooltip(
+                `<div>
+                     Vulović Transport 289
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_bdf8cff7418eb559a73c2706c4cf53c9 = L.marker(
+                [44.015182, 20.930044],
+                {
+  "icon": icon_6110aeb5bc729ba115cde77ba08dc468,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_3a30fd13b2e58fce5c7aa2f4193cbec8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d9a97ed8981911d094a0649842441ea8 = $(`<div id="html_d9a97ed8981911d094a0649842441ea8" style="width: 100.0%; height: 100.0%;"><b>70306</b><br><i>Vulović Transport 306</i><br><br><b>Linija:</b> 20011<br><b>Poslednji signal:</b> 07.03.2025. 19:23:00</div>`)[0];
+                popup_3a30fd13b2e58fce5c7aa2f4193cbec8.setContent(html_d9a97ed8981911d094a0649842441ea8);
+            
+        
+
+        marker_bdf8cff7418eb559a73c2706c4cf53c9.bindPopup(popup_3a30fd13b2e58fce5c7aa2f4193cbec8)
+        ;
+
+        
+    
+    
+            marker_bdf8cff7418eb559a73c2706c4cf53c9.bindTooltip(
+                `<div>
+                     Vulović Transport 306
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5605fecf5fd422adba21c34973667597 = L.marker(
+                [44.015747, 20.931253],
+                {
+  "icon": icon_2798081aa4c34952161e690ffc1c1448,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_16221f97ef015b7dc17b323ccd7bbeff = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3a5707cbdc3a4a40b54825c97b50f077 = $(`<div id="html_3a5707cbdc3a4a40b54825c97b50f077" style="width: 100.0%; height: 100.0%;"><b>70307</b><br><i>Vulović Transport 307</i><br><br><b>Linija:</b> 30011<br><b>Poslednji signal:</b> 27.03.2025. 20:14:00</div>`)[0];
+                popup_16221f97ef015b7dc17b323ccd7bbeff.setContent(html_3a5707cbdc3a4a40b54825c97b50f077);
+            
+        
+
+        marker_5605fecf5fd422adba21c34973667597.bindPopup(popup_16221f97ef015b7dc17b323ccd7bbeff)
+        ;
+
+        
+    
+    
+            marker_5605fecf5fd422adba21c34973667597.bindTooltip(
+                `<div>
+                     Vulović Transport 307
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_219c9c82a1f96835dec91709f6440df4 = L.marker(
+                [44.65622, 20.198065],
+                {
+  "icon": icon_0e7b6e0bca6720fed20182c4e090c69b,
+}
+            ).addTo(feature_group_b9ea94fc7a3deaed287216ce7dc944f7);
+        
+    
+        var popup_5d6c836a69e6e498da2c696d2f3623ea = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c1766f1775add5ffb85447459147a5d4 = $(`<div id="html_c1766f1775add5ffb85447459147a5d4" style="width: 100.0%; height: 100.0%;"><b>30160</b><br><i>Strela Obrenovac 160</i><br><br><b>Linija:</b> 60604<br><b>Poslednji signal:</b> 28.01.2024. 03:51:00</div>`)[0];
+                popup_5d6c836a69e6e498da2c696d2f3623ea.setContent(html_c1766f1775add5ffb85447459147a5d4);
+            
+        
+
+        marker_219c9c82a1f96835dec91709f6440df4.bindPopup(popup_5d6c836a69e6e498da2c696d2f3623ea)
+        ;
+
+        
+    
+    
+            marker_219c9c82a1f96835dec91709f6440df4.bindTooltip(
+                `<div>
+                     Strela Obrenovac 160
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_b9ea94fc7a3deaed287216ce7dc944f7.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var feature_group_04263e6a01c0008e7b4c3297391b3479 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_e1ab9494b139d43fa1c64a5c7457809a = L.marker(
+                [44.01573, 20.934822],
+                {
+  "icon": icon_ddc6e343256cadcc29e5e61db23f740e,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_1c8fd8be3781da2fc635ed2ed459c0c2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a95a0ffdb9a0cf86277a9472dbdb88ab = $(`<div id="html_a95a0ffdb9a0cf86277a9472dbdb88ab" style="width: 100.0%; height: 100.0%;"><b>50220</b><br><i>Nepoznat prevoznik 50220</i><br><br><b>Linija:</b> 00002<br><b>Poslednji signal:</b> 01.01.1970. 01:14:00</div>`)[0];
+                popup_1c8fd8be3781da2fc635ed2ed459c0c2.setContent(html_a95a0ffdb9a0cf86277a9472dbdb88ab);
+            
+        
+
+        marker_e1ab9494b139d43fa1c64a5c7457809a.bindPopup(popup_1c8fd8be3781da2fc635ed2ed459c0c2)
+        ;
+
+        
+    
+    
+            marker_e1ab9494b139d43fa1c64a5c7457809a.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50220
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1611b27643c1cd8b0d16588439376c7a = L.marker(
+                [44.01506, 20.934517],
+                {
+  "icon": icon_b6b9de72483b2db954fbcbb188c1b1f6,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_9bb4ace03899dc3f8daa0cfba7f94259 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2a7222474ba768af5e92db0742d6a16e = $(`<div id="html_2a7222474ba768af5e92db0742d6a16e" style="width: 100.0%; height: 100.0%;"><b>50027</b><br><i>Nepoznat prevoznik 50027</i><br><br><b>Linija:</b> 00002<br><b>Poslednji signal:</b> 04.06.2020. 09:36:10</div>`)[0];
+                popup_9bb4ace03899dc3f8daa0cfba7f94259.setContent(html_2a7222474ba768af5e92db0742d6a16e);
+            
+        
+
+        marker_1611b27643c1cd8b0d16588439376c7a.bindPopup(popup_9bb4ace03899dc3f8daa0cfba7f94259)
+        ;
+
+        
+    
+    
+            marker_1611b27643c1cd8b0d16588439376c7a.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50027
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7e61b88581d4c7397863a3f34d63940f = L.marker(
+                [44.011024, 20.90966],
+                {
+  "icon": icon_b514234cc928643c083a28955d2dc94a,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_21640ab73e0cbeec301cfcd8d59618b7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8e2941517fedba532123388c98cd8414 = $(`<div id="html_8e2941517fedba532123388c98cd8414" style="width: 100.0%; height: 100.0%;"><b>55101</b><br><i>Nepoznat prevoznik 55101</i><br><br><b>Linija:</b> 00004<br><b>Poslednji signal:</b> 30.11.2023. 06:18:00</div>`)[0];
+                popup_21640ab73e0cbeec301cfcd8d59618b7.setContent(html_8e2941517fedba532123388c98cd8414);
+            
+        
+
+        marker_7e61b88581d4c7397863a3f34d63940f.bindPopup(popup_21640ab73e0cbeec301cfcd8d59618b7)
+        ;
+
+        
+    
+    
+            marker_7e61b88581d4c7397863a3f34d63940f.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 55101
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_2027f6c0e4b89c75295475612220e9fa = L.marker(
+                [44.015408, 20.930168],
+                {
+  "icon": icon_2ffa09e929514f2c9338a9901656a57e,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_a992ca045241c4ae7744574be6e57c62 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1cc55865ed374d0e27ad855e28b1f761 = $(`<div id="html_1cc55865ed374d0e27ad855e28b1f761" style="width: 100.0%; height: 100.0%;"><b>50037</b><br><i>Nepoznat prevoznik 50037</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 01.12.2023. 02:18:00</div>`)[0];
+                popup_a992ca045241c4ae7744574be6e57c62.setContent(html_1cc55865ed374d0e27ad855e28b1f761);
+            
+        
+
+        marker_2027f6c0e4b89c75295475612220e9fa.bindPopup(popup_a992ca045241c4ae7744574be6e57c62)
+        ;
+
+        
+    
+    
+            marker_2027f6c0e4b89c75295475612220e9fa.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50037
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ce55a45478be54838436bc6f7c35c95a = L.marker(
+                [44.01538, 20.934315],
+                {
+  "icon": icon_e9d9262f78e7aae939474d05012c84e1,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_58a690880c91db15df81b5ae7f6da916 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_78876d139659b85d46b2873d0a8c5c05 = $(`<div id="html_78876d139659b85d46b2873d0a8c5c05" style="width: 100.0%; height: 100.0%;"><b>50172</b><br><i>Nepoznat prevoznik 50172</i><br><br><b>Linija:</b> 00007<br><b>Poslednji signal:</b> 30.11.2023. 23:30:00</div>`)[0];
+                popup_58a690880c91db15df81b5ae7f6da916.setContent(html_78876d139659b85d46b2873d0a8c5c05);
+            
+        
+
+        marker_ce55a45478be54838436bc6f7c35c95a.bindPopup(popup_58a690880c91db15df81b5ae7f6da916)
+        ;
+
+        
+    
+    
+            marker_ce55a45478be54838436bc6f7c35c95a.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50172
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6d59b2c690e1d71a36d1a5a4fa7cdd6d = L.marker(
+                [44.015465, 20.934702],
+                {
+  "icon": icon_8af400ad86961883f8fdf6cd3f0fe3a7,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_45fd62a2c372c7f37ef503fff23764d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fed43ca3fab267bcca3d57a9166f8871 = $(`<div id="html_fed43ca3fab267bcca3d57a9166f8871" style="width: 100.0%; height: 100.0%;"><b>50044</b><br><i>Nepoznat prevoznik 50044</i><br><br><b>Linija:</b> 00009<br><b>Poslednji signal:</b> 30.11.2023. 20:30:10</div>`)[0];
+                popup_45fd62a2c372c7f37ef503fff23764d7.setContent(html_fed43ca3fab267bcca3d57a9166f8871);
+            
+        
+
+        marker_6d59b2c690e1d71a36d1a5a4fa7cdd6d.bindPopup(popup_45fd62a2c372c7f37ef503fff23764d7)
+        ;
+
+        
+    
+    
+            marker_6d59b2c690e1d71a36d1a5a4fa7cdd6d.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50044
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_15d26f2c67330e67b2bec05b8ae50a7c = L.marker(
+                [44.01537, 20.93022],
+                {
+  "icon": icon_17b6979484ff255df646f857e294c631,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_7495035990817b3b92186f2733a2b6e9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1bbcbbd01b0bb04fe750e444f3cee193 = $(`<div id="html_1bbcbbd01b0bb04fe750e444f3cee193" style="width: 100.0%; height: 100.0%;"><b>50048</b><br><i>Nepoznat prevoznik 50048</i><br><br><b>Linija:</b> 00015<br><b>Poslednji signal:</b> 01.12.2023. 02:16:30</div>`)[0];
+                popup_7495035990817b3b92186f2733a2b6e9.setContent(html_1bbcbbd01b0bb04fe750e444f3cee193);
+            
+        
+
+        marker_15d26f2c67330e67b2bec05b8ae50a7c.bindPopup(popup_7495035990817b3b92186f2733a2b6e9)
+        ;
+
+        
+    
+    
+            marker_15d26f2c67330e67b2bec05b8ae50a7c.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50048
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_938641e820260b12cc09fddd2e738d51 = L.marker(
+                [44.01519, 20.930468],
+                {
+  "icon": icon_9d1bf6b762a1a0aed2652a9f84b48da9,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_d443a7dfa61b35d79eaaccbd23aa2f3b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_09f2c92b8022e4812189770cf06ec449 = $(`<div id="html_09f2c92b8022e4812189770cf06ec449" style="width: 100.0%; height: 100.0%;"><b>50036</b><br><i>Nepoznat prevoznik 50036</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 01.12.2023. 03:21:00</div>`)[0];
+                popup_d443a7dfa61b35d79eaaccbd23aa2f3b.setContent(html_09f2c92b8022e4812189770cf06ec449);
+            
+        
+
+        marker_938641e820260b12cc09fddd2e738d51.bindPopup(popup_d443a7dfa61b35d79eaaccbd23aa2f3b)
+        ;
+
+        
+    
+    
+            marker_938641e820260b12cc09fddd2e738d51.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50036
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9ee0595082ddd63ca0cbc1af643bc574 = L.marker(
+                [44.015656, 20.934837],
+                {
+  "icon": icon_f6b926d2eb6b2f64f8e6b838af51387c,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_ccba820b8144887e520eb94662a7d020 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_66e8759eea9b059ba1c40a91a8f6536f = $(`<div id="html_66e8759eea9b059ba1c40a91a8f6536f" style="width: 100.0%; height: 100.0%;"><b>50216</b><br><i>Nepoznat prevoznik 50216</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 13.12.2023. 10:22:00</div>`)[0];
+                popup_ccba820b8144887e520eb94662a7d020.setContent(html_66e8759eea9b059ba1c40a91a8f6536f);
+            
+        
+
+        marker_9ee0595082ddd63ca0cbc1af643bc574.bindPopup(popup_ccba820b8144887e520eb94662a7d020)
+        ;
+
+        
+    
+    
+            marker_9ee0595082ddd63ca0cbc1af643bc574.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50216
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_daaf3adb5fa24e34db4e5631d481c5da = L.marker(
+                [44.01552, 20.935066],
+                {
+  "icon": icon_96ade51e48688e6386bb85effe407c49,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_ea54e37c2a7d98a470d2495bdacce47e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f220a24fbb94d69ff0ccc641d9e7045d = $(`<div id="html_f220a24fbb94d69ff0ccc641d9e7045d" style="width: 100.0%; height: 100.0%;"><b>50208</b><br><i>Nepoznat prevoznik 50208</i><br><br><b>Linija:</b> 00019<br><b>Poslednji signal:</b> 06.12.2023. 17:11:10</div>`)[0];
+                popup_ea54e37c2a7d98a470d2495bdacce47e.setContent(html_f220a24fbb94d69ff0ccc641d9e7045d);
+            
+        
+
+        marker_daaf3adb5fa24e34db4e5631d481c5da.bindPopup(popup_ea54e37c2a7d98a470d2495bdacce47e)
+        ;
+
+        
+    
+    
+            marker_daaf3adb5fa24e34db4e5631d481c5da.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50208
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_daaa90271dbcc32fe5f1838f05b8f6b6 = L.marker(
+                [44.015514, 20.934183],
+                {
+  "icon": icon_dd4935eeb0fb62964ac406e35ce8906f,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_8a89404f1d67eaecf54b4514ba134c2e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dde25e41fd6176b5f8ee53ef812654bc = $(`<div id="html_dde25e41fd6176b5f8ee53ef812654bc" style="width: 100.0%; height: 100.0%;"><b>50215</b><br><i>Nepoznat prevoznik 50215</i><br><br><b>Linija:</b> 00024<br><b>Poslednji signal:</b> 01.12.2023. 00:20:00</div>`)[0];
+                popup_8a89404f1d67eaecf54b4514ba134c2e.setContent(html_dde25e41fd6176b5f8ee53ef812654bc);
+            
+        
+
+        marker_daaa90271dbcc32fe5f1838f05b8f6b6.bindPopup(popup_8a89404f1d67eaecf54b4514ba134c2e)
+        ;
+
+        
+    
+    
+            marker_daaa90271dbcc32fe5f1838f05b8f6b6.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50215
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fed9656cd6b88d80741ed9fcea12d7b0 = L.marker(
+                [44.008358, 20.946789],
+                {
+  "icon": icon_5a5cef35a490469cf287562d1f7715a3,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_0f69e720742cffa99c17f8750384d148 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c8017def8adf430a0566fc953d4d4cae = $(`<div id="html_c8017def8adf430a0566fc953d4d4cae" style="width: 100.0%; height: 100.0%;"><b>50201</b><br><i>Nepoznat prevoznik 50201</i><br><br><b>Linija:</b> 00024<br><b>Poslednji signal:</b> 14.04.2021. 05:13:40</div>`)[0];
+                popup_0f69e720742cffa99c17f8750384d148.setContent(html_c8017def8adf430a0566fc953d4d4cae);
+            
+        
+
+        marker_fed9656cd6b88d80741ed9fcea12d7b0.bindPopup(popup_0f69e720742cffa99c17f8750384d148)
+        ;
+
+        
+    
+    
+            marker_fed9656cd6b88d80741ed9fcea12d7b0.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50201
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a8bf0c16d40fd875542af0411d92d7a8 = L.marker(
+                [44.015675, 20.929443],
+                {
+  "icon": icon_cbe09ba2ec1a2ccbcbea0176da07396b,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_e1a39a3ef9964d5a1a8bdecff04c4e34 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca0ef76eb1fd499476559b302885eed9 = $(`<div id="html_ca0ef76eb1fd499476559b302885eed9" style="width: 100.0%; height: 100.0%;"><b>50038</b><br><i>Nepoznat prevoznik 50038</i><br><br><b>Linija:</b> 10002<br><b>Poslednji signal:</b> 04.12.2023. 01:06:30</div>`)[0];
+                popup_e1a39a3ef9964d5a1a8bdecff04c4e34.setContent(html_ca0ef76eb1fd499476559b302885eed9);
+            
+        
+
+        marker_a8bf0c16d40fd875542af0411d92d7a8.bindPopup(popup_e1a39a3ef9964d5a1a8bdecff04c4e34)
+        ;
+
+        
+    
+    
+            marker_a8bf0c16d40fd875542af0411d92d7a8.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50038
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_eb098833dc8b71043e348a96d715de8b = L.marker(
+                [44.01555, 20.929605],
+                {
+  "icon": icon_24871f60275e04fb7d11a47ba40a6831,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_d673ba7ea689c5ff725767fdb87cc547 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c7e534b90785ecf54411f4f796da2164 = $(`<div id="html_c7e534b90785ecf54411f4f796da2164" style="width: 100.0%; height: 100.0%;"><b>50033</b><br><i>Nepoznat prevoznik 50033</i><br><br><b>Linija:</b> 10015<br><b>Poslednji signal:</b> 01.12.2023. 03:49:00</div>`)[0];
+                popup_d673ba7ea689c5ff725767fdb87cc547.setContent(html_c7e534b90785ecf54411f4f796da2164);
+            
+        
+
+        marker_eb098833dc8b71043e348a96d715de8b.bindPopup(popup_d673ba7ea689c5ff725767fdb87cc547)
+        ;
+
+        
+    
+    
+            marker_eb098833dc8b71043e348a96d715de8b.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50033
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0faa563d174a1f54ba41be921b21d62f = L.marker(
+                [44.015556, 20.935059],
+                {
+  "icon": icon_ab7fca5a2b14328c1d93912042b3a4b6,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_6a98c147fcc754159e2bca70566302aa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f04169bbcfadff261f917e896dd06455 = $(`<div id="html_f04169bbcfadff261f917e896dd06455" style="width: 100.0%; height: 100.0%;"><b>50219</b><br><i>Nepoznat prevoznik 50219</i><br><br><b>Linija:</b> 10017<br><b>Poslednji signal:</b> 21.07.2020. 09:07:00</div>`)[0];
+                popup_6a98c147fcc754159e2bca70566302aa.setContent(html_f04169bbcfadff261f917e896dd06455);
+            
+        
+
+        marker_0faa563d174a1f54ba41be921b21d62f.bindPopup(popup_6a98c147fcc754159e2bca70566302aa)
+        ;
+
+        
+    
+    
+            marker_0faa563d174a1f54ba41be921b21d62f.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50219
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_95a45ff4e5d6a6b6d0bb39161730ec96 = L.marker(
+                [44.0157, 20.929567],
+                {
+  "icon": icon_9e773a8b2e0fb3969b0d56fb6f0bb270,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_f09f77b854b0f2584a3de0fbd652914f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e78db3ddb1c18ebc6f41599400100bcb = $(`<div id="html_e78db3ddb1c18ebc6f41599400100bcb" style="width: 100.0%; height: 100.0%;"><b>70262</b><br><i>Vulović Transport 262</i><br><br><b>Linija:</b> 20008<br><b>Poslednji signal:</b> 03.09.2019. 18:00:00</div>`)[0];
+                popup_f09f77b854b0f2584a3de0fbd652914f.setContent(html_e78db3ddb1c18ebc6f41599400100bcb);
+            
+        
+
+        marker_95a45ff4e5d6a6b6d0bb39161730ec96.bindPopup(popup_f09f77b854b0f2584a3de0fbd652914f)
+        ;
+
+        
+    
+    
+            marker_95a45ff4e5d6a6b6d0bb39161730ec96.bindTooltip(
+                `<div>
+                     Vulović Transport 262
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1312cfe76a64dff8fd1956454538f3f6 = L.marker(
+                [44.015244, 20.934544],
+                {
+  "icon": icon_0ef95e67bb7d57f9cbb6299fada9ad6a,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_c8fba196fb0e62a3b5ae466fe4158697 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e24176d583c91ffd9fac2a199e9a4e41 = $(`<div id="html_e24176d583c91ffd9fac2a199e9a4e41" style="width: 100.0%; height: 100.0%;"><b>50223</b><br><i>Nepoznat prevoznik 50223</i><br><br><b>Linija:</b> 20011<br><b>Poslednji signal:</b> 01.12.2023. 00:30:00</div>`)[0];
+                popup_c8fba196fb0e62a3b5ae466fe4158697.setContent(html_e24176d583c91ffd9fac2a199e9a4e41);
+            
+        
+
+        marker_1312cfe76a64dff8fd1956454538f3f6.bindPopup(popup_c8fba196fb0e62a3b5ae466fe4158697)
+        ;
+
+        
+    
+    
+            marker_1312cfe76a64dff8fd1956454538f3f6.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50223
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6517a031adf88c448d2d0c671014c008 = L.marker(
+                [44.01533, 20.934828],
+                {
+  "icon": icon_8f1a046ced5aa899008797e9e97e3d5e,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_4ff7cc8e517c810f1f7a2d6002ff19c4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_30bea7176a0cd1d07cbf025479b45d92 = $(`<div id="html_30bea7176a0cd1d07cbf025479b45d92" style="width: 100.0%; height: 100.0%;"><b>50034</b><br><i>Nepoznat prevoznik 50034</i><br><br><b>Linija:</b> 20011<br><b>Poslednji signal:</b> 06.04.2023. 20:47:30</div>`)[0];
+                popup_4ff7cc8e517c810f1f7a2d6002ff19c4.setContent(html_30bea7176a0cd1d07cbf025479b45d92);
+            
+        
+
+        marker_6517a031adf88c448d2d0c671014c008.bindPopup(popup_4ff7cc8e517c810f1f7a2d6002ff19c4)
+        ;
+
+        
+    
+    
+            marker_6517a031adf88c448d2d0c671014c008.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50034
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_87ffac4091c92de201c5463f0ba0f3fa = L.marker(
+                [44.01523, 20.934513],
+                {
+  "icon": icon_f63daa98fbeafce81ffdff0cc93197e3,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_75c8b79dc0c5c4112a85609a6cb36500 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f90f1ab84c83c0037255363fff1fab46 = $(`<div id="html_f90f1ab84c83c0037255363fff1fab46" style="width: 100.0%; height: 100.0%;"><b>50221</b><br><i>Nepoznat prevoznik 50221</i><br><br><b>Linija:</b> 20017<br><b>Poslednji signal:</b> 30.11.2023. 23:30:00</div>`)[0];
+                popup_75c8b79dc0c5c4112a85609a6cb36500.setContent(html_f90f1ab84c83c0037255363fff1fab46);
+            
+        
+
+        marker_87ffac4091c92de201c5463f0ba0f3fa.bindPopup(popup_75c8b79dc0c5c4112a85609a6cb36500)
+        ;
+
+        
+    
+    
+            marker_87ffac4091c92de201c5463f0ba0f3fa.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50221
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_de0bd0483c617c8d18b1553bfc1ec49e = L.marker(
+                [44.015274, 20.934626],
+                {
+  "icon": icon_18cf07e6b0dd7f142c8d01d924d52a56,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_9f994419904a11c449877a2f36c4b438 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5cbe515a924209086c5995d16f312b7 = $(`<div id="html_b5cbe515a924209086c5995d16f312b7" style="width: 100.0%; height: 100.0%;"><b>50222</b><br><i>Nepoznat prevoznik 50222</i><br><br><b>Linija:</b> 30001<br><b>Poslednji signal:</b> 30.11.2023. 23:35:30</div>`)[0];
+                popup_9f994419904a11c449877a2f36c4b438.setContent(html_b5cbe515a924209086c5995d16f312b7);
+            
+        
+
+        marker_de0bd0483c617c8d18b1553bfc1ec49e.bindPopup(popup_9f994419904a11c449877a2f36c4b438)
+        ;
+
+        
+    
+    
+            marker_de0bd0483c617c8d18b1553bfc1ec49e.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50222
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e45ca00cdcc37a3c603d053e59311b21 = L.marker(
+                [44.015076, 20.9341],
+                {
+  "icon": icon_6bdb7cd01250011cab5acb9c2214c1cc,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_924bac92ad9b6687104929ac7c75831d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0e52cee8a3e929a01a4e51c654bd457c = $(`<div id="html_0e52cee8a3e929a01a4e51c654bd457c" style="width: 100.0%; height: 100.0%;"><b>50032</b><br><i>Nepoznat prevoznik 50032</i><br><br><b>Linija:</b> 30002<br><b>Poslednji signal:</b> 10.06.2020. 14:41:00</div>`)[0];
+                popup_924bac92ad9b6687104929ac7c75831d.setContent(html_0e52cee8a3e929a01a4e51c654bd457c);
+            
+        
+
+        marker_e45ca00cdcc37a3c603d053e59311b21.bindPopup(popup_924bac92ad9b6687104929ac7c75831d)
+        ;
+
+        
+    
+    
+            marker_e45ca00cdcc37a3c603d053e59311b21.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50032
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_32d72ebd8c978d228b5473709ea35e32 = L.marker(
+                [44.015057, 20.935133],
+                {
+  "icon": icon_fe8bf2f93b7026457a28a57a5d6c64ce,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_3a15a742c9429d141443f715681be877 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bdc0269129235c0c368ea16b25e44efa = $(`<div id="html_bdc0269129235c0c368ea16b25e44efa" style="width: 100.0%; height: 100.0%;"><b>61016</b><br><i>Nepoznat prevoznik 61016</i><br><br><b>Linija:</b> 60601<br><b>Poslednji signal:</b> 30.11.2023. 21:10:00</div>`)[0];
+                popup_3a15a742c9429d141443f715681be877.setContent(html_bdc0269129235c0c368ea16b25e44efa);
+            
+        
+
+        marker_32d72ebd8c978d228b5473709ea35e32.bindPopup(popup_3a15a742c9429d141443f715681be877)
+        ;
+
+        
+    
+    
+            marker_32d72ebd8c978d228b5473709ea35e32.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 61016
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9dd78383187fb71e8090f4ae76058865 = L.marker(
+                [44.01528, 20.930258],
+                {
+  "icon": icon_8e7f1c952c25b8cccae7401a542524e2,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_506d89a5d993240238b89f12ec280406 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8ff171ad8f6106fc7ea9ab33d79ee99b = $(`<div id="html_8ff171ad8f6106fc7ea9ab33d79ee99b" style="width: 100.0%; height: 100.0%;"><b>50042</b><br><i>Nepoznat prevoznik 50042</i><br><br><b>Linija:</b> 60603<br><b>Poslednji signal:</b> 01.12.2023. 02:15:30</div>`)[0];
+                popup_506d89a5d993240238b89f12ec280406.setContent(html_8ff171ad8f6106fc7ea9ab33d79ee99b);
+            
+        
+
+        marker_9dd78383187fb71e8090f4ae76058865.bindPopup(popup_506d89a5d993240238b89f12ec280406)
+        ;
+
+        
+    
+    
+            marker_9dd78383187fb71e8090f4ae76058865.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50042
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d57bd157fbc6a5632dbe42d637c100f8 = L.marker(
+                [44.01504, 20.935102],
+                {
+  "icon": icon_5945558a40146816ec9cd9c9e2ec9271,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_ee341d6baec5bd8f80412cc7e4c03df9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_65a0451709a4f8fbf925f3b9cf10c4d6 = $(`<div id="html_65a0451709a4f8fbf925f3b9cf10c4d6" style="width: 100.0%; height: 100.0%;"><b>62011</b><br><i>Nepoznat prevoznik 62011</i><br><br><b>Linija:</b> 60603<br><b>Poslednji signal:</b> 30.11.2023. 23:30:00</div>`)[0];
+                popup_ee341d6baec5bd8f80412cc7e4c03df9.setContent(html_65a0451709a4f8fbf925f3b9cf10c4d6);
+            
+        
+
+        marker_d57bd157fbc6a5632dbe42d637c100f8.bindPopup(popup_ee341d6baec5bd8f80412cc7e4c03df9)
+        ;
+
+        
+    
+    
+            marker_d57bd157fbc6a5632dbe42d637c100f8.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 62011
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e4621930529915bcd09eeafbe6a10df1 = L.marker(
+                [44.015865, 20.929432],
+                {
+  "icon": icon_23cc87751c016aa383ffa342db1e6cb6,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_a32b8c6fca3a90cc7d3e7b9c204678b0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9aad6f47f021be83b9b4a33e710ee11d = $(`<div id="html_9aad6f47f021be83b9b4a33e710ee11d" style="width: 100.0%; height: 100.0%;"><b>50041</b><br><i>Nepoznat prevoznik 50041</i><br><br><b>Linija:</b> 60605<br><b>Poslednji signal:</b> 01.12.2023. 03:43:00</div>`)[0];
+                popup_a32b8c6fca3a90cc7d3e7b9c204678b0.setContent(html_9aad6f47f021be83b9b4a33e710ee11d);
+            
+        
+
+        marker_e4621930529915bcd09eeafbe6a10df1.bindPopup(popup_a32b8c6fca3a90cc7d3e7b9c204678b0)
+        ;
+
+        
+    
+    
+            marker_e4621930529915bcd09eeafbe6a10df1.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50041
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7fa847b92149cca2d2d5059c849b892e = L.marker(
+                [44.015514, 20.934944],
+                {
+  "icon": icon_4fd63b998c972934bfa8f6ec0a1a37f5,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_0b983a3f10085a99d50964efc7972fee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_368e806d0d18463992eee3f5bb9b7d97 = $(`<div id="html_368e806d0d18463992eee3f5bb9b7d97" style="width: 100.0%; height: 100.0%;"><b>55083</b><br><i>Nepoznat prevoznik 55083</i><br><br><b>Linija:</b> 60606<br><b>Poslednji signal:</b> 30.11.2023. 22:53:30</div>`)[0];
+                popup_0b983a3f10085a99d50964efc7972fee.setContent(html_368e806d0d18463992eee3f5bb9b7d97);
+            
+        
+
+        marker_7fa847b92149cca2d2d5059c849b892e.bindPopup(popup_0b983a3f10085a99d50964efc7972fee)
+        ;
+
+        
+    
+    
+            marker_7fa847b92149cca2d2d5059c849b892e.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 55083
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_351192e8966c690e2ee156b72211612d = L.marker(
+                [44.014996, 20.934986],
+                {
+  "icon": icon_72cbfae15d9c6842e25f3a879012dd42,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_822ddb4452074508a8d2fe3001ca5e1f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f039e54785fd3d541174956a6c4cd014 = $(`<div id="html_f039e54785fd3d541174956a6c4cd014" style="width: 100.0%; height: 100.0%;"><b>61017</b><br><i>Nepoznat prevoznik 61017</i><br><br><b>Linija:</b> 60607<br><b>Poslednji signal:</b> 03.11.2023. 09:20:10</div>`)[0];
+                popup_822ddb4452074508a8d2fe3001ca5e1f.setContent(html_f039e54785fd3d541174956a6c4cd014);
+            
+        
+
+        marker_351192e8966c690e2ee156b72211612d.bindPopup(popup_822ddb4452074508a8d2fe3001ca5e1f)
+        ;
+
+        
+    
+    
+            marker_351192e8966c690e2ee156b72211612d.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 61017
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a740cca26b563e528424f8f552f447dd = L.marker(
+                [44.015526, 20.93508],
+                {
+  "icon": icon_67aba2b39cc9ec6cf8534424ffbc2311,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_9819005929657b4f8d1f4a2ef936b6a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3bcba3ad8df9a092c180026b503c1bee = $(`<div id="html_3bcba3ad8df9a092c180026b503c1bee" style="width: 100.0%; height: 100.0%;"><b>55091</b><br><i>Nepoznat prevoznik 55091</i><br><br><b>Linija:</b> 60610<br><b>Poslednji signal:</b> 06.12.2023. 15:23:10</div>`)[0];
+                popup_9819005929657b4f8d1f4a2ef936b6a5.setContent(html_3bcba3ad8df9a092c180026b503c1bee);
+            
+        
+
+        marker_a740cca26b563e528424f8f552f447dd.bindPopup(popup_9819005929657b4f8d1f4a2ef936b6a5)
+        ;
+
+        
+    
+    
+            marker_a740cca26b563e528424f8f552f447dd.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 55091
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d842883cd65118d63b938d32a6dec387 = L.marker(
+                [44.015182, 20.930313],
+                {
+  "icon": icon_a3e6197ddfd6afb1ff873bc499ffd36e,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_f5d6136f878fb45f34e2e2f6c9459014 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e861fe04fd269f506e2c1c96cb4af26a = $(`<div id="html_e861fe04fd269f506e2c1c96cb4af26a" style="width: 100.0%; height: 100.0%;"><b>30117</b><br><i>Strela Obrenovac 117</i><br><br><b>Linija:</b> 60610<br><b>Poslednji signal:</b> 03.12.2023. 18:02:30</div>`)[0];
+                popup_f5d6136f878fb45f34e2e2f6c9459014.setContent(html_e861fe04fd269f506e2c1c96cb4af26a);
+            
+        
+
+        marker_d842883cd65118d63b938d32a6dec387.bindPopup(popup_f5d6136f878fb45f34e2e2f6c9459014)
+        ;
+
+        
+    
+    
+            marker_d842883cd65118d63b938d32a6dec387.bindTooltip(
+                `<div>
+                     Strela Obrenovac 117
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0a1bfe2980239b8edbc92cecd5e215a7 = L.marker(
+                [44.015118, 20.935202],
+                {
+  "icon": icon_b0a5de745453c5c84572db5ddc699ee5,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_3af116a263a6cfd9d6fc2f1b7f47b776 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_077fce0d60d746109453450dab9eb34b = $(`<div id="html_077fce0d60d746109453450dab9eb34b" style="width: 100.0%; height: 100.0%;"><b>55094</b><br><i>Nepoznat prevoznik 55094</i><br><br><b>Linija:</b> 60611<br><b>Poslednji signal:</b> 30.11.2023. 23:43:00</div>`)[0];
+                popup_3af116a263a6cfd9d6fc2f1b7f47b776.setContent(html_077fce0d60d746109453450dab9eb34b);
+            
+        
+
+        marker_0a1bfe2980239b8edbc92cecd5e215a7.bindPopup(popup_3af116a263a6cfd9d6fc2f1b7f47b776)
+        ;
+
+        
+    
+    
+            marker_0a1bfe2980239b8edbc92cecd5e215a7.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 55094
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7f93adfe44a3505c4776e2a667bd465d = L.marker(
+                [44.015373, 20.934746],
+                {
+  "icon": icon_4049d74fb5b4dbb830423276f330c748,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_c6c257c8aebd7ee35b1d8a90a2d58603 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_220ca3dc77cd197c22fe08efd207e6e1 = $(`<div id="html_220ca3dc77cd197c22fe08efd207e6e1" style="width: 100.0%; height: 100.0%;"><b>50040</b><br><i>Nepoznat prevoznik 50040</i><br><br><b>Linija:</b> 61605<br><b>Poslednji signal:</b> 19.02.2022. 13:38:00</div>`)[0];
+                popup_c6c257c8aebd7ee35b1d8a90a2d58603.setContent(html_220ca3dc77cd197c22fe08efd207e6e1);
+            
+        
+
+        marker_7f93adfe44a3505c4776e2a667bd465d.bindPopup(popup_c6c257c8aebd7ee35b1d8a90a2d58603)
+        ;
+
+        
+    
+    
+            marker_7f93adfe44a3505c4776e2a667bd465d.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50040
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_cf2c67b61a6afbb48ac2a316fb42e904 = L.marker(
+                [44.015152, 20.930334],
+                {
+  "icon": icon_6d2f993857e45e42e76f8a4cbeea714f,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_d90e671c1e80ed8b8dccf241972960f8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_06f1da5c89ea475170af1f180560a3ce = $(`<div id="html_06f1da5c89ea475170af1f180560a3ce" style="width: 100.0%; height: 100.0%;"><b>70295</b><br><i>Vulović Transport 295</i><br><br><b>Linija:</b> 61608<br><b>Poslednji signal:</b> 17.09.2020. 21:17:00</div>`)[0];
+                popup_d90e671c1e80ed8b8dccf241972960f8.setContent(html_06f1da5c89ea475170af1f180560a3ce);
+            
+        
+
+        marker_cf2c67b61a6afbb48ac2a316fb42e904.bindPopup(popup_d90e671c1e80ed8b8dccf241972960f8)
+        ;
+
+        
+    
+    
+            marker_cf2c67b61a6afbb48ac2a316fb42e904.bindTooltip(
+                `<div>
+                     Vulović Transport 295
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_056624bf6f87861990a38897ed28c83e = L.marker(
+                [44.015083, 20.929884],
+                {
+  "icon": icon_ba2d08a0933377b81c1a458ca3eef4dd,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_282349f5452bab21f69881befd662805 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_65d5dbf55c7ab201a2d84f1c15369b1e = $(`<div id="html_65d5dbf55c7ab201a2d84f1c15369b1e" style="width: 100.0%; height: 100.0%;"><b>70267</b><br><i>Vulović Transport 267</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 25.10.2019. 23:50:00</div>`)[0];
+                popup_282349f5452bab21f69881befd662805.setContent(html_65d5dbf55c7ab201a2d84f1c15369b1e);
+            
+        
+
+        marker_056624bf6f87861990a38897ed28c83e.bindPopup(popup_282349f5452bab21f69881befd662805)
+        ;
+
+        
+    
+    
+            marker_056624bf6f87861990a38897ed28c83e.bindTooltip(
+                `<div>
+                     Vulović Transport 267
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_27a512ff3fbc44f0f9a41afe4a4ed7a1 = L.marker(
+                [44.014683, 20.93034],
+                {
+  "icon": icon_aae03373a29be026b41ac63e552f6b07,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_88c3b5080a0e0048879367fc6300fcdf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4c72cfa5069e25fb06af138144251bb0 = $(`<div id="html_4c72cfa5069e25fb06af138144251bb0" style="width: 100.0%; height: 100.0%;"><b>70264</b><br><i>Vulović Transport 264</i><br><br><b>Linija:</b> 00010<br><b>Poslednji signal:</b> 13.12.2019. 21:34:00</div>`)[0];
+                popup_88c3b5080a0e0048879367fc6300fcdf.setContent(html_4c72cfa5069e25fb06af138144251bb0);
+            
+        
+
+        marker_27a512ff3fbc44f0f9a41afe4a4ed7a1.bindPopup(popup_88c3b5080a0e0048879367fc6300fcdf)
+        ;
+
+        
+    
+    
+            marker_27a512ff3fbc44f0f9a41afe4a4ed7a1.bindTooltip(
+                `<div>
+                     Vulović Transport 264
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d016d5e0da20ba6ae3c525c000ad398b = L.marker(
+                [44.01512, 20.929947],
+                {
+  "icon": icon_745a5e81741c4ef9e5580b3ab8ee03d1,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_491a6bcda89cd34f0f6dd91652669bf8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1657e8adf5989597bb8b5806b48822ff = $(`<div id="html_1657e8adf5989597bb8b5806b48822ff" style="width: 100.0%; height: 100.0%;"><b>70260</b><br><i>Vulović Transport 260</i><br><br><b>Linija:</b> 00020<br><b>Poslednji signal:</b> 13.12.2019. 22:00:00</div>`)[0];
+                popup_491a6bcda89cd34f0f6dd91652669bf8.setContent(html_1657e8adf5989597bb8b5806b48822ff);
+            
+        
+
+        marker_d016d5e0da20ba6ae3c525c000ad398b.bindPopup(popup_491a6bcda89cd34f0f6dd91652669bf8)
+        ;
+
+        
+    
+    
+            marker_d016d5e0da20ba6ae3c525c000ad398b.bindTooltip(
+                `<div>
+                     Vulović Transport 260
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0b3735d736e9f1df1931bfccf36cb69b = L.marker(
+                [44.00234, 20.891933],
+                {
+  "icon": icon_4af1b2cdad6a269dc75bdaa31bc2c21d,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_5e3e20c15d870a91b729cd456b88a43a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1b5fdfaf437528d31004a394486cfe22 = $(`<div id="html_1b5fdfaf437528d31004a394486cfe22" style="width: 100.0%; height: 100.0%;"><b>70263</b><br><i>Vulović Transport 263</i><br><br><b>Linija:</b> 00020<br><b>Poslednji signal:</b> 10.01.2020. 15:50:00</div>`)[0];
+                popup_5e3e20c15d870a91b729cd456b88a43a.setContent(html_1b5fdfaf437528d31004a394486cfe22);
+            
+        
+
+        marker_0b3735d736e9f1df1931bfccf36cb69b.bindPopup(popup_5e3e20c15d870a91b729cd456b88a43a)
+        ;
+
+        
+    
+    
+            marker_0b3735d736e9f1df1931bfccf36cb69b.bindTooltip(
+                `<div>
+                     Vulović Transport 263
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c7b11063ca41a6dbe3ac3b24e4b33291 = L.marker(
+                [44.01552, 20.934624],
+                {
+  "icon": icon_4b7076443f8c2b02593db4cfe365d3b7,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_ed641ca64bb1016aa4b88d9030aa02cd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_928b3b6a991c46867b4c4f34fe50960e = $(`<div id="html_928b3b6a991c46867b4c4f34fe50960e" style="width: 100.0%; height: 100.0%;"><b>50072</b><br><i>Nepoznat prevoznik 50072</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 19.10.2019. 10:25:00</div>`)[0];
+                popup_ed641ca64bb1016aa4b88d9030aa02cd.setContent(html_928b3b6a991c46867b4c4f34fe50960e);
+            
+        
+
+        marker_c7b11063ca41a6dbe3ac3b24e4b33291.bindPopup(popup_ed641ca64bb1016aa4b88d9030aa02cd)
+        ;
+
+        
+    
+    
+            marker_c7b11063ca41a6dbe3ac3b24e4b33291.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50072
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c30288297cf551fdb17c2862d360f516 = L.marker(
+                [44.014713, 20.930168],
+                {
+  "icon": icon_7bbdb4346da9695392304687eff92dae,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_6f68d972c8a64d1e1de2a0005517bc0b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5abab8bddeeb696d495954d4bc534285 = $(`<div id="html_5abab8bddeeb696d495954d4bc534285" style="width: 100.0%; height: 100.0%;"><b>70222</b><br><i>Vulović Transport 222</i><br><br><b>Linija:</b> 62602<br><b>Poslednji signal:</b> 01.01.2020. 14:25:40</div>`)[0];
+                popup_6f68d972c8a64d1e1de2a0005517bc0b.setContent(html_5abab8bddeeb696d495954d4bc534285);
+            
+        
+
+        marker_c30288297cf551fdb17c2862d360f516.bindPopup(popup_6f68d972c8a64d1e1de2a0005517bc0b)
+        ;
+
+        
+    
+    
+            marker_c30288297cf551fdb17c2862d360f516.bindTooltip(
+                `<div>
+                     Vulović Transport 222
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_545a1da27882e66b15c9b82e74b3f956 = L.marker(
+                [44.01574, 20.92929],
+                {
+  "icon": icon_f90cf9e329a4968dd4f578831d46a822,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_c8c76db16037d2d4774ef1f94e111640 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_69083a575a9700f792c0268cc695eb4c = $(`<div id="html_69083a575a9700f792c0268cc695eb4c" style="width: 100.0%; height: 100.0%;"><b>70220</b><br><i>Vulović Transport 220</i><br><br><b>Linija:</b> 00013<br><b>Poslednji signal:</b> 16.11.2020. 13:08:20</div>`)[0];
+                popup_c8c76db16037d2d4774ef1f94e111640.setContent(html_69083a575a9700f792c0268cc695eb4c);
+            
+        
+
+        marker_545a1da27882e66b15c9b82e74b3f956.bindPopup(popup_c8c76db16037d2d4774ef1f94e111640)
+        ;
+
+        
+    
+    
+            marker_545a1da27882e66b15c9b82e74b3f956.bindTooltip(
+                `<div>
+                     Vulović Transport 220
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0752fdf306257a274f086afc9d4cf84a = L.marker(
+                [44.015644, 20.929562],
+                {
+  "icon": icon_b07840ed0b50252c93eef0adfb478c9d,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_6c907be89a54c3935d55d79e77f9940a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5b63062d3b412520e72ed3ac66d5f180 = $(`<div id="html_5b63062d3b412520e72ed3ac66d5f180" style="width: 100.0%; height: 100.0%;"><b>70221</b><br><i>Vulović Transport 221</i><br><br><b>Linija:</b> 00006<br><b>Poslednji signal:</b> 18.09.2020. 12:26:50</div>`)[0];
+                popup_6c907be89a54c3935d55d79e77f9940a.setContent(html_5b63062d3b412520e72ed3ac66d5f180);
+            
+        
+
+        marker_0752fdf306257a274f086afc9d4cf84a.bindPopup(popup_6c907be89a54c3935d55d79e77f9940a)
+        ;
+
+        
+    
+    
+            marker_0752fdf306257a274f086afc9d4cf84a.bindTooltip(
+                `<div>
+                     Vulović Transport 221
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6ba329142cc9de49477a4c1bf6386b66 = L.marker(
+                [44.01465, 20.930372],
+                {
+  "icon": icon_5fcfd3f11cfe33ab87dd39375bf58db0,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_d3980613800af1d5f29f4d4e68ab2e7b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_51b821d9619ee1e5254acc830742fcc4 = $(`<div id="html_51b821d9619ee1e5254acc830742fcc4" style="width: 100.0%; height: 100.0%;"><b>70266</b><br><i>Vulović Transport 266</i><br><br><b>Linija:</b> 60606<br><b>Poslednji signal:</b> 10.01.2020. 20:20:00</div>`)[0];
+                popup_d3980613800af1d5f29f4d4e68ab2e7b.setContent(html_51b821d9619ee1e5254acc830742fcc4);
+            
+        
+
+        marker_6ba329142cc9de49477a4c1bf6386b66.bindPopup(popup_d3980613800af1d5f29f4d4e68ab2e7b)
+        ;
+
+        
+    
+    
+            marker_6ba329142cc9de49477a4c1bf6386b66.bindTooltip(
+                `<div>
+                     Vulović Transport 266
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c82b6310461225094fd801e38de7c93c = L.marker(
+                [44.015682, 20.935205],
+                {
+  "icon": icon_a1b872b83bb76e2515932db3ebeb6ce7,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_6e17848acb469ee06908b97ecde7036b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b14b25faf471b2beb2cf0fa1758c9b73 = $(`<div id="html_b14b25faf471b2beb2cf0fa1758c9b73" style="width: 100.0%; height: 100.0%;"><b>50070</b><br><i>Nepoznat prevoznik 50070</i><br><br><b>Linija:</b> 30001<br><b>Poslednji signal:</b> 01.02.2020. 18:11:30</div>`)[0];
+                popup_6e17848acb469ee06908b97ecde7036b.setContent(html_b14b25faf471b2beb2cf0fa1758c9b73);
+            
+        
+
+        marker_c82b6310461225094fd801e38de7c93c.bindPopup(popup_6e17848acb469ee06908b97ecde7036b)
+        ;
+
+        
+    
+    
+            marker_c82b6310461225094fd801e38de7c93c.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50070
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a122f6cd7b606dc706f8f7a8c86b10c6 = L.marker(
+                [44.015663, 20.934978],
+                {
+  "icon": icon_2dd4485502ea32362c5ccdea59102203,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_cfa9f1940128999aeb25113057ccdc86 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f59c5fb41d62d1e69609ac4147b42649 = $(`<div id="html_f59c5fb41d62d1e69609ac4147b42649" style="width: 100.0%; height: 100.0%;"><b>50002</b><br><i>Nepoznat prevoznik 50002</i><br><br><b>Linija:</b> 30001<br><b>Poslednji signal:</b> 01.02.2020. 15:00:00</div>`)[0];
+                popup_cfa9f1940128999aeb25113057ccdc86.setContent(html_f59c5fb41d62d1e69609ac4147b42649);
+            
+        
+
+        marker_a122f6cd7b606dc706f8f7a8c86b10c6.bindPopup(popup_cfa9f1940128999aeb25113057ccdc86)
+        ;
+
+        
+    
+    
+            marker_a122f6cd7b606dc706f8f7a8c86b10c6.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50002
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d2f4b93c594fa59bdbff1b90cdd2b7cd = L.marker(
+                [44.01541, 20.935291],
+                {
+  "icon": icon_f11dc83101b8fb53ad642eb01e130453,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_2c99ed4df59a43a0f86318196e13c4ac = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_655336ea9dd1e6102443c1ff958b463a = $(`<div id="html_655336ea9dd1e6102443c1ff958b463a" style="width: 100.0%; height: 100.0%;"><b>50071</b><br><i>Nepoznat prevoznik 50071</i><br><br><b>Linija:</b> 00011<br><b>Poslednji signal:</b> 28.12.2019. 00:34:30</div>`)[0];
+                popup_2c99ed4df59a43a0f86318196e13c4ac.setContent(html_655336ea9dd1e6102443c1ff958b463a);
+            
+        
+
+        marker_d2f4b93c594fa59bdbff1b90cdd2b7cd.bindPopup(popup_2c99ed4df59a43a0f86318196e13c4ac)
+        ;
+
+        
+    
+    
+            marker_d2f4b93c594fa59bdbff1b90cdd2b7cd.bindTooltip(
+                `<div>
+                     Nepoznat prevoznik 50071
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ca1edf9b8ce828b8f7d62f203d2d088c = L.marker(
+                [44.015427, 20.929668],
+                {
+  "icon": icon_fa1e17750745a533e77fcbaefbbb0936,
+}
+            ).addTo(feature_group_04263e6a01c0008e7b4c3297391b3479);
+        
+    
+        var popup_c740b13011c9d263a9da2d1009f6ff15 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4e6f70493ab15d17f76c806b1d5b9271 = $(`<div id="html_4e6f70493ab15d17f76c806b1d5b9271" style="width: 100.0%; height: 100.0%;"><b>70224</b><br><i>Vulović Transport 224</i><br><br><b>Linija:</b> 00003<br><b>Poslednji signal:</b> 15.01.2020. 22:02:00</div>`)[0];
+                popup_c740b13011c9d263a9da2d1009f6ff15.setContent(html_4e6f70493ab15d17f76c806b1d5b9271);
+            
+        
+
+        marker_ca1edf9b8ce828b8f7d62f203d2d088c.bindPopup(popup_c740b13011c9d263a9da2d1009f6ff15)
+        ;
+
+        
+    
+    
+            marker_ca1edf9b8ce828b8f7d62f203d2d088c.bindTooltip(
+                `<div>
+                     Vulović Transport 224
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        function geo_json_fd590fcfad0d245f194f56d458be33d9_styler(feature) {
+            switch(feature.properties.BUS_ID) {
+                default:
+                    return {"color": "transparent", "fillColor": "transparent", "weight": 0};
+            }
+        }
+
+        function geo_json_fd590fcfad0d245f194f56d458be33d9_onEachFeature(feature, layer) {
+
+            layer.on({
+            });
+        };
+        var geo_json_fd590fcfad0d245f194f56d458be33d9 = L.geoJson(null, {
+                onEachFeature: geo_json_fd590fcfad0d245f194f56d458be33d9_onEachFeature,
+            
+                style: geo_json_fd590fcfad0d245f194f56d458be33d9_styler,
+            ...{
+}
+        });
+
+        function geo_json_fd590fcfad0d245f194f56d458be33d9_add (data) {
+            geo_json_fd590fcfad0d245f194f56d458be33d9
+                .addData(data);
+        }
+            geo_json_fd590fcfad0d245f194f56d458be33d9_add({"features": [{"geometry": {"coordinates": [20.930946, 44.015823], "type": "Point"}, "properties": {"BUS_ID": "70227"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931368, 44.015053], "type": "Point"}, "properties": {"BUS_ID": "70312"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931786, 44.015034], "type": "Point"}, "properties": {"BUS_ID": "70338"}, "type": "Feature"}, {"geometry": {"coordinates": [20.934029, 44.000607], "type": "Point"}, "properties": {"BUS_ID": "70331"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931215, 44.015766], "type": "Point"}, "properties": {"BUS_ID": "70290"}, "type": "Feature"}, {"geometry": {"coordinates": [20.927576, 44.010876], "type": "Point"}, "properties": {"BUS_ID": "70291"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930223, 44.014805], "type": "Point"}, "properties": {"BUS_ID": "70275"}, "type": "Feature"}, {"geometry": {"coordinates": [20.88351, 43.998104], "type": "Point"}, "properties": {"BUS_ID": "70318"}, "type": "Feature"}, {"geometry": {"coordinates": [20.912819, 44.00903], "type": "Point"}, "properties": {"BUS_ID": "70328"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930426, 44.01474], "type": "Point"}, "properties": {"BUS_ID": "70311"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93035, 44.014782], "type": "Point"}, "properties": {"BUS_ID": "70282"}, "type": "Feature"}, {"geometry": {"coordinates": [20.87932, 44.0398], "type": "Point"}, "properties": {"BUS_ID": "70315"}, "type": "Feature"}, {"geometry": {"coordinates": [20.918762, 44.02852], "type": "Point"}, "properties": {"BUS_ID": "70274"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930676, 44.01494], "type": "Point"}, "properties": {"BUS_ID": "70299"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930044, 44.015278], "type": "Point"}, "properties": {"BUS_ID": "70226"}, "type": "Feature"}, {"geometry": {"coordinates": [20.951878, 44.03198], "type": "Point"}, "properties": {"BUS_ID": "70319"}, "type": "Feature"}, {"geometry": {"coordinates": [20.879332, 43.985153], "type": "Point"}, "properties": {"BUS_ID": "70326"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93005, 44.014923], "type": "Point"}, "properties": {"BUS_ID": "70301"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931059, 44.015465], "type": "Point"}, "properties": {"BUS_ID": "70288"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931316, 44.014893], "type": "Point"}, "properties": {"BUS_ID": "70335"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93126, 44.015762], "type": "Point"}, "properties": {"BUS_ID": "70303"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930931, 44.01582], "type": "Point"}, "properties": {"BUS_ID": "70285"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931318, 44.014896], "type": "Point"}, "properties": {"BUS_ID": "70317"}, "type": "Feature"}, {"geometry": {"coordinates": [20.95489, 44.05105], "type": "Point"}, "properties": {"BUS_ID": "30228"}, "type": "Feature"}, {"geometry": {"coordinates": [20.968884, 44.033558], "type": "Point"}, "properties": {"BUS_ID": "70337"}, "type": "Feature"}, {"geometry": {"coordinates": [20.890627, 43.988583], "type": "Point"}, "properties": {"BUS_ID": "70329"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930931, 44.0157], "type": "Point"}, "properties": {"BUS_ID": "70273"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931364, 44.015697], "type": "Point"}, "properties": {"BUS_ID": "70298"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931011, 44.015667], "type": "Point"}, "properties": {"BUS_ID": "70270"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931337, 44.0156], "type": "Point"}, "properties": {"BUS_ID": "70302"}, "type": "Feature"}, {"geometry": {"coordinates": [20.929834, 44.01567], "type": "Point"}, "properties": {"BUS_ID": "70276"}, "type": "Feature"}, {"geometry": {"coordinates": [20.917665, 44.009216], "type": "Point"}, "properties": {"BUS_ID": "70321"}, "type": "Feature"}, {"geometry": {"coordinates": [20.927584, 44.011044], "type": "Point"}, "properties": {"BUS_ID": "70325"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930532, 44.014496], "type": "Point"}, "properties": {"BUS_ID": "70279"}, "type": "Feature"}, {"geometry": {"coordinates": [20.872728, 43.945244], "type": "Point"}, "properties": {"BUS_ID": "30227"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930347, 44.01451], "type": "Point"}, "properties": {"BUS_ID": "70296"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930424, 44.014755], "type": "Point"}, "properties": {"BUS_ID": "70281"}, "type": "Feature"}, {"geometry": {"coordinates": [20.820827, 44.031227], "type": "Point"}, "properties": {"BUS_ID": "70500"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931208, 44.01502], "type": "Point"}, "properties": {"BUS_ID": "70314"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93016, 44.01534], "type": "Point"}, "properties": {"BUS_ID": "30234"}, "type": "Feature"}, {"geometry": {"coordinates": [20.918257, 44.00519], "type": "Point"}, "properties": {"BUS_ID": "30235"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931475, 44.015656], "type": "Point"}, "properties": {"BUS_ID": "70300"}, "type": "Feature"}, {"geometry": {"coordinates": [20.929379, 44.015568], "type": "Point"}, "properties": {"BUS_ID": "70293"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93053, 44.014603], "type": "Point"}, "properties": {"BUS_ID": "70272"}, "type": "Feature"}, {"geometry": {"coordinates": [20.898594, 44.00875], "type": "Point"}, "properties": {"BUS_ID": "70278"}, "type": "Feature"}, {"geometry": {"coordinates": [20.906242, 44.00664], "type": "Point"}, "properties": {"BUS_ID": "70334"}, "type": "Feature"}, {"geometry": {"coordinates": [20.89717, 44.00831], "type": "Point"}, "properties": {"BUS_ID": "30231"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930143, 44.015415], "type": "Point"}, "properties": {"BUS_ID": "30240"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93148, 44.01465], "type": "Point"}, "properties": {"BUS_ID": "70277"}, "type": "Feature"}, {"geometry": {"coordinates": [20.907215, 44.00699], "type": "Point"}, "properties": {"BUS_ID": "70333"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930357, 44.01467], "type": "Point"}, "properties": {"BUS_ID": "70283"}, "type": "Feature"}, {"geometry": {"coordinates": [20.916765, 44.018288], "type": "Point"}, "properties": {"BUS_ID": "30230"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931305, 44.014935], "type": "Point"}, "properties": {"BUS_ID": "70332"}, "type": "Feature"}, {"geometry": {"coordinates": [20.897507, 44.009], "type": "Point"}, "properties": {"BUS_ID": "70316"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931189, 44.015797], "type": "Point"}, "properties": {"BUS_ID": "70309"}, "type": "Feature"}, {"geometry": {"coordinates": [20.920258, 44.016117], "type": "Point"}, "properties": {"BUS_ID": "30238"}, "type": "Feature"}, {"geometry": {"coordinates": [20.905582, 44.02846], "type": "Point"}, "properties": {"BUS_ID": "70330"}, "type": "Feature"}, {"geometry": {"coordinates": [20.92989, 44.01531], "type": "Point"}, "properties": {"BUS_ID": "70313"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931013, 44.014557], "type": "Point"}, "properties": {"BUS_ID": "70280"}, "type": "Feature"}, {"geometry": {"coordinates": [20.910454, 44.0202], "type": "Point"}, "properties": {"BUS_ID": "70327"}, "type": "Feature"}, {"geometry": {"coordinates": [20.932842, 44.015144], "type": "Point"}, "properties": {"BUS_ID": "70323"}, "type": "Feature"}, {"geometry": {"coordinates": [20.916355, 44.012024], "type": "Point"}, "properties": {"BUS_ID": "30237"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930353, 44.014828], "type": "Point"}, "properties": {"BUS_ID": "70292"}, "type": "Feature"}, {"geometry": {"coordinates": [20.868793, 43.993305], "type": "Point"}, "properties": {"BUS_ID": "70324"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931463, 44.015003], "type": "Point"}, "properties": {"BUS_ID": "70225"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930767, 44.014385], "type": "Point"}, "properties": {"BUS_ID": "70271"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931227, 44.014908], "type": "Point"}, "properties": {"BUS_ID": "70322"}, "type": "Feature"}, {"geometry": {"coordinates": [20.831831, 43.982372], "type": "Point"}, "properties": {"BUS_ID": "30241"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931211, 44.015785], "type": "Point"}, "properties": {"BUS_ID": "70289"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930044, 44.015182], "type": "Point"}, "properties": {"BUS_ID": "70306"}, "type": "Feature"}, {"geometry": {"coordinates": [20.865393, 43.985806], "type": "Point"}, "properties": {"BUS_ID": "30239"}, "type": "Feature"}, {"geometry": {"coordinates": [20.916504, 44.029762], "type": "Point"}, "properties": {"BUS_ID": "30233"}, "type": "Feature"}, {"geometry": {"coordinates": [20.93725, 43.972843], "type": "Point"}, "properties": {"BUS_ID": "30183"}, "type": "Feature"}, {"geometry": {"coordinates": [20.931253, 44.015747], "type": "Point"}, "properties": {"BUS_ID": "70307"}, "type": "Feature"}, {"geometry": {"coordinates": [20.984266, 44.045567], "type": "Point"}, "properties": {"BUS_ID": "30236"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930365, 44.015232], "type": "Point"}, "properties": {"BUS_ID": "30165"}, "type": "Feature"}, {"geometry": {"coordinates": [20.938816, 43.99686], "type": "Point"}, "properties": {"BUS_ID": "30177"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930258, 44.01522], "type": "Point"}, "properties": {"BUS_ID": "30169"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930347, 44.015167], "type": "Point"}, "properties": {"BUS_ID": "30173"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930075, 44.018776], "type": "Point"}, "properties": {"BUS_ID": "30221"}, "type": "Feature"}, {"geometry": {"coordinates": [20.198065, 44.65622], "type": "Point"}, "properties": {"BUS_ID": "30160"}, "type": "Feature"}, {"geometry": {"coordinates": [20.91715, 44.00909], "type": "Point"}, "properties": {"BUS_ID": "30223"}, "type": "Feature"}, {"geometry": {"coordinates": [20.927504, 44.0102], "type": "Point"}, "properties": {"BUS_ID": "30175"}, "type": "Feature"}, {"geometry": {"coordinates": [20.838924, 44.113106], "type": "Point"}, "properties": {"BUS_ID": "30174"}, "type": "Feature"}, {"geometry": {"coordinates": [20.665277, 44.152195], "type": "Point"}, "properties": {"BUS_ID": "30229"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930305, 44.01513], "type": "Point"}, "properties": {"BUS_ID": "30168"}, "type": "Feature"}, {"geometry": {"coordinates": [20.929998, 44.01553], "type": "Point"}, "properties": {"BUS_ID": "30170"}, "type": "Feature"}, {"geometry": {"coordinates": [20.927536, 44.010292], "type": "Point"}, "properties": {"BUS_ID": "30176"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930246, 44.018757], "type": "Point"}, "properties": {"BUS_ID": "30172"}, "type": "Feature"}, {"geometry": {"coordinates": [20.930344, 44.015312], "type": "Point"}, "properties": {"BUS_ID": "30222"}, "type": "Feature"}, {"geometry": {"coordinates": [20.823235, 44.190113], "type": "Point"}, "properties": {"BUS_ID": "30232"}, "type": "Feature"}, {"geometry": {"coordinates": [20.927702, 44.010303], "type": "Point"}, "properties": {"BUS_ID": "30166"}, "type": "Feature"}, {"geometry": {"coordinates": [20.790043, 43.98326], "type": "Point"}, "properties": {"BUS_ID": "30167"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_fd590fcfad0d245f194f56d458be33d9.addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var geo_json_fd590fcfad0d245f194f56d458be33d9searchControl = new L.Control.Search({
+                layer: geo_json_fd590fcfad0d245f194f56d458be33d9,
+                
+                propertyName: 'BUS_ID',
+                
+                collapsed: true,
+                textPlaceholder: 'Traži garažni broj...',
+                position:'topleft',
+            
+                initial: false,
+                
+                zoom: 16,
+                
+                hideMarkerOnCollapse: true
+            
+                });
+                geo_json_fd590fcfad0d245f194f56d458be33d9searchControl.on('search:locationfound', function(e) {
+                    geo_json_fd590fcfad0d245f194f56d458be33d9.setStyle(function(feature){
+                        return feature.properties.style
+                    })
+                    
+                    if(e.layer._popup)
+                        e.layer.openPopup();
+                })
+                geo_json_fd590fcfad0d245f194f56d458be33d9searchControl.on('search:collapsed', function(e) {
+                        geo_json_fd590fcfad0d245f194f56d458be33d9.setStyle(function(feature){
+                            return feature.properties.style
+                    });
+                });
+            map_1a7a6e6eb6746aaf45803154308b271c.addControl( geo_json_fd590fcfad0d245f194f56d458be33d9searchControl );
+
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+        
+    
+            var layer_control_112f09189a3c5309d3c4bcfee6e7d29f_layers = {
+                base_layers : {
+                    "cartodbdarkmatter" : tile_layer_85d0f7ea16a0f9d73ef7589842394bf9,
+                    "Satelit" : tile_layer_ad52f93b1b66334d7209207cb1c3d2de,
+                    "Standardna mapa" : tile_layer_3595802830dd406974f90683d344197c,
+                },
+                overlays :  {
+                    "Aktivni" : feature_group_26ea359fc33225135c533582e199e244,
+                    "Neaktivni (2024-danas)" : feature_group_b9ea94fc7a3deaed287216ce7dc944f7,
+                    "Arhiva (biv\u0161a Arriva, \u003c2024)" : feature_group_04263e6a01c0008e7b4c3297391b3479,
+                    "search_layer" : geo_json_fd590fcfad0d245f194f56d458be33d9,
+                },
+            };
+            let layer_control_112f09189a3c5309d3c4bcfee6e7d29f = L.control.layers(
+                layer_control_112f09189a3c5309d3c4bcfee6e7d29f_layers.base_layers,
+                layer_control_112f09189a3c5309d3c4bcfee6e7d29f_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_1a7a6e6eb6746aaf45803154308b271c);
+
+        
+</script>
+</html>
