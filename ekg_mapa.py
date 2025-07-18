@@ -106,7 +106,7 @@ def create_map(buses):
     fg_arch   = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
 
     search_features = []
-    counts = {'active': 0, 'mid': 0, 'old': 0, 'archive': 0, 'total': 0}
+    counts = {'active': 0, 'mid': 0, '24h': 0, 'old': 0, 'archive': 0, 'total': 0}
 
     for bus in buses:
         try:
