@@ -4,8 +4,7 @@ import folium
 import os
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
-from jinja2 import Template
+from folium.plugins import MarkerCluster, Search, Fullscreen
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -23,9 +22,9 @@ def get_vehicle_info(bus_id):
     return "Nepoznat prevoznik", bus_id_str
 
 def get_secrets():
-    api_url    = os.getenv("API_URL")
+    api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
-    device_id  = os.getenv("DEVICE_ID")
+    device_id = os.getenv("DEVICE_ID")
     if not all([api_url, auth_token, device_id]):
         raise ValueError("Nisu postavljene sve environment variables (API_URL, AUTH_TOKEN, DEVICE_ID)")
     headers = {
@@ -84,9 +83,9 @@ def create_map(buses):
         buses = []
 
     tz = ZoneInfo("Europe/Belgrade")
-    now          = datetime.now(tz)
-    ten_min_ago  = now - timedelta(minutes=10)
-    sixty_min_ago= now - timedelta(minutes=60)
+    now = datetime.now(tz)
+    ten_min_ago = now - timedelta(minutes=10)
+    sixty_min_ago = now - timedelta(minutes=60)
     twenty_four_hours_ago = now - timedelta(hours=24)
     archive_cutoff = datetime(2024, 1, 1, tzinfo=tz)
 
@@ -98,25 +97,23 @@ def create_map(buses):
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
     fg_active = folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True)
-    fg_mid    = folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True)
-    fg_24h    = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True)
-    fg_old    = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
-    fg_arch   = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
+    fg_mid = folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True)
+    fg_24h = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True)
+    fg_old = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
+    fg_arch = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
 
     search_features = []
     counts = {'active': 0, 'mid': 0, '24h': 0, 'old': 0, 'archive': 0, 'total': 0}
 
     for bus in buses:
         try:
-            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'),
-                                             '%Y%m%d%H%M%S').replace(tzinfo=tz)
-
+            last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=tz)
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
-            lon = float(bus.get('LONGITUDE','0').replace(',', '.'))
+            lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
             if lat == 0 or lon == 0:
                 continue
 
-            bus_id     = bus.get('BUS_ID', 'N/A')
+            bus_id = bus.get('BUS_ID', 'N/A')
             route_code = bus.get('ROUTE_CODE', 'N/A')
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
@@ -150,7 +147,7 @@ def create_map(buses):
 
                 search_features.append({
                     'type': 'Feature',
-                    'geometry': {'type': 'Point','coordinates':[lon,lat]},
+                    'geometry': {'type': 'Point', 'coordinates': [lon, lat]},
                     'properties': {'BUS_ID': bus_id}
                 })
             else:
@@ -159,7 +156,6 @@ def create_map(buses):
                 counts['archive'] += 1
 
             counts['total'] += 1
-
         except Exception:
             continue
 
@@ -196,7 +192,7 @@ def create_map(buses):
         Aktivna: {counts['active']}<br>
         10-60 min: {counts['mid']}<br>
         1-24h: {counts['24h']}<br>
-        60min-2024: {counts['old']}<br>
+        24h+: {counts['old']}<br>
         Arhiva: {counts['archive']}
     </div>
     """
@@ -214,7 +210,6 @@ def create_map(buses):
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
 
 def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
-    """Učitava, ažurira i čuva JSON fajl sa evidencijom vozila."""
     try:
         with open(log_file, 'r', encoding='utf-8') as f:
             log_data = json.load(f)
@@ -243,19 +238,17 @@ def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
             if bus_id_str in log_data:
                 log_data[bus_id_str][1] = last_seen_str
             else:
-                log_data[bus_id_str] = [last_seen_str, last_seen_str, ""]
-
+                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
         except (ValueError, KeyError, TypeError):
             continue
 
     try:
         with open(log_file, 'w', encoding='utf-8') as f:
-            sorted_log_data = dict(sorted(log_data.items(), key=lambda item: int(item[0])))
+            sorted_log_data = dict(sorted(log_data.items(), key=lambda item: datetime.strptime(item[1][0], '%d.%m.%Y %H:%M:%S'), reverse=True))
             json.dump(sorted_log_data, f, indent=4, ensure_ascii=False)
         print(f"✔️ Evidencija vozila je uspešno ažurirana u fajlu '{log_file}'.")
     except Exception as e:
         print(f"Greška pri čuvanju JSON fajla: {e}")
-
 
 def main():
     try:
@@ -268,7 +261,6 @@ def main():
             print("Nije moguće generisati mapu i evidenciju bez podataka o vozilima.")
     except Exception as e:
         print(f"Došlo je do greške u izvršavanju programa: {e}")
-
 
 if __name__ == "__main__":
     main()
