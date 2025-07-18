@@ -3,6 +3,7 @@ import json
 import folium
 import os
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from folium.plugins import MarkerCluster, Search, Fullscreen, LocateControl
 from jinja2 import Template
 import urllib3
