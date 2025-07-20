@@ -9,10 +9,6 @@ from zoneinfo import ZoneInfo
 from folium.plugins import MarkerCluster, Search, Fullscreen
 import urllib3
 
-# --- DEBUG PREKIDAČ ---
-# Postavi na True da vidiš detaljne poruke o izvršavanju
-DEBUG = True
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 REFRESH_SECONDS = 1800
@@ -28,7 +24,6 @@ def get_vehicle_info(bus_id):
     return "Nepoznat prevoznik", bus_id_str
 
 def get_secrets():
-    if DEBUG: print("[DEBUG] Učitavam tajne (API URL, token...).")
     api_url = os.getenv("API_URL")
     auth_token = os.getenv("AUTH_TOKEN")
     device_id = os.getenv("DEVICE_ID")
@@ -73,39 +68,26 @@ def enhance_html_head(html_file, interval_seconds):
             with open(html_file, 'w', encoding='utf-8') as f:
                 f.write(html_content)
     except Exception as e:
-        if DEBUG: print(f"❌ GREŠKA kod dodavanja HTML tagova: {e}")
+        print(f"Greška kod dodavanja HTML tagova: {e}")
 
 def fetch_bus_data(api_url, headers):
-    if DEBUG: print(f"[DEBUG] Dobavljam podatke sa API-ja: {api_url}")
     try:
         resp = requests.get(api_url, headers=headers, timeout=15, verify=False)
         resp.raise_for_status()
-        if DEBUG: print(f"[DEBUG] API odgovor status: {resp.status_code}")
-        
-        # Proveri da li je odgovor JSON
-        try:
-            response_json = resp.json()
-        except json.JSONDecodeError:
-            if DEBUG: print(f"❌ GREŠKA: API nije vratio validan JSON. Sadržaj odgovora:\n{resp.text}")
-            return None
-
+        response_json = resp.json()
         nested = json.loads(response_json['data'])
         buses = nested['ROOT']['BUSES']['BUS']
-        if DEBUG: print(f"[DEBUG] Uspešno dobavljeno {len(buses)} vozila sa API-ja.")
         return buses
     except Exception as e:
-        if DEBUG:
-            print(f"❌ GREŠKA pri dobavljanju podataka sa API-ja: {e}")
-            traceback.print_exc()
+        print(f"Greška pri dobavljanju podataka sa API-ja: {e}")
+        traceback.print_exc()
         return None
 
 def sanitize_for_class(name):
     return re.sub(r'[^a-zA-Z0-9\-_]', '-', name).lower()
 
 def create_map(buses, log_data):
-    if DEBUG: print("\n[DEBUG] --- Početak kreiranja mape ---")
     if buses is None:
-        if DEBUG: print("[DEBUG] Lista autobusa je 'None', postavljam na praznu listu.")
         buses = []
 
     tz = ZoneInfo("Europe/Belgrade")
@@ -122,24 +104,24 @@ def create_map(buses, log_data):
                      name='Satelit', attr='Esri').add_to(bus_map)
     folium.TileLayer('OpenStreetMap', name='Standardna mapa').add_to(bus_map)
 
-    fg_active = folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True)
-    fg_mid = folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True)
-    fg_24h = folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True)
-    fg_old = folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False)
-    fg_arch = folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
-
-    search_features = []
-    counts = {'active': 0, 'mid': 0, '24h': 0, 'old': 0, 'archive': 0, 'total': 0}
+    groups = {
+        'active': folium.FeatureGroup(name="🟢 Aktivna (0–10 min)", show=True),
+        'mid': folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True),
+        '24h': folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True),
+        'old': folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False),
+        'archive': folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
+    }
     
-    if DEBUG: print(f"[DEBUG] Počinjem obradu {len(buses)} vozila za mapu.")
-    for i, bus in enumerate(buses):
-        if DEBUG: print(f"\n[DEBUG] Obrada vozila {i+1}/{len(buses)} -> {bus.get('BUS_ID')}")
+    search_features = []
+    counts = {key: 0 for key in groups}
+    counts['total'] = 0
+
+    for bus in buses:
         try:
             last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=tz)
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
             lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
             if lat == 0 or lon == 0:
-                if DEBUG: print("[DEBUG] Preskačem vozilo, koordinate su 0.")
                 continue
 
             bus_id = bus.get('BUS_ID', 'N/A')
@@ -147,13 +129,9 @@ def create_map(buses, log_data):
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
             
-            if DEBUG: print(f"[DEBUG] Tražim model za Garažni Broj: '{bus_id}'")
             log_entry = log_data.get(bus_id, [None, None, "Nepoznat"])
-            if DEBUG: print(f"[DEBUG] Nađen zapis u floti: {log_entry}")
-            
             model_name = log_entry[2] if log_entry[2] not in ["Ime Busa", ""] else "Nepoznat"
             model_class = sanitize_for_class(model_name)
-            if DEBUG: print(f"[DEBUG] Model: '{model_name}', CSS klasa: '{model_class}'")
 
             popup_html = (
                 f"<b>Linija:</b> {clean_line} ({route_code})<br>"
@@ -164,46 +142,38 @@ def create_map(buses, log_data):
             )
             tooltip = f"Linija {clean_line} | {operator} #{internal} | {model_name}"
             
-            marker = folium.Marker([lat, lon], tooltip=tooltip, popup=popup_html)
+            icon_color = 'lightgray'
+            target_group = groups['old']
+            group_key = 'old'
 
             if last_seen_dt >= archive_cutoff:
                 if last_seen_dt > ten_min_ago:
-                    marker.icon = folium.Icon(color="green", icon="bus", prefix="fa", extra_classes=model_class)
-                    fg_active.add_child(marker)
-                    counts['active'] += 1
+                    icon_color, target_group, group_key = 'green', groups['active'], 'active'
                 elif last_seen_dt > sixty_min_ago:
-                    marker.icon = folium.Icon(color="darkgreen", icon="bus", prefix="fa", extra_classes=model_class)
-                    fg_mid.add_child(marker)
-                    counts['mid'] += 1
+                    icon_color, target_group, group_key = 'darkgreen', groups['mid'], 'mid'
                 elif last_seen_dt > twenty_four_hours_ago:
-                    marker.icon = folium.Icon(color="orange", icon="bus", prefix="fa", extra_classes=model_class)
-                    fg_24h.add_child(marker)
-                    counts['24h'] += 1
-                else:
-                    marker.icon = folium.Icon(color="lightgray", icon="bus", prefix="fa", extra_classes=model_class)
-                    fg_old.add_child(marker)
-                    counts['old'] += 1
-
+                    icon_color, target_group, group_key = 'orange', groups['24h'], '24h'
                 search_features.append({'type': 'Feature','geometry': {'type': 'Point', 'coordinates': [lon, lat]},'properties': {'BUS_ID': bus_id}})
             else:
-                marker.icon = folium.Icon(color="black", icon="bus", prefix="fa", extra_classes=model_class)
-                fg_arch.add_child(marker)
-                counts['archive'] += 1
+                icon_color, target_group, group_key = 'black', groups['archive'], 'archive'
 
+            # WORKAROUND: Kreiraj ikonicu bez 'extra_classes', pa ih dodaj ručno
+            icon = folium.Icon(color=icon_color, icon="bus", prefix="fa")
+            icon.options['extraClasses'] = model_class
+            
+            marker = folium.Marker([lat, lon], tooltip=tooltip, popup=popup_html, icon=icon)
+            target_group.add_child(marker)
+            
+            counts[group_key] += 1
             counts['total'] += 1
-            if DEBUG: print(f"[DEBUG] ✔️ Uspešno obrađeno vozilo {bus_id}")
+
         except Exception as e:
-            if DEBUG:
-                print(f"❌ GREŠKA pri obradi vozila: {bus}")
-                print(f"   Tip greške: {type(e).__name__}, Poruka: {e}")
-                traceback.print_exc()
+            print(f"❌ GREŠKA pri obradi vozila: {bus.get('BUS_ID')}. Poruka: {e}")
+            traceback.print_exc()
             continue
 
-    if DEBUG: print("[DEBUG] --- Završena obrada vozila za mapu ---")
-    if DEBUG: print(f"[DEBUG] Finalni brojači: {counts}")
-    
-    for fg in [fg_active, fg_mid, fg_24h, fg_old, fg_arch]:
-        bus_map.add_child(fg)
+    for group in groups.values():
+        bus_map.add_child(group)
 
     if search_features:
         search_layer = folium.GeoJson({'type': 'FeatureCollection', 'features': search_features}, name="Pretraga", marker=folium.CircleMarker(radius=0, fill_opacity=0, opacity=0))
@@ -222,7 +192,6 @@ def create_map(buses, log_data):
     bus_map.get_root().html.add_child(folium.Element(stats_html))
 
     unique_models = sorted(list(set(v[2] for v in log_data.values() if v[2] not in ["Ime Busa", "Nepoznat", ""])))
-    if DEBUG: print(f"[DEBUG] Pronađeni jedinstveni modeli za filtere: {unique_models}")
 
     filter_buttons_html = '<div id="filter-container" style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; display: flex; flex-wrap: wrap; gap: 5px;">'
     filter_buttons_html += '<button class="filter-btn active" onclick="filterByModel(\'all\', this)">Svi modeli</button>'
@@ -266,26 +235,14 @@ def create_map(buses, log_data):
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
 
 def load_vehicle_log(log_file=VEHICLE_LOG_FILE):
-    if DEBUG: print(f"[DEBUG] Pokušavam da učitam fajl sa flotom: '{log_file}'")
     try:
         with open(log_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            if DEBUG: print(f"[DEBUG] ✔️ Uspešno učitano {len(data)} zapisa iz '{log_file}'.")
-            return data
-    except FileNotFoundError:
-        if DEBUG: print(f"[DEBUG] ⚠️ Fajl '{log_file}' nije pronađen. Vraćam praznu listu.")
-        return {}
-    except json.JSONDecodeError:
-        if DEBUG: print(f"❌ GREŠKA: Fajl '{log_file}' nije validan JSON. Vraćam praznu listu.")
-        return {}
-    except Exception as e:
-        if DEBUG: print(f"❌ GREŠKA: Nepoznata greška pri čitanju '{log_file}': {e}")
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
 def update_and_save_log(buses, log_data, log_file=VEHICLE_LOG_FILE):
-    if DEBUG: print("\n[DEBUG] --- Početak ažuriranja i čuvanja 'flota.json' ---")
     if not buses:
-        if DEBUG: print("[DEBUG] Nema novih podataka o busevima za ažuriranje evidencije.")
         return log_data
 
     tz = ZoneInfo("Europe/Belgrade")
@@ -304,41 +261,36 @@ def update_and_save_log(buses, log_data, log_file=VEHICLE_LOG_FILE):
             last_seen_str = last_seen_dt.strftime('%d.%m.%Y %H:%M:%S')
 
             if bus_id_str in log_data:
-                if DEBUG: print(f"[DEBUG] Ažuriram postojeći zapis za {bus_id_str}.")
                 log_data[bus_id_str][1] = last_seen_str
             else:
-                if DEBUG: print(f"[DEBUG] Dodajem novi zapis za {bus_id_str}.")
                 log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
-        except (ValueError, KeyError, TypeError) as e:
-            if DEBUG: print(f"❌ GREŠKA pri ažuriranju zapisa za vozilo {bus.get('BUS_ID')}: {e}")
+        except (ValueError, KeyError, TypeError):
             continue
     
     try:
         with open(log_file, 'w', encoding='utf-8') as f:
             sorted_log_data = dict(sorted(log_data.items(), key=lambda item: datetime.strptime(item[1][0], '%d.%m.%Y %H:%M:%S'), reverse=True))
             json.dump(sorted_log_data, f, indent=4, ensure_ascii=False)
-        if DEBUG: print(f"[DEBUG] ✔️ Evidencija vozila je uspešno sačuvana u fajl '{log_file}'.")
+        print(f"✔️ Evidencija vozila je uspešno ažurirana u fajlu '{log_file}'.")
     except Exception as e:
-        if DEBUG: print(f"❌ GREŠKA pri čuvanju JSON fajla: {e}")
+        print(f"Greška pri čuvanju JSON fajla: {e}")
 
     return log_data
 
 def main():
-    if DEBUG: print("--- POKRETANJE SKRIPTE ---")
     try:
         log_data = load_vehicle_log()
         api_url, headers = get_secrets()
         buses = fetch_bus_data(api_url, headers)
         
         if buses is not None:
-            updated_log_data = update_and_save_log(buses, log_data.copy()) # Šaljemo kopiju da ne utičemo na original
+            updated_log_data = update_and_save_log(buses, log_data.copy())
             create_map(buses, updated_log_data)
         else:
             print("Nije moguće generisati mapu i evidenciju jer podaci sa API-ja nisu dobavljeni.")
     except Exception as e:
-        if DEBUG:
-            print(f"❌ KATASTROFALNA GREŠKA U 'main' FUNKCIJI: {e}")
-            traceback.print_exc()
+        print(f"❌ KATASTROFALNA GREŠKA U 'main' FUNKCIJI: {e}")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()
