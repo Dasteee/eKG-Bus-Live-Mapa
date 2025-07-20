@@ -117,13 +117,13 @@ def create_map(buses):
             route_code = bus.get('ROUTE_CODE', 'N/A')
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
-            log_entry = log_data.get(str(bus_id), [None, None, ""])
-            model_name = log_entry[2] if log_entry[2] != "" else ""
-            model_class = sanitize_for_class(model_name)
+           # log_entry = log_data.get(str(bus_id), [None, None, ""])
+           # model_name = log_entry[2] if log_entry[2] != "" else ""
+           # model_class = sanitize_for_class(model_name)
 
             popup = (
                 f"<b>Vozilo:</b> {bus_id}<br>"
-                f"<b>Model:</b> {model_name}<br>"
+              #  f"<b>Model:</b> {model_name}<br>"
                 f"<b>Linija:</b> {clean_line} ({route_code})<br>"
                 f"{operator} #{internal}<br>"
                 f"<b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
