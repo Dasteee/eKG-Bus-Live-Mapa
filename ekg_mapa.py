@@ -2,6 +2,7 @@ import requests
 import json
 import folium
 import os
+import re
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from folium.plugins import MarkerCluster, Search, Fullscreen
@@ -78,7 +79,10 @@ def fetch_bus_data(api_url, headers):
         print(f"Greška pri fetch-u podataka: {e}")
         return None
 
-def create_map(buses):
+def sanitize_for_class(name):
+    return re.sub(r'[^a-zA-Z0-9\-_]', '-', name).lower()
+
+def create_map(buses, log_data):
     if buses is None:
         buses = []
 
@@ -117,36 +121,38 @@ def create_map(buses):
             route_code = bus.get('ROUTE_CODE', 'N/A')
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
-           # log_entry = log_data.get(str(bus_id), [None, None, ""])
-           # model_name = log_entry[2] if log_entry[2] != "" else ""
-           # model_class = sanitize_for_class(model_name)
+            
+            log_entry = log_data.get(bus_id, [None, None, "Nepoznat"])
+            model_name = log_entry[2] if log_entry[2] not in ["Ime Busa", ""] else "Nepoznat"
+            model_class = sanitize_for_class(model_name)
 
-            popup = (
-                f"<b>Vozilo:</b> {bus_id}<br>"
-              #  f"<b>Model:</b> {model_name}<br>"
+            popup_html = (
                 f"<b>Linija:</b> {clean_line} ({route_code})<br>"
+                f"<b>Vozilo:</b> {bus_id}<br>"
+                f"<b>Model:</b> {model_name}<br>"
                 f"{operator} #{internal}<br>"
                 f"<b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
             )
-            tooltip = f"Linija {clean_line} | {operator} #{internal}"
-            icon = folium.Icon(color="gray", icon="bus", prefix="fa")
+            tooltip = f"Linija {clean_line} | {operator} #{internal} | {model_name}"
+            
+            marker = folium.Marker([lat, lon], tooltip=tooltip, popup=popup_html)
 
             if last_seen_dt >= archive_cutoff:
                 if last_seen_dt > ten_min_ago:
-                    icon = folium.Icon(color="green", icon="bus", prefix="fa")
-                    fg_active.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                    marker.icon = folium.Icon(color="green", icon="bus", prefix="fa", extra_classes=model_class)
+                    fg_active.add_child(marker)
                     counts['active'] += 1
                 elif last_seen_dt > sixty_min_ago:
-                    icon = folium.Icon(color="darkgreen", icon="bus", prefix="fa")
-                    fg_mid.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                    marker.icon = folium.Icon(color="darkgreen", icon="bus", prefix="fa", extra_classes=model_class)
+                    fg_mid.add_child(marker)
                     counts['mid'] += 1
                 elif last_seen_dt > twenty_four_hours_ago:
-                    icon = folium.Icon(color="orange", icon="bus", prefix="fa")
-                    fg_24h.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                    marker.icon = folium.Icon(color="orange", icon="bus", prefix="fa", extra_classes=model_class)
+                    fg_24h.add_child(marker)
                     counts['24h'] += 1
                 else:
-                    icon = folium.Icon(color="lightgray", icon="bus", prefix="fa")
-                    fg_old.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                    marker.icon = folium.Icon(color="lightgray", icon="bus", prefix="fa", extra_classes=model_class)
+                    fg_old.add_child(marker)
                     counts['old'] += 1
 
                 search_features.append({
@@ -155,12 +161,13 @@ def create_map(buses):
                     'properties': {'BUS_ID': bus_id}
                 })
             else:
-                icon = folium.Icon(color="black", icon="bus", prefix="fa")
-                fg_arch.add_child(folium.Marker([lat, lon], tooltip=tooltip, popup=popup, icon=icon))
+                marker.icon = folium.Icon(color="black", icon="bus", prefix="fa", extra_classes=model_class)
+                fg_arch.add_child(marker)
                 counts['archive'] += 1
 
             counts['total'] += 1
-        except Exception:
+        except Exception as e:
+            print(f"Greška pri obradi vozila {bus.get('BUS_ID')}: {e}")
             continue
 
     for fg in [fg_active, fg_mid, fg_24h, fg_old, fg_arch]:
@@ -186,9 +193,9 @@ def create_map(buses):
     folium.LayerControl(collapsed=False).add_to(bus_map)
 
     stats_html = f"""
-    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
                 background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
-                border-radius: 8px; z-index: 999; font-size: 14px; min-width: 280px;">
+                border-radius: 8px; z-index: 1000; font-size: 14px; min-width: 280px;">
         <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
             onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
         <b>Stanje na mapi</b><br>
@@ -202,8 +209,62 @@ def create_map(buses):
     """
     bus_map.get_root().html.add_child(folium.Element(stats_html))
 
+    unique_models = sorted(list(set(v[2] for v in log_data.values() if v[2] not in ["Ime Busa", "Nepoznat", ""])))
+
+    filter_buttons_html = '<div id="filter-container" style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; display: flex; flex-wrap: wrap; gap: 5px;">'
+    filter_buttons_html += '<button class="filter-btn active" onclick="filterByModel(\'all\', this)">Svi modeli</button>'
+    for model in unique_models:
+        model_class = sanitize_for_class(model)
+        filter_buttons_html += f'<button class="filter-btn" onclick="filterByModel(\'{model_class}\', this)">{model}</button>'
+    filter_buttons_html += '</div>'
+
+    filter_js = """
+    <script>
+        function filterByModel(modelClass, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            var markers = document.querySelectorAll('.leaflet-marker-icon');
+            markers.forEach(function(marker) {
+                var parent = marker.parentElement;
+                if (modelClass === 'all') {
+                    parent.style.display = '';
+                } else {
+                    if (marker.classList.contains(modelClass)) {
+                        parent.style.display = '';
+                    } else {
+                        parent.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+    """
+
+    filter_css = """
+    <style>
+        .filter-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background-color: #3388ff;
+            color: white;
+            border-color: #3388ff;
+        }
+    </style>
+    """
+
+    bus_map.get_root().html.add_child(folium.Element(filter_buttons_html))
+    bus_map.get_root().html.add_child(folium.Element(filter_js))
+    bus_map.get_root().html.add_child(folium.Element(filter_css))
+
     disclaimer_html = """
-    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
         <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
     </div>
     """
@@ -213,19 +274,20 @@ def create_map(buses):
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
 
-def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
+def load_vehicle_log(log_file=VEHICLE_LOG_FILE):
     try:
         with open(log_file, 'r', encoding='utf-8') as f:
-            log_data = json.load(f)
+            return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        log_data = {}
+        return {}
+
+def update_and_save_log(buses, log_data, log_file=VEHICLE_LOG_FILE):
+    if not buses:
+        print("Nema podataka o busevima za ažuriranje evidencije.")
+        return log_data
 
     tz = ZoneInfo("Europe/Belgrade")
     archive_cutoff = datetime(2024, 1, 1, tzinfo=tz)
-
-    if not buses:
-        print("Nema podataka o busevima za ažuriranje evidencije.")
-        return
 
     for bus in buses:
         try:
@@ -234,18 +296,18 @@ def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
                 continue
 
             last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=tz)
-            last_seen_str = last_seen_dt.strftime('%d.%m.%Y %H:%M:%S')
-
             if last_seen_dt < archive_cutoff:
                 continue
+
+            last_seen_str = last_seen_dt.strftime('%d.%m.%Y %H:%M:%S')
 
             if bus_id_str in log_data:
                 log_data[bus_id_str][1] = last_seen_str
             else:
-                log_data[bus_id_str] = [last_seen_str, last_seen_str, ""]
+                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
         except (ValueError, KeyError, TypeError):
             continue
-
+    
     try:
         with open(log_file, 'w', encoding='utf-8') as f:
             sorted_log_data = dict(sorted(log_data.items(), key=lambda item: datetime.strptime(item[1][0], '%d.%m.%Y %H:%M:%S'), reverse=True))
@@ -254,13 +316,16 @@ def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
     except Exception as e:
         print(f"Greška pri čuvanju JSON fajla: {e}")
 
+    return log_data
+
 def main():
     try:
+        log_data = load_vehicle_log()
         api_url, headers = get_secrets()
         buses = fetch_bus_data(api_url, headers)
         if buses:
-            create_map(buses)
-            update_vehicle_log(buses)
+            updated_log_data = update_and_save_log(buses, log_data)
+            create_map(buses, updated_log_data)
         else:
             print("Nije moguće generisati mapu i evidenciju bez podataka o vozilima.")
     except Exception as e:
