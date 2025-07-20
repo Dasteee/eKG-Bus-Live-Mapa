@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_5561e6335fd8bfa501574c99509dc473 {
+                #map_7047a6a0a59a454c0f3a98ba758f7155 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -62,13 +62,13 @@
 <body>
     
     
-    <div id="stats-box" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
                 background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
-                border-radius: 8px; z-index: 999; font-size: 14px; min-width: 280px;">
+                border-radius: 8px; z-index: 1000; font-size: 14px; min-width: 280px;">
         <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
             onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
         <b>Stanje na mapi</b><br>
-        Ažurirano: 20.07.2025. 11:26:34<br>
+        Ažurirano: 20.07.2025. 11:31:22<br>
         Aktivna: 0<br>
         10-60 min: 0<br>
         1-24h: 0<br>
@@ -76,20 +76,60 @@
         Arhiva: 0
     </div>
     
+    <div id="filter-container" style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; display: flex; flex-wrap: wrap; gap: 5px;"><button class="filter-btn active" onclick="filterByModel('all', this)">Svi modeli</button><button class="filter-btn" onclick="filterByModel('golden-dragon-xml6125cln', this)">Golden Dragon XML6125CLN</button><button class="filter-btn" onclick="filterByModel('g-lery-z-cobra-gd272lf--2015-', this)">Güleryüz Cobra GD272LF (2015)</button><button class="filter-btn" onclick="filterByModel('maz-203-069', this)">MAZ-203.069</button><button class="filter-btn" onclick="filterByModel('mercedes-benz-o530-citaro', this)">Mercedes-Benz O530 Citaro</button><button class="filter-btn" onclick="filterByModel('mercedes-benz-o530-citaro-fl', this)">Mercedes-Benz O530 Citaro FL</button><button class="filter-btn" onclick="filterByModel('volvo-7700-fl', this)">Volvo 7700 FL</button></div>
     
-    <div style="position: absolute; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
+    <script>
+        function filterByModel(modelClass, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            var markers = document.querySelectorAll('.leaflet-marker-icon');
+            markers.forEach(function(marker) {
+                var parent = marker.parentElement;
+                if (modelClass === 'all') {
+                    parent.style.display = '';
+                } else {
+                    if (marker.classList.contains(modelClass)) {
+                        parent.style.display = '';
+                    } else {
+                        parent.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+    
+    
+    <style>
+        .filter-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background-color: #3388ff;
+            color: white;
+            border-color: #3388ff;
+        }
+    </style>
+    
+    
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
         <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
     </div>
     
     
-            <div class="folium-map" id="map_5561e6335fd8bfa501574c99509dc473" ></div>
+            <div class="folium-map" id="map_7047a6a0a59a454c0f3a98ba758f7155" ></div>
         
 </body>
 <script>
     
     
-            var map_5561e6335fd8bfa501574c99509dc473 = L.map(
-                "map_5561e6335fd8bfa501574c99509dc473",
+            var map_7047a6a0a59a454c0f3a98ba758f7155 = L.map(
+                "map_7047a6a0a59a454c0f3a98ba758f7155",
                 {
                     center: [44.0141, 20.9116],
                     crs: L.CRS.EPSG3857,
@@ -106,7 +146,7 @@
 
         
     
-            var tile_layer_a345df4097d5031c5d7028a921840351 = L.tileLayer(
+            var tile_layer_ac85f76a068c09061fb9d79627013b71 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -123,10 +163,10 @@
             );
         
     
-            tile_layer_a345df4097d5031c5d7028a921840351.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            tile_layer_ac85f76a068c09061fb9d79627013b71.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var tile_layer_84f9845fbc16e72b447c4aa09d59d251 = L.tileLayer(
+            var tile_layer_5c6a6e47003fe3cf357e14142a70b974 = L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 {
   "minZoom": 0,
@@ -143,10 +183,10 @@
             );
         
     
-            tile_layer_84f9845fbc16e72b447c4aa09d59d251.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            tile_layer_5c6a6e47003fe3cf357e14142a70b974.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var tile_layer_26b0f24347856f4ebd9dd1ceb0f96cea = L.tileLayer(
+            var tile_layer_b020e305e8722643c8343a98aa40d211 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -163,43 +203,43 @@
             );
         
     
-            tile_layer_26b0f24347856f4ebd9dd1ceb0f96cea.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            tile_layer_b020e305e8722643c8343a98aa40d211.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var feature_group_77dadcec3fb53140bac83727c2817cf2 = L.featureGroup(
+            var feature_group_07b67c2952bf4318f7c0e8fa16636d42 = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_77dadcec3fb53140bac83727c2817cf2.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            feature_group_07b67c2952bf4318f7c0e8fa16636d42.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var feature_group_affa20a8a600184a25b10632f7131301 = L.featureGroup(
+            var feature_group_4b1013b99292e892b46a2b57a864628c = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_affa20a8a600184a25b10632f7131301.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            feature_group_4b1013b99292e892b46a2b57a864628c.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var feature_group_33a822b6594efd58ea81f31f2e8373ee = L.featureGroup(
+            var feature_group_9cf784a0821fac3000cb3112b0ea1ca2 = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_33a822b6594efd58ea81f31f2e8373ee.addTo(map_5561e6335fd8bfa501574c99509dc473);
+            feature_group_9cf784a0821fac3000cb3112b0ea1ca2.addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var feature_group_b803e0f7ddc1c8f5aac2da0a294c5f34 = L.featureGroup(
+            var feature_group_14a26c44b0197d4ac82420ffedc9307a = L.featureGroup(
                 {
 }
             );
         
     
-            var feature_group_6027f684a2060aa2b192af69e15b891d = L.featureGroup(
+            var feature_group_8c517aa60bff7d42618cf378b7e1de26 = L.featureGroup(
                 {
 }
             );
@@ -212,32 +252,32 @@
   "titleCancel": "Exit Full Screen",
   "forceSeparateButton": false,
 }
-            ).addTo(map_5561e6335fd8bfa501574c99509dc473);
+            ).addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
         
     
-            var layer_control_3e17dc903f7545ce28cd6ba38b2d1156_layers = {
+            var layer_control_41e35e3c7c154fb37e2f168d857dccfd_layers = {
                 base_layers : {
-                    "cartodbdarkmatter" : tile_layer_a345df4097d5031c5d7028a921840351,
-                    "Satelit" : tile_layer_84f9845fbc16e72b447c4aa09d59d251,
-                    "Standardna mapa" : tile_layer_26b0f24347856f4ebd9dd1ceb0f96cea,
+                    "cartodbdarkmatter" : tile_layer_ac85f76a068c09061fb9d79627013b71,
+                    "Satelit" : tile_layer_5c6a6e47003fe3cf357e14142a70b974,
+                    "Standardna mapa" : tile_layer_b020e305e8722643c8343a98aa40d211,
                 },
                 overlays :  {
-                    "\ud83d\udfe2 Aktivna (0\u201310 min)" : feature_group_77dadcec3fb53140bac83727c2817cf2,
-                    "\ud83d\udfe2 Aktivna (10\u201360 min)" : feature_group_affa20a8a600184a25b10632f7131301,
-                    "\ud83d\udfe0 Neaktivna (1-24h)" : feature_group_33a822b6594efd58ea81f31f2e8373ee,
-                    "\ud83d\udd34 Neaktivna (\u003e24h)" : feature_group_b803e0f7ddc1c8f5aac2da0a294c5f34,
-                    "\u26ab Arhiva (pre 2024)" : feature_group_6027f684a2060aa2b192af69e15b891d,
+                    "\ud83d\udfe2 Aktivna (0\u201310 min)" : feature_group_07b67c2952bf4318f7c0e8fa16636d42,
+                    "\ud83d\udfe2 Aktivna (10\u201360 min)" : feature_group_4b1013b99292e892b46a2b57a864628c,
+                    "\ud83d\udfe0 Neaktivna (1-24h)" : feature_group_9cf784a0821fac3000cb3112b0ea1ca2,
+                    "\ud83d\udd34 Neaktivna (\u003e24h)" : feature_group_14a26c44b0197d4ac82420ffedc9307a,
+                    "\u26ab Arhiva (pre 2024)" : feature_group_8c517aa60bff7d42618cf378b7e1de26,
                 },
             };
-            let layer_control_3e17dc903f7545ce28cd6ba38b2d1156 = L.control.layers(
-                layer_control_3e17dc903f7545ce28cd6ba38b2d1156_layers.base_layers,
-                layer_control_3e17dc903f7545ce28cd6ba38b2d1156_layers.overlays,
+            let layer_control_41e35e3c7c154fb37e2f168d857dccfd = L.control.layers(
+                layer_control_41e35e3c7c154fb37e2f168d857dccfd_layers.base_layers,
+                layer_control_41e35e3c7c154fb37e2f168d857dccfd_layers.overlays,
                 {
   "position": "topright",
   "collapsed": false,
   "autoZIndex": true,
 }
-            ).addTo(map_5561e6335fd8bfa501574c99509dc473);
+            ).addTo(map_7047a6a0a59a454c0f3a98ba758f7155);
 
         
 </script>
