@@ -118,9 +118,14 @@ def create_map(buses):
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
 
+            log_entry = log_data.get(bus_id, [None, None, "Nepoznat"])
+            model_name = log_entry[2] if log_entry[2] != "" else ""
+            model_class = sanitize_for_class(model_name)
+
             popup = (
-                f"<b>Linija:</b> {clean_line} ({route_code})<br>"
                 f"<b>Vozilo:</b> {bus_id}<br>"
+                f"<b>Model:</b> {model_name}<br>"
+                f"<b>Linija:</b> {clean_line} ({route_code})<br>"
                 f"{operator} #{internal}<br>"
                 f"<b>Poslednji signal:</b> {last_seen_dt.strftime('%d.%m.%Y. %H:%M:%S')}"
             )
@@ -238,7 +243,7 @@ def update_vehicle_log(buses, log_file=VEHICLE_LOG_FILE):
             if bus_id_str in log_data:
                 log_data[bus_id_str][1] = last_seen_str
             else:
-                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
+                log_data[bus_id_str] = [last_seen_str, last_seen_str, ""]
         except (ValueError, KeyError, TypeError):
             continue
 
