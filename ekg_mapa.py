@@ -157,7 +157,6 @@ def create_map(buses, log_data):
             else:
                 icon_color, target_group, group_key = 'black', groups['archive'], 'archive'
 
-            # WORKAROUND: Kreiraj ikonicu bez 'extra_classes', pa ih dodaj ručno
             icon = folium.Icon(color=icon_color, icon="bus", prefix="fa")
             icon.options['extraClasses'] = model_class
             
@@ -193,34 +192,110 @@ def create_map(buses, log_data):
 
     unique_models = sorted(list(set(v[2] for v in log_data.values() if v[2] not in ["Ime Busa", "Nepoznat", ""])))
 
-    filter_buttons_html = '<div id="filter-container" style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; display: flex; flex-wrap: wrap; gap: 5px;">'
-    filter_buttons_html += '<button class="filter-btn active" onclick="filterByModel(\'all\', this)">Svi modeli</button>'
+    filter_control_html = """
+    <div id="filter-control-container">
+        <button id="funnel-btn" onclick="toggleFilterMenu()">
+            <i class="fa fa-filter" style="font-size: 14px;"></i>
+        </button>
+        <div id="filter-menu" class="hidden">
+            <button class="filter-btn active" onclick="filterByModel('all', this)">Svi modeli</button>
+    """
     for model in unique_models:
         model_class = sanitize_for_class(model)
-        filter_buttons_html += f'<button class="filter-btn" onclick="filterByModel(\'{model_class}\', this)">{model}</button>'
-    filter_buttons_html += '</div>'
+        filter_control_html += f'<button class="filter-btn" onclick="filterByModel(\'{model_class}\', this)">{model}</button>'
+    filter_control_html += """
+        </div>
+    </div>
+    """
 
-    filter_js = """<script>
+    filter_js = """
+    <script>
+        function toggleFilterMenu() {
+            document.getElementById('filter-menu').classList.toggle('hidden');
+        }
+
         function filterByModel(modelClass, btnElement) {
+            document.getElementById('filter-menu').classList.add('hidden');
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
-            var markers = document.querySelectorAll('.leaflet-marker-icon');
-            markers.forEach(function(marker) {
-                var parent = marker.parentElement;
-                if (modelClass === 'all') { parent.style.display = ''; }
-                else {
-                    if (marker.classList.contains(modelClass)) { parent.style.display = ''; }
-                    else { parent.style.display = 'none'; }
+            
+            var markerIcons = document.querySelectorAll('.leaflet-marker-icon');
+            markerIcons.forEach(function(markerIcon) {
+                var markerContainer = markerIcon.parentElement;
+                if (modelClass === 'all') {
+                    markerContainer.style.display = '';
+                } else {
+                    var iTag = markerIcon.querySelector('i');
+                    if (iTag && iTag.classList.contains(modelClass)) {
+                        markerContainer.style.display = '';
+                    } else {
+                        markerContainer.style.display = 'none';
+                    }
                 }
             });
         }
-    </script>"""
-    filter_css = """<style>
-        .filter-btn { padding: 5px 10px; font-size: 12px; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
-        .filter-btn.active { background-color: #3388ff; color: white; border-color: #3388ff; }
-    </style>"""
+    </script>
+    """
 
-    bus_map.get_root().html.add_child(folium.Element(filter_buttons_html))
+    filter_css = """
+    <style>
+        #filter-control-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        #funnel-btn {
+            background-color: #fff;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 4px;
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+            line-height: 30px;
+            text-align: center;
+        }
+        #funnel-btn:hover {
+            background-color: #f4f4f4;
+        }
+        #filter-menu {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: white;
+            border-radius: 5px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #filter-menu.hidden {
+            display: none;
+        }
+        .filter-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+        }
+        .filter-btn:hover {
+            background-color: #f0f0f0;
+        }
+        .filter-btn.active {
+            background-color: #3388ff;
+            color: white;
+        }
+    </style>
+    """
+
+    bus_map.get_root().html.add_child(folium.Element(filter_control_html))
     bus_map.get_root().html.add_child(folium.Element(filter_js))
     bus_map.get_root().html.add_child(folium.Element(filter_css))
 
