@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a4fba8ed7e63e9d04273bd1c74d9b6a6 {
+                #map_7bb01b5688ce214b39b6efa5acb2485e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -62,74 +62,44 @@
 <body>
     
     
-    <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
-                background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px;
-                border-radius: 8px; z-index: 1000; font-size: 14px; min-width: 280px;">
-        <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;"
-            onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
-        <b>Stanje na mapi</b><br>
-        Ažurirano: 20.07.2025. 11:33:10<br>
-        Aktivna: 0<br>
-        10-60 min: 0<br>
-        1-24h: 0<br>
-        24h+: 0<br>
-        Arhiva: 0
+    <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px; border-radius: 8px; z-index: 1000; font-size: 14px; min-width: 280px;">
+        <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;" onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
+        <b>Stanje na mapi</b><br> Ažurirano: 20.07.2025. 11:36:21<br>
+        Aktivna: 0<br> 10-60 min: 0<br> 1-24h: 0<br> 24h+: 0<br> Arhiva: 0
     </div>
-    
     <div id="filter-container" style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; display: flex; flex-wrap: wrap; gap: 5px;"><button class="filter-btn active" onclick="filterByModel('all', this)">Svi modeli</button><button class="filter-btn" onclick="filterByModel('golden-dragon-xml6125cln', this)">Golden Dragon XML6125CLN</button><button class="filter-btn" onclick="filterByModel('g-lery-z-cobra-gd272lf--2015-', this)">Güleryüz Cobra GD272LF (2015)</button><button class="filter-btn" onclick="filterByModel('maz-203-069', this)">MAZ-203.069</button><button class="filter-btn" onclick="filterByModel('mercedes-benz-o530-citaro', this)">Mercedes-Benz O530 Citaro</button><button class="filter-btn" onclick="filterByModel('mercedes-benz-o530-citaro-fl', this)">Mercedes-Benz O530 Citaro FL</button><button class="filter-btn" onclick="filterByModel('volvo-7700-fl', this)">Volvo 7700 FL</button></div>
-    
     <script>
         function filterByModel(modelClass, btnElement) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
-            
             var markers = document.querySelectorAll('.leaflet-marker-icon');
             markers.forEach(function(marker) {
                 var parent = marker.parentElement;
-                if (modelClass === 'all') {
-                    parent.style.display = '';
-                } else {
-                    if (marker.classList.contains(modelClass)) {
-                        parent.style.display = '';
-                    } else {
-                        parent.style.display = 'none';
-                    }
+                if (modelClass === 'all') { parent.style.display = ''; }
+                else {
+                    if (marker.classList.contains(modelClass)) { parent.style.display = ''; }
+                    else { parent.style.display = 'none'; }
                 }
             });
         }
     </script>
-    
-    
     <style>
-        .filter-btn {
-            padding: 5px 10px;
-            font-size: 12px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .filter-btn.active {
-            background-color: #3388ff;
-            color: white;
-            border-color: #3388ff;
-        }
+        .filter-btn { padding: 5px 10px; font-size: 12px; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
+        .filter-btn.active { background-color: #3388ff; color: white; border-color: #3388ff; }
     </style>
-    
     
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
         <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
     </div>
     
-    
-            <div class="folium-map" id="map_a4fba8ed7e63e9d04273bd1c74d9b6a6" ></div>
+            <div class="folium-map" id="map_7bb01b5688ce214b39b6efa5acb2485e" ></div>
         
 </body>
 <script>
     
     
-            var map_a4fba8ed7e63e9d04273bd1c74d9b6a6 = L.map(
-                "map_a4fba8ed7e63e9d04273bd1c74d9b6a6",
+            var map_7bb01b5688ce214b39b6efa5acb2485e = L.map(
+                "map_7bb01b5688ce214b39b6efa5acb2485e",
                 {
                     center: [44.0141, 20.9116],
                     crs: L.CRS.EPSG3857,
@@ -146,7 +116,7 @@
 
         
     
-            var tile_layer_77a70b0c90eb773a3466377934786d56 = L.tileLayer(
+            var tile_layer_b1e3117e7ca8d392630c5ef6a4d22af5 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -163,10 +133,10 @@
             );
         
     
-            tile_layer_77a70b0c90eb773a3466377934786d56.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            tile_layer_b1e3117e7ca8d392630c5ef6a4d22af5.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var tile_layer_ebbe51f5309f2239968b0684533cd7e8 = L.tileLayer(
+            var tile_layer_ca56eb50c39daf0ef8f060a0f63b4709 = L.tileLayer(
                 "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 {
   "minZoom": 0,
@@ -183,10 +153,10 @@
             );
         
     
-            tile_layer_ebbe51f5309f2239968b0684533cd7e8.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            tile_layer_ca56eb50c39daf0ef8f060a0f63b4709.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var tile_layer_7c99e9e1c96e1005c840cbbb584629e3 = L.tileLayer(
+            var tile_layer_a59de19eb2f6f40c9ee2be97e5b28253 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -203,43 +173,43 @@
             );
         
     
-            tile_layer_7c99e9e1c96e1005c840cbbb584629e3.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            tile_layer_a59de19eb2f6f40c9ee2be97e5b28253.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var feature_group_9ee84cadff7528f05922ea0db2e422fe = L.featureGroup(
+            var feature_group_3a749457d93d39183d67a0e72573d33b = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_9ee84cadff7528f05922ea0db2e422fe.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            feature_group_3a749457d93d39183d67a0e72573d33b.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var feature_group_3f9c5515a5e29ac51fec03da03efa127 = L.featureGroup(
+            var feature_group_7a1a9eb482179c9e74b0701c7306d31e = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_3f9c5515a5e29ac51fec03da03efa127.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            feature_group_7a1a9eb482179c9e74b0701c7306d31e.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var feature_group_5619591a4ddf1b0cd41c634a64a5cb2e = L.featureGroup(
+            var feature_group_7d5bbb2dd10ae29cd97ff0bf6cd91c88 = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_5619591a4ddf1b0cd41c634a64a5cb2e.addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            feature_group_7d5bbb2dd10ae29cd97ff0bf6cd91c88.addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var feature_group_732474ed3306a056ee3556031199c2c0 = L.featureGroup(
+            var feature_group_cafccf7e60c4b1fd1877bac9291a80b7 = L.featureGroup(
                 {
 }
             );
         
     
-            var feature_group_74fb47d73df70b93da2da3d13e289905 = L.featureGroup(
+            var feature_group_902dc3459993e0f6adfa4e7e91ab19a3 = L.featureGroup(
                 {
 }
             );
@@ -252,32 +222,32 @@
   "titleCancel": "Exit Full Screen",
   "forceSeparateButton": false,
 }
-            ).addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            ).addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
         
     
-            var layer_control_d2c84a185750714acd5a0cc8789f36d3_layers = {
+            var layer_control_f71bcb9a29536c0891497490a7c6127d_layers = {
                 base_layers : {
-                    "cartodbdarkmatter" : tile_layer_77a70b0c90eb773a3466377934786d56,
-                    "Satelit" : tile_layer_ebbe51f5309f2239968b0684533cd7e8,
-                    "Standardna mapa" : tile_layer_7c99e9e1c96e1005c840cbbb584629e3,
+                    "cartodbdarkmatter" : tile_layer_b1e3117e7ca8d392630c5ef6a4d22af5,
+                    "Satelit" : tile_layer_ca56eb50c39daf0ef8f060a0f63b4709,
+                    "Standardna mapa" : tile_layer_a59de19eb2f6f40c9ee2be97e5b28253,
                 },
                 overlays :  {
-                    "\ud83d\udfe2 Aktivna (0\u201310 min)" : feature_group_9ee84cadff7528f05922ea0db2e422fe,
-                    "\ud83d\udfe2 Aktivna (10\u201360 min)" : feature_group_3f9c5515a5e29ac51fec03da03efa127,
-                    "\ud83d\udfe0 Neaktivna (1-24h)" : feature_group_5619591a4ddf1b0cd41c634a64a5cb2e,
-                    "\ud83d\udd34 Neaktivna (\u003e24h)" : feature_group_732474ed3306a056ee3556031199c2c0,
-                    "\u26ab Arhiva (pre 2024)" : feature_group_74fb47d73df70b93da2da3d13e289905,
+                    "\ud83d\udfe2 Aktivna (0\u201310 min)" : feature_group_3a749457d93d39183d67a0e72573d33b,
+                    "\ud83d\udfe2 Aktivna (10\u201360 min)" : feature_group_7a1a9eb482179c9e74b0701c7306d31e,
+                    "\ud83d\udfe0 Neaktivna (1-24h)" : feature_group_7d5bbb2dd10ae29cd97ff0bf6cd91c88,
+                    "\ud83d\udd34 Neaktivna (\u003e24h)" : feature_group_cafccf7e60c4b1fd1877bac9291a80b7,
+                    "\u26ab Arhiva (pre 2024)" : feature_group_902dc3459993e0f6adfa4e7e91ab19a3,
                 },
             };
-            let layer_control_d2c84a185750714acd5a0cc8789f36d3 = L.control.layers(
-                layer_control_d2c84a185750714acd5a0cc8789f36d3_layers.base_layers,
-                layer_control_d2c84a185750714acd5a0cc8789f36d3_layers.overlays,
+            let layer_control_f71bcb9a29536c0891497490a7c6127d = L.control.layers(
+                layer_control_f71bcb9a29536c0891497490a7c6127d_layers.base_layers,
+                layer_control_f71bcb9a29536c0891497490a7c6127d_layers.overlays,
                 {
   "position": "topright",
   "collapsed": false,
   "autoZIndex": true,
 }
-            ).addTo(map_a4fba8ed7e63e9d04273bd1c74d9b6a6);
+            ).addTo(map_7bb01b5688ce214b39b6efa5acb2485e);
 
         
 </script>
