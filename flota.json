@@ -319,11 +319,14 @@
         "05.09.2025 15:35:10",
         "Mercedes-Benz O530 Citaro FL"
     ],
-    "70277": [
+    "70277": {
         "18.07.2025 19:34:00",
         "29.08.2025 17:02:00",
-        "Mercedes-Benz O530 Citaro FL"
-    ],
+        "Mercedes-Benz O530 Citaro FL",
+        "out_of_service",
+        "Zapalio se - 29.08.2025.",
+        "link": "https://www.instagram.com/kragujevcani.rs/reel/DN8hVzkDILl/",
+    }
     "70280": [
         "18.07.2025 18:30:00",
         "07.09.2025 12:50:00",
