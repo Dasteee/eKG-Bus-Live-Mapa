@@ -299,12 +299,6 @@ def create_map(buses, log_data):
     bus_map.get_root().html.add_child(folium.Element(filter_js))
     bus_map.get_root().html.add_child(folium.Element(filter_css))
 
-    disclaimer_html = """
-    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 999; background-color: rgba(30, 30, 30, 0.7); color: #ccc; padding: 5px 10px; border-radius: 5px; font-family: Arial, sans-serif; font-size: 11px; border: 1px solid #555;">
-        <p style="margin: 0;"><b>Disclaimer:</b> Ovo je nezvanični, hobi projekat. Podaci su informativnog karaktera i moguće su netačnosti.</p>
-    </div>"""
-    bus_map.get_root().html.add_child(folium.Element(disclaimer_html))
-
     bus_map.save(MAP_FILE)
     enhance_html_head(MAP_FILE, REFRESH_SECONDS)
     print(f"✔️ Mapa uspešno generisana ({counts['total']} vozila).")
