@@ -130,7 +130,7 @@ def create_map(buses, log_data):
             operator, internal = get_vehicle_info(bus_id)
             
             log_entry = log_data.get(bus_id, [None, None, "Nepoznat"])
-            model_name = log_entry[2] if log_entry[2] not in ["Ime Busa", ""] else "Nepoznat"
+            model_name = log_entry[2] if log_entry[2] not in ["Ime Busa", ""] else ""
             model_class = sanitize_for_class(model_name)
 
             popup_html = (
