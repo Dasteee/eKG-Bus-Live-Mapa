@@ -109,28 +109,39 @@ def create_map(buses, log_data):
         'mid': folium.FeatureGroup(name="🟢 Aktivna (10–60 min)", show=True),
         '24h': folium.FeatureGroup(name="🟠 Neaktivna (1-24h)", show=True),
         'old': folium.FeatureGroup(name="🔴 Neaktivna (>24h)", show=False),
+        'out_of_service': folium.FeatureGroup(name="🔥 Van saobraćaja (specijalni)", show=True), # <<< NOVA GRUPA
         'archive': folium.FeatureGroup(name="⚫ Arhiva (pre 2024)", show=False)
     }
     
     search_features = []
     counts = {key: 0 for key in groups}
     counts['total'] = 0
+    processed_api_buses = set() # <<< PRATI BUSEVE SA API-JA
 
     for bus in buses:
         try:
+            bus_id = bus.get('BUS_ID', 'N/A')
+            processed_api_buses.add(bus_id) # <<< Dodaj ID u set
+            
             last_seen_dt = datetime.strptime(bus.get('LAST_GPS_TIME'), '%Y%m%d%H%M%S').replace(tzinfo=tz)
             lat = float(bus.get('LATITUDE', '0').replace(',', '.'))
             lon = float(bus.get('LONGITUDE', '0').replace(',', '.'))
             if lat == 0 or lon == 0:
                 continue
 
-            bus_id = bus.get('BUS_ID', 'N/A')
             route_code = bus.get('ROUTE_CODE', 'N/A')
             clean_line = get_clean_line_number(route_code)
             operator, internal = get_vehicle_info(bus_id)
             
-            log_entry = log_data.get(bus_id, [None, None, "Nepoznat"])
-            model_name = log_entry[2] if log_entry[2] not in ["Ime Busa", ""] else ""
+            log_entry = log_data.get(bus_id)
+            model_name = "Nepoznat"
+            # <<< PROVERA NOVOG I STAROG FORMATA U JSON-U
+            if isinstance(log_entry, list) and len(log_entry) > 2:
+                model_name = log_entry[2]
+            elif isinstance(log_entry, dict):
+                model_name = log_entry.get('model', "Nepoznat")
+
+            if model_name in ["Ime Busa", ""]: model_name = ""
             model_class = sanitize_for_class(model_name)
 
             popup_html = (
@@ -167,9 +178,45 @@ def create_map(buses, log_data):
             counts['total'] += 1
 
         except Exception as e:
-            print(f"❌ GREŠKA pri obradi vozila: {bus.get('BUS_ID')}. Poruka: {e}")
+            print(f"❌ GREŠKA pri obradi vozila sa API-ja: {bus.get('BUS_ID')}. Poruka: {e}")
             traceback.print_exc()
             continue
+
+    # <<< NOVA SEKCIJA: Dodavanje specijalnih markera iz flota.json
+    for bus_id, log_entry in log_data.items():
+        if bus_id in processed_api_buses:
+            continue # Preskoči ako je već obrađen sa API-ja
+        
+        if isinstance(log_entry, dict) and log_entry.get('status') == 'out_of_service':
+            try:
+                lat = float(log_entry.get('lat', 0))
+                lon = float(log_entry.get('lon', 0))
+                if lat == 0 or lon == 0: continue
+
+                operator, internal = get_vehicle_info(bus_id)
+                model_name = log_entry.get('model', 'Nepoznat')
+                reason = log_entry.get('reason', 'Van saobraćaja')
+                link = log_entry.get('link')
+
+                popup_html = (
+                    f"<b>Vozilo:</b> {bus_id} ({operator} #{internal})<br>"
+                    f"<b>Model:</b> {model_name}<br>"
+                    f"<b>Status:</b> <span style='color:red; font-weight:bold;'>{reason}</span><br>"
+                )
+                if link:
+                    popup_html += f"<a href='{link}' target='_blank'>Više informacija...</a>"
+
+                tooltip = f"{bus_id} | {model_name} | {reason}"
+                icon = folium.Icon(color='red', icon='fire', prefix='fa')
+                
+                marker = folium.Marker([lat, lon], tooltip=tooltip, popup=popup_html, icon=icon)
+                groups['out_of_service'].add_child(marker)
+                
+                counts['out_of_service'] += 1
+                counts['total'] += 1
+            except Exception as e:
+                print(f"❌ GREŠKA pri obradi specijalnog vozila '{bus_id}': {e}")
+
 
     for group in groups.values():
         bus_map.add_child(group)
@@ -186,11 +233,14 @@ def create_map(buses, log_data):
     <div id="stats-box" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); background-color: rgba(0,0,0,0.75); color: white; padding: 10px 15px; border-radius: 8px; z-index: 1000; font-size: 14px; min-width: 280px;">
         <span style="position: absolute; top: 5px; right: 10px; cursor: pointer; color: #fff; font-weight: bold; font-size: 18px;" onclick="document.getElementById('stats-box').style.display='none';">&times;</span>
         <b>Stanje na mapi</b><br> Ažurirano: {datetime.now(ZoneInfo("Europe/Belgrade")).strftime('%d.%m.%Y. %H:%M:%S')}<br>
-        Aktivna: {counts['active']}<br> 10-60 min: {counts['mid']}<br> 1-24h: {counts['24h']}<br> 24h+: {counts['old']}<br> Arhiva: {counts['archive']}
+        Aktivna: {counts['active']}<br> 10-60 min: {counts['mid']}<br> 1-24h: {counts['24h']}<br> 24h+: {counts['old']}<br> Van saobraćaja: {counts['out_of_service']}<br> Arhiva: {counts['archive']}
     </div>"""
     bus_map.get_root().html.add_child(folium.Element(stats_html))
-
-    unique_models = sorted(list(set(v[2] for v in log_data.values() if v[2] not in ["Ime Busa", "Nepoznat", ""])))
+    
+    #... ostatak tvoje funkcije (filteri) ostaje isti ...
+    # Zbog dužine, nisam kopirao ostatak funkcije, ali on ostaje nepromenjen.
+    # Samo kopiraj ovaj kod preko svoje postojeće create_map funkcije.
+    unique_models = sorted(list(set(v[2] if isinstance(v, list) and len(v) > 2 else v.get('model', 'Nepoznat') for v in log_data.values() if (isinstance(v, list) and len(v) > 2 and v[2] not in ["Ime Busa", "Nepoznat", ""]) or (isinstance(v, dict) and v.get('model') not in ["Ime Busa", "Nepoznat", ""]))))
 
     filter_control_html = """
     <div id="filter-control-container">
@@ -309,7 +359,6 @@ def load_vehicle_log(log_file=VEHICLE_LOG_FILE):
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
-
 def update_and_save_log(buses, log_data, log_file=VEHICLE_LOG_FILE):
     if not buses:
         return log_data
@@ -329,16 +378,36 @@ def update_and_save_log(buses, log_data, log_file=VEHICLE_LOG_FILE):
 
             last_seen_str = last_seen_dt.strftime('%d.%m.%Y %H:%M:%S')
 
-            if bus_id_str in log_data:
-                log_data[bus_id_str][1] = last_seen_str
+            entry = log_data.get(bus_id_str)
+            if entry:
+                # <<< PROVERA DA LI JE LISTA (STARI FORMAT) ILI REČNIK (NOVI FORMAT)
+                if isinstance(entry, list) and len(entry) > 1:
+                    entry[1] = last_seen_str
+                elif isinstance(entry, dict):
+                    entry['last_seen'] = last_seen_str
             else:
-                log_data[bus_id_str] = [last_seen_str, last_seen_str, "Ime Busa"]
-        except (ValueError, KeyError, TypeError):
+                # Novi unos će sada biti rečnik, da budeš spreman za budućnost
+                log_data[bus_id_str] = {
+                    "first_seen": last_seen_str,
+                    "last_seen": last_seen_str,
+                    "model": "Ime Busa"
+                }
+        except (ValueError, KeyError, TypeError) as e:
+            print(f"Greška pri ažuriranju loga za vozilo: {e}")
             continue
     
     try:
         with open(log_file, 'w', encoding='utf-8') as f:
-            sorted_log_data = dict(sorted(log_data.items(), key=lambda item: datetime.strptime(item[1][0], '%d.%m.%Y %H:%M:%S'), reverse=True))
+            # Sortiranje će raditi i za liste i za rečnike
+            def get_sort_key(item):
+                value = item[1]
+                if isinstance(value, list) and len(value) > 0:
+                    return datetime.strptime(value[0], '%d.%m.%Y %H:%M:%S')
+                if isinstance(value, dict) and 'first_seen' in value:
+                    return datetime.strptime(value['first_seen'], '%d.%m.%Y %H:%M:%S')
+                return datetime.min # Fallback
+                
+            sorted_log_data = dict(sorted(log_data.items(), key=get_sort_key, reverse=True))
             json.dump(sorted_log_data, f, indent=4, ensure_ascii=False)
         print(f"✔️ Evidencija vozila je uspešno ažurirana u fajlu '{log_file}'.")
     except Exception as e:
